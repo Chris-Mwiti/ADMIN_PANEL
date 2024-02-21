@@ -1,5 +1,6 @@
 import SideBar from "./components/SideBar";
 import { Main } from "./components/Main";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function MainLayout() {
   return (
@@ -9,6 +10,7 @@ export default function MainLayout() {
         ">
       <SideBar />
       <Main />
+      <Toaster />
     </div>
   );
 }

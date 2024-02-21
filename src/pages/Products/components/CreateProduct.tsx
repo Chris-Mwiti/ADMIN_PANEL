@@ -17,9 +17,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useThumbnails } from "@/contexts/component.store";
+import { useToast } from "@/components/ui/use-toast";
 
 const CreateProduct = () => {
   const thumbnails = useThumbnails();
+  const { toast } = useToast();
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
@@ -35,8 +37,13 @@ const CreateProduct = () => {
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
+    console.log(thumbnails);
     values.productImages = thumbnails as string[];
     console.log(values);
+    toast({
+      title: "Product creation is successful",
+      description: "Your product has been created successfully",
+    })
   };
 
   return (
@@ -75,7 +82,7 @@ const CreateProduct = () => {
             />
 
             <Button type="submit" className="bg-slate-100">
-              Submit
+              Create
             </Button>
           </form>
         </Form>

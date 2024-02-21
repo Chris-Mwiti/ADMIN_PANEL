@@ -14,7 +14,8 @@ import { useState } from "react";
 import { TProductFormSchema } from "../schemas/productFormSchema";
 import { Button } from "@/components/ui/button";
 import { UploadCloudIcon } from "lucide-react";
-import { useActions } from "@/contexts/component.store";
+import { useActions, useThumbnails } from "@/contexts/component.store";
+import Thumbnails from "./Thumbnails";
 
 export type TProductDetails = {
   form: UseFormReturn<TProductFormSchema>;
@@ -22,15 +23,16 @@ export type TProductDetails = {
 };
 
 const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
+  const storedThumbnails = useThumbnails();
+  const { updateThumbnails, removeAllThumbnails } = useActions();
 
-  const  { updateThumbnails } = useActions();
   const thumbnailImages: Array<string | ArrayBuffer | null> = [];
-  const [thumbnails, setThumbnails] = useState<string[]>([]);
+  const [thumbnails, setThumbnails] = useState<string[]>(
+    storedThumbnails as string[]
+  );
   const [isUploadComplete, setUploadComplete] = useState(true);
 
-  const handleImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
       setUploadComplete(false);
@@ -38,6 +40,7 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           thumbnailImages.push(reader.result);
+          console.log(thumbnailImages);
           setThumbnails(thumbnailImages as string[]);
         };
 
@@ -106,29 +109,28 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
                     />
                   </FormControl>
                   <div className="w-full grid grid-cols-4 gap-3 xl:grid-col-8 md:grid-cols-12 lg:grid-cols-8">
-                    {thumbnails?.map((image) => (
-                      <div
-                        className="size-16 rounded-md border"
-                        key={image as string}>
-                        <img
-                          src={image as string}
-                          alt="selected"
-                          className="size-full rounded-md"
-                        />
-                      </div>
+                    {thumbnails?.map((image, index) => (
+                      <Thumbnails image={image} key={index} index={index}/>
                     ))}
                   </div>
-                  <Button
-                    className="bg-slate-200 flex justify-around items-center space-x-2"
-                    onClick={() => {
-                      const isUploadComplete = updateThumbnails(thumbnailImages);
-                      if(isUploadComplete) return setUploadComplete(true);
-                    }}
-                    type="button"
-                    disabled={isUploadComplete}>
-                    <UploadCloudIcon size={"20px"} color="#000" />
-                    <p className="text-black">upload</p>
-                  </Button>
+                  <div className="w-full flex justify-between">
+                    <Button
+                      className="bg-slate-200 flex justify-around items-center space-x-2"
+                      onClick={() => {
+                        console.log(thumbnails);
+                        updateThumbnails(thumbnails);
+                      }}
+                      type="button"
+                      disabled={isUploadComplete}>
+                      <UploadCloudIcon size={"20px"} color="#000" />
+                      <p className="text-black">upload</p>
+                    </Button>
+                    <Button variant={"outline"} onClick={removeAllThumbnails} disabled={
+                      thumbnails.length > 0 ? false  : true
+                    }>
+                      Remove All
+                    </Button>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
