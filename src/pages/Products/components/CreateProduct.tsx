@@ -18,10 +18,13 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useThumbnails } from "@/contexts/component.store";
 import { useToast } from "@/components/ui/use-toast";
+import useCreateProduct from "../services/createProducts";
+import { ToastAction } from "@/components/ui/toast";
 
 const CreateProduct = () => {
   const thumbnails = useThumbnails();
   const { toast } = useToast();
+  const {isPending,isError,error, data, mutate, reset} = useCreateProduct()
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
@@ -34,15 +37,29 @@ const CreateProduct = () => {
       productSku: "",
       productQuantity: "1",
       productTag: "",
+      sellingPrice: "",
+      stockStatus: "in stock"
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
     console.log(thumbnails);
     values.productImages = thumbnails as string[];
-    console.log(values);
-    toast({
-      title: "Product creation is successful",
-      description: "Your product has been created successfully",
+    mutate(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          className: "bg-[#7cf988]",
+          title: "Success",
+          description: "Product creation is successful",
+        });
+      },
+      onError(error, variables, context) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+          action: <ToastAction altText="Retry" onClick={reset}>Retry</ToastAction>
+        })
+      },
     })
   };
 

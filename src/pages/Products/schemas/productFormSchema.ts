@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const ProductFormSchema = z.object({
+  id:z.string().optional(),
   productName: z
     .string({
       invalid_type_error: "A string value is required",
@@ -62,7 +63,9 @@ const ProductFormSchema = z.object({
   }),
   expireDate: z.date({
     required_error: "Expiry date required"
-  }).optional()
+  }).optional(),
+  createdAt: z.date().default(new Date()),
+  stockStatus: z.string().optional()
 });
 
 export type TProductFormSchema = z.infer<typeof ProductFormSchema>;
