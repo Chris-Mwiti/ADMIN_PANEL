@@ -10,7 +10,6 @@ import {
   MoreVertical,
   Pencil,
   Trash2Icon,
-  View,
 } from "lucide-react";
 import { TProductFormSchema } from "../schemas/productFormSchema";
 import useDeleteProductById from "../services/deleteProduct";

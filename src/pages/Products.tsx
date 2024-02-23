@@ -1,5 +1,7 @@
+import ProductListTable from "./Products/tables/ProductListTable";
+
 export default function Products() {
   return (
-    <div>Products</div>
+    <ProductListTable />
   )
 }

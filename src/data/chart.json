@@ -6,39 +6,15 @@
         "series": [
           {
             "name": "Week 1 Sales",
-            "data": [
-              300,
-              200,
-              400,
-              120,
-              250,
-              120,
-              125
-            ]
+            "data": [300, 200, 400, 120, 250, 120, 125]
           },
           {
             "name": "Week 2 Sales",
-            "data": [
-              210,
-              125,
-              160,
-              240,
-              300,
-              125,
-              100
-            ]
+            "data": [210, 125, 160, 240, 300, 125, 100]
           },
           {
             "name": "Week 3 Sales",
-            "data": [
-              500,
-              140,
-              210,
-              145,
-              325,
-              135,
-              178
-            ]
+            "data": [500, 140, 210, 145, 325, 135, 178]
           }
         ],
         "options": {
@@ -57,11 +33,7 @@
               "show": true
             }
           },
-          "colors": [
-            "#ffd044",
-            "#5a03d5",
-            "#ef5a7f"
-          ],
+          "colors": ["#ffd044", "#5a03d5", "#ef5a7f"],
           "dataLabels": {
             "enabled": false
           },
@@ -86,15 +58,7 @@
             "size": 0
           },
           "xaxis": {
-            "categories": [
-              "Sun",
-              "Mon",
-              "Tue",
-              "Wed",
-              "Thur",
-              "Fri",
-              "Sat"
-            ],
+            "categories": ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
             "title": {
               "text": "Days Of Week",
               "style": {
@@ -142,33 +106,18 @@
     {
       "id": "2",
       "MonthlySales": {
-        "labels": [
-          "Week 1",
-          "Week 2",
-          "Week 3",
-          "Week 4"
-        ],
+        "labels": ["Week 1", "Week 2", "Week 3", "Week 4"],
         "datasets": [
           {
             "label": "January",
-            "data": [
-              200,
-              145,
-              300,
-              310
-            ],
+            "data": [200, 145, 300, 310],
             "fill": false,
             "borderColor": "#f59e0b",
             "tension": 0.5
           },
           {
             "label": "February",
-            "data": [
-              300,
-              210,
-              165,
-              205
-            ],
+            "data": [300, 210, 165, 205],
             "fill": false,
             "borderColor": "#2dd4bf",
             "tension": 0.5
@@ -183,13 +132,7 @@
       "sales": [
         {
           "type": "pie",
-          "series": [
-            200,
-            500,
-            300,
-            100,
-            150
-          ],
+          "series": [200, 500, 300, 100, 150],
           "options": {
             "chart": {
               "width": 300,
@@ -295,6 +238,100 @@
       "expireDate": "2024-02-27T21:00:00.000Z",
       "createdAt": "2024-02-22T04:59:05.172Z",
       "stockStatus": "in stock"
+    }
+  ],
+  "Orders": [
+    {
+      "id": "12345",
+      "customerName": "Fredrick Irumba",
+      "customerEmail": "fredrick@gmail.com",
+      "customerAvatar": "/public/avatar.jpg",
+      "orderDate": "2024-02-27T21:00:00.000Z",
+      "itemsCount": "10",
+      "totalOrderPrice": "500",
+      "orderStatus": "pending",
+      "orderItems": [
+        {
+          "productName": "Grape juice",
+          "productImage": "/public/carousel1.jfif",
+          "sellingPrice": "300",
+          "orderQty": "5",
+          "productCategory": "Food"
+        }
+      ],
+      "orderInfo":{
+        "shipBy": "Direct Expresss",
+        "trackingNo": "SPXIRDEFGVE134",
+        "address": "Nairobi",
+        "recipientPhone": "071234567",
+        "paymentType": "MPESA"
+      }
+    },
+    {
+      "id": "24957",
+      "customerName": "Fredrick Irumba",
+      "customerEmail": "fredrick@gmail.com",
+      "customerAvatar": "/public/avatar.jpg",
+      "orderDate": "2024-02-27T21:00:00.000Z",
+      "itemsCount": "10",
+      "totalOrderPrice": "500",
+      "orderStatus": "completed",
+      "orderItems": [
+        {
+          "productName": "Grape juice",
+          "productImage": "/public/carousel1.jfif",
+          "sellingPrice": "300",
+          "orderQty": "5",
+          "productCategory": "Food"
+        }
+      ],
+      "orderInfo": {
+        "shipBy": "Direct Expresss",
+        "trackingNo": "SPXIRDEFGVE134",
+        "address": "Nairobi",
+        "recipientPhone": "071234567",
+        "paymentType": "MPESA"
+      }
+    },
+    {
+      "id": "34345",
+      "customerName": "Fredrick Irumba",
+      "customerEmail": "fredrick@gmail.com",
+      "customerAvatar": "/public/avatar.jpg",
+      "orderDate": "2024-02-27T21:00:00.000Z",
+      "itemsCount": "10",
+      "totalOrderPrice": "500",
+      "orderStatus": "refunded",
+      "orderItems": [
+        {
+          "productName": "Grape juice",
+          "productImage": "/public/carousel1.jfif",
+          "sellingPrice": "300",
+          "orderQty": "5",
+          "productCategory": "Food"
+        },
+        {
+          "productName": "Grape juice",
+          "productImage": "/public/carousel2.jfif",
+          "sellingPrice": "300",
+          "orderQty": "5",
+          "productCategory": "Food"
+        },
+        {
+          "productName": "Grape juice",
+          "productImage": "/public/carousel3.jfif",
+          "sellingPrice": "300",
+          "orderQty": "5",
+          "productCategory": "Food"
+        }
+      ],
+      "orderInfo":  {
+        "shipBy": "Direct Expresss",
+        "trackingNo": "SPXIRDEFGVE134",
+        "address": "Nairobi",
+        "recipientPhone": "071234567",
+        "paymentType": "MPESA"
+      }
     }
   ]
 }

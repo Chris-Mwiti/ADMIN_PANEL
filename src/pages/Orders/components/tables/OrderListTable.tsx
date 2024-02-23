@@ -1,9 +1,10 @@
 import { useState } from "react";
-import useGetProducts from "../services/getProducts";
-import tableColums, { Products } from "./columns";
+import useGetOrders from "../services/getOrders";
+import orderColumns from "./colums";
+import { TOrdersSchema } from "../schemas/orders.schema";
 import {
-  ColumnDef,
   ColumnFiltersState,
+  ExpandedState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -39,20 +40,28 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const ProductListTable = () => {
+const OrdersListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnsVisibility] = useState<VisibilityState>(
     {}
   );
   const [rowSelection, setRowSelection] = useState({});
+  const [expanded, setExpanded] = useState<ExpandedState>({});
 
   //   API call to a fake database
-  const { isLoading, isError, error, data, refetch } = useGetProducts();
-  const table = useReactTable<Products>({
-    data: data as Products[],
-    columns: tableColums,
+  const { isLoading, isError, error, data, refetch } = useGetOrders();
+  const table = useReactTable<TOrdersSchema>({
+    data: data as TOrdersSchema[],
+    columns: orderColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -66,35 +75,57 @@ const ProductListTable = () => {
       columnFilters,
       columnVisibility,
       rowSelection,
+      expanded,
     },
   });
 
   if (isLoading) {
-    return <ProductListLoading />;
+    return <OrderListLoading />;
   }
 
   if (isError) {
-    return <ProductErrorFallBack error={error} retry={refetch} />;
+    return <OrderErrorFallBack error={error} retry={refetch} />;
   }
 
   if (data) {
     return (
-      <div className="w-full">
+      <div className="w-full p-2">
+        <p className="text-3xl text-slate-100 font-medium">Orders List</p>
         {/* @TODO:Extract filter section to be a component */}
-        <div className="flex flex-col items-center py-4 sm:flex-row">
+        <div className="flex flex-col space-y-3 space-x-3 items-center py-4 sm:flex-row">
+          {/* Filter orders serch field */}
+         
           <Input
-            placeholder="Filter products..."
-            value={
-              (table.getColumn("productName")?.getFilterValue() as string) ?? ""
-            }
+            placeholder="Filter orders..."
+            value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
             onChange={(e) =>
-              table.getColumn("productName")?.setFilterValue(e.target.value)
+              table.getColumn("id")?.setFilterValue(e.target.value)
             }
             className="max-w-sm text-white"
           />
+
+          {/* Filter order status select field */}
+          <Select
+            onValueChange={(value) =>
+              table.getColumn("orderStatus")?.setFilterValue(value)
+            }
+          >
+            <SelectTrigger className="max-w-sm text-white">
+              <SelectValue placeholder="Filter status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="refunded">Refunded</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Columns filter dropdown field */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant={"outline"} className="ml-auto text-white">
+              <Button
+                variant={"outline"}
+                className="ml-auto text-white w-full sm:w-max">
                 Columns <ChevronDown className="ml-2 size-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -158,12 +189,13 @@ const ProductListTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={tableColums.length}
+                    colSpan={orderColumns.length}
                     className="h-24 text-center">
                     No results found
                   </TableCell>
                 </TableRow>
               )}
+             
             </TableBody>
           </Table>
 
@@ -181,8 +213,7 @@ const ProductListTable = () => {
                 size={"sm"}
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
-                className="text-white"
-            >
+                className="text-white">
                 Previous
               </Button>
 
@@ -191,8 +222,7 @@ const ProductListTable = () => {
                 size={"sm"}
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
-                className="text-white"
-              >
+                className="text-white">
                 Next
               </Button>
             </div>
@@ -203,7 +233,7 @@ const ProductListTable = () => {
   }
 };
 
-const ProductListLoading = () => {
+const OrderListLoading = () => {
   return (
     <Card className="w-full">
       <CardHeader>
@@ -216,7 +246,7 @@ const ProductListLoading = () => {
   );
 };
 
-const ProductErrorFallBack = ({
+const OrderErrorFallBack = ({
   error,
   retry,
 }: {
@@ -239,4 +269,4 @@ const ProductErrorFallBack = ({
   );
 };
 
-export default ProductListTable;
+export default OrdersListTable;

@@ -1,19 +1,12 @@
-import { SheetClose } from "@/components/ui/sheet";
 import {
   Boxes,
-  Contact,
   Contact2,
   Home,
   HomeIcon,
   Kanban,
   ReceiptText,
-  Shirt,
-  ShoppingBag,
-  ShoppingBagIcon,
-  ShoppingBasket,
   ShoppingCart,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import NavLink from "./NavLink";
 import MobileNavLinks from "./MobileNavLinks";
 
@@ -38,7 +31,7 @@ const DesktopNavLinks = (props: IDesktopNavLinksProps) => {
           title="Products"
           subUrlLinks={["/create", "list", "edit"]}
         />
-        <NavLink urlPath="/orders" icon={ShoppingCart} title="Order" />
+        <NavLink urlPath="/orders" icon={ShoppingCart} title="Order" subUrlLinks={["edit"]} />
         <NavLink urlPath="/invoices" icon={ReceiptText} title="Invoices" />
         <NavLink urlPath="/kanban" icon={Kanban} title="Kanban" />
       </ul>
