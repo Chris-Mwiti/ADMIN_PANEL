@@ -26,7 +26,8 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
       <Checkbox
         checked={
           table.getIsAllRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+          (table.getIsSomePageRowsSelected() as boolean) ||
+          "indeterminate"
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -60,7 +61,7 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
         <div className="font-medium text-slate-100">{row.getValue("id")}</div>
       );
     },
-    enableHiding: false
+    enableHiding: false,
   },
 
   {
@@ -85,7 +86,7 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
         </div>
       );
     },
-    enableHiding: false
+    enableHiding: false,
   },
 
   {
@@ -141,9 +142,7 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
       };
       return (
         <div
-          className={`${
-            bgClass[status]
-          } p-2 rounded-md text-center shadow-lg`}>
+          className={`${bgClass[status]} p-2 rounded-md text-center shadow-lg`}>
           {status}
         </div>
       );

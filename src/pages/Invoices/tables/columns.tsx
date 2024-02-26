@@ -19,8 +19,7 @@ const invoicesColumns: ColumnDef<TInvoicesSchema>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
+          table.getIsAllRowsSelected() || (table.getIsSomePageRowsSelected() as boolean || "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"

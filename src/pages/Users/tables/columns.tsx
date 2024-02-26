@@ -23,7 +23,9 @@ const usersColumns: ColumnDef<TUsers>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllRowsSelected()||(table.getIsSomePageRowsSelected() && "indeterminate")
+          table.getIsAllRowsSelected() ||
+          (table.getIsSomePageRowsSelected() as boolean) ||
+          "indeterminate"
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -63,7 +65,7 @@ const usersColumns: ColumnDef<TUsers>[] = [
   {
     id: "fullName",
     header: "Name",
-    accessorFn: row => `${row.name.firstName} ${row.name.lastName}`,
+    accessorFn: (row) => `${row.name.firstName} ${row.name.lastName}`,
     cell: ({ row }) => {
       return (
         <div className="flex space-x-3">
@@ -135,9 +137,9 @@ const usersColumns: ColumnDef<TUsers>[] = [
   {
     accessorKey: "company",
     header: "Company",
-    cell:({row}) => (
-        <p className="text-slate-100 font-medium">{row.getValue("company")}</p>
-    )
+    cell: ({ row }) => (
+      <p className="text-slate-100 font-medium">{row.getValue("company")}</p>
+    ),
   },
   {
     id: "actions",

@@ -35,7 +35,8 @@ export const tableColums: ColumnDef<Products>[] = [
       <Checkbox
         checked={
           table.getIsAllRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+          (table.getIsSomePageRowsSelected() as boolean) ||
+          "indeterminate"
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -163,9 +164,7 @@ export const tableColums: ColumnDef<Products>[] = [
               </Button>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Button
-                variant={"destructive"}
-              >
+              <Button variant={"destructive"}>
                 <Trash2Icon color="#ff1309" className="mr-3 size-4" />
                 Delete
               </Button>
