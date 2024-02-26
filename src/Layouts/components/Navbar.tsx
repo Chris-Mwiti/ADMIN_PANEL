@@ -29,9 +29,6 @@ export const Navbar = () => {
           <Bell color="#ffffff" />
         </span>
         <span>
-          <User color="#ffffff" />
-        </span>
-        <span>
           <Settings color="#ffffff" />
         </span>
         <AvatarComponent />

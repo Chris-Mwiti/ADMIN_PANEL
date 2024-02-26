@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { TProductFormSchema } from "../schemas/productFormSchema";
+import { TProductFormSchema } from "../schemas/product.schema";
 import { Button } from "@/components/ui/button";
 import { UploadCloudIcon } from "lucide-react";
 import { useActions, useThumbnails } from "@/contexts/component.store";
@@ -110,7 +110,7 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
                   </FormControl>
                   <div className="w-full grid grid-cols-4 gap-3 xl:grid-col-8 md:grid-cols-12 lg:grid-cols-8">
                     {thumbnails?.map((image, index) => (
-                      <Thumbnails image={image} key={index} index={index}/>
+                      <Thumbnails image={image} key={index} index={index} />
                     ))}
                   </div>
                   <div className="w-full flex justify-between">
@@ -125,9 +125,10 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
                       <UploadCloudIcon size={"20px"} color="#000" />
                       <p className="text-black">upload</p>
                     </Button>
-                    <Button variant={"outline"} onClick={removeAllThumbnails} disabled={
-                      thumbnails.length > 0 ? false  : true
-                    }>
+                    <Button
+                      variant={"outline"}
+                      onClick={removeAllThumbnails}
+                      disabled={thumbnails.length > 0 ? false : true}>
                       Remove All
                     </Button>
                   </div>

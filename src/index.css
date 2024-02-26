@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  @apply transition-colors ease-in duration-100
+* {
+  @apply transition-colors ease-in duration-100;
 }
 
 .main {
@@ -11,8 +11,8 @@
   overflow-y: auto;
 }
 
-@media (min-width:640px) {
-  body{
+@media (min-width: 640px) {
+  body {
     overflow: hidden;
   }
 }

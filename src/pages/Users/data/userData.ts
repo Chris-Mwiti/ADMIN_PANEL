@@ -1,0 +1,86 @@
+import TUser from "../schemas/users.schema";
+
+let UserData: TUser[] = [
+  {
+    id: "1290",
+    name: {
+      firstName: "Chris",
+      lastName: "Mwiti",
+    },
+    email: "mwitichris@gmail.com",
+    emailVerified: true,
+    phone: "0712345678",
+    address: "Nairobi",
+    company: "Safaricom",
+    role: "Data Analyst",
+    avatar: "/avatar.jpg",
+    createdAt: new Date("2024-02-25T10:04:12.192Z"),
+    status: "active",
+  },
+  {
+    id: "129r",
+    name: {
+      firstName: "Chris",
+      lastName: "Mwiti",
+    },
+    email: "mwitichris@gmail.com",
+    emailVerified: true,
+    phone: "0712345678",
+    address: "Nairobi",
+    company: "Safaricom",
+    role: "Data Analyst",
+    avatar: "/avatar.jpg",
+    createdAt: new Date("2024-02-25T10:04:12.192Z"),
+    status: "banned",
+  },
+  {
+    id: "129i",
+    name: {
+      firstName: "Chris",
+      lastName: "Mwiti",
+    },
+    email: "mwitichris@gmail.com",
+    emailVerified: true,
+    phone: "0712345678",
+    address: "Nairobi",
+    company: "Safaricom",
+    role: "Data Analyst",
+    avatar: "/avatar.jpg",
+    createdAt: new Date("2024-02-25T10:04:12.192Z"),
+    status: "pending",
+  },
+  {
+    id: "fdcc",
+    name: {
+      firstName: "Chris",
+      lastName: "Mwiti",
+    },
+    email: "mwitichris@gmail.com",
+    emailVerified: true,
+    phone: "0712345678",
+    address: "Nairobi",
+    company: "Safaricom",
+    role: "Data Analyst",
+    avatar: "/avatar.jpg",
+    createdAt: new Date("2024-02-25T10:05:24.364Z"),
+    status: "active",
+  },
+  {
+    id: "7f52",
+    name: {
+      firstName: "Derrick",
+      lastName: "Shimenga",
+    },
+    email: "derrick@gmail.com",
+    emailVerified: true,
+    phone: "0712345679",
+    address: "Kakamega",
+    company: "Airtel",
+    role: "Analyst",
+    avatar: "/avatar.jpg",
+    createdAt: new Date("2024-02-25T10:06:51.206Z"),
+    status: "active",
+  },
+];
+
+export default UserData

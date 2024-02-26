@@ -1,8 +1,10 @@
 import { useState } from "react";
-import useGetProducts from "../services/getProducts";
-import tableColums, { Products } from "./columns";
+import useGetUsers from "../services/getUsers";
+import usersColumns from "./columns";
+import TUser from "../schemas/users.schema";
 import {
   ColumnFiltersState,
+  ExpandedState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -20,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, UserPlus } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -29,25 +31,34 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
-import productData from "@/pages/Products/data/productData";
 import { useNavigate } from "react-router";
+import userData from "../data/userData";
 
-const ProductListTable = () => {
+const UserListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnsVisibility] = useState<VisibilityState>(
     {}
   );
   const [rowSelection, setRowSelection] = useState({});
+  const [expanded, setExpanded] = useState<ExpandedState>({});
 
-  //   API call to a fake database
-  // const { isLoading, isError, error, data, refetch } = useGetProducts();
-  const data = productData;
-  const table = useReactTable<Products>({
-    data: data as Products[],
-    columns: tableColums,
+  const navigate = useNavigate()
+    //   API call to a fake database
+    //   const { isLoading, isError, error, data, refetch } = useGetUsers();
+    const data = userData;
+    const table = useReactTable<TUser>({
+    data: data!,
+    columns: usersColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -61,45 +72,73 @@ const ProductListTable = () => {
       columnFilters,
       columnVisibility,
       rowSelection,
+      expanded,
     },
   });
 
-  const navigate = useNavigate();
-  // if (isLoading) {
-  //   return <TableLoading />;
-  // }
+//   if (isLoading) {
+//     return <TableLoading />;
+//   }
 
-  // if (isError) {
-  //   return <TableError error={error} retry={refetch} />;
-  // }
+//   if (isError) {
+//     return <TableError error={error} retry={refetch} />;
+//   }
 
   if (data) {
     return (
-      <div className="w-full container space-y-3">
+      <div className="w-full p-2">
         <div className="w-full flex justify-between">
-          <p className="text-3xl text-slate-100 font-medium">Invoices List</p>
-          <Button
-            className="bg-slate-300"
-            onClick={() => navigate("/products/create")}>
-            <Plus className="mr-3" />
-            New Product
+          <p className="text-3xl text-slate-100 font-medium">Users List</p>
+          <Button className="bg-slate-300" onClick={() => navigate("/users/create")}>
+            <UserPlus className="mr-3" />
+            New User
           </Button>
         </div>
         {/* @TODO:Extract filter section to be a component */}
-        <div className="flex flex-col items-center py-4 sm:flex-row">
+        <div className="flex flex-col space-y-3 space-x-3 items-center py-4 sm:flex-row">
+          {/* Filter orders serch field */}
+
           <Input
-            placeholder="Filter products..."
+            placeholder="Filter name..."
             value={
-              (table.getColumn("productName")?.getFilterValue() as string) ?? ""
+              (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
             }
             onChange={(e) =>
-              table.getColumn("productName")?.setFilterValue(e.target.value)
+              table.getColumn("fullName")?.setFilterValue(e.target.value)
             }
             className="max-w-sm text-white"
           />
+
+          <Input
+            placeholder="Filter roles..."
+            value={(table.getColumn("role")?.getFilterValue() as string) ?? ""}
+            onChange={(e) =>
+              table.getColumn("role")?.setFilterValue(e.target.value)
+            }
+            className="max-w-sm text-white"
+          />
+
+          {/* Filter order status select field */}
+          <Select
+            onValueChange={(value) =>
+              table.getColumn("status")?.setFilterValue(value)
+            }>
+            <SelectTrigger className="max-w-sm text-white">
+              <SelectValue placeholder="Filter status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="banned">Banned</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Columns filter dropdown field */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant={"outline"} className="ml-auto text-white">
+              <Button
+                variant={"outline"}
+                className="ml-auto text-white w-full sm:w-max">
                 Columns <ChevronDown className="ml-2 size-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -163,7 +202,7 @@ const ProductListTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={tableColums.length}
+                    colSpan={usersColumns.length}
                     className="h-24 text-center">
                     No results found
                   </TableCell>
@@ -206,4 +245,4 @@ const ProductListTable = () => {
   }
 };
 
-export default ProductListTable;
+export default UserListTable;

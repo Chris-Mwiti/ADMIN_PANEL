@@ -11,6 +11,8 @@ import { ISales } from "./SalesChart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import chartData from "../data/chart";
+import { ApexOptions } from "apexcharts";
 
 type TSales = {
   type: string;
@@ -21,18 +23,20 @@ interface IProductSales {
 }
 
 const ProductSalesChart = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery({
-    queryKey: ["ProductSales"],
-    queryFn: () =>
-      axios
-        .get<IProductSales>("http://localhost:1100/ProductSales/1")
-        .then((res) => res.data),
-  });
+  // const { isLoading, isError, data, error, refetch } = useQuery({
+  //   queryKey: ["ProductSales"],
+  //   queryFn: () =>
+  //     axios
+  //       .get<IProductSales>("http://localhost:1100/ProductSales/1")
+  //       .then((res) => res.data),
+  // });
 
-  if (isLoading) return <ProductSalesLoadingChart />;
+  // if (isLoading) return <ProductSalesLoadingChart />;
 
-  if (isError)
-    return <ProductSalesErrorFallBack error={error} refetchFn={refetch} />;
+  // if (isError)
+  //   return <ProductSalesErrorFallBack error={error} refetchFn={refetch} />;
+
+  const data = chartData.ProductSales.find(value => value.id == "1");
 
   return (
     <Card>
@@ -44,7 +48,7 @@ const ProductSalesChart = () => {
         <Chart
           type="pie"
           series={data?.sales[0].series}
-          options={data?.sales[0].options}
+          options={data?.sales[0].options as ApexOptions}
           width={"440px"}
         />
       </CardContent>

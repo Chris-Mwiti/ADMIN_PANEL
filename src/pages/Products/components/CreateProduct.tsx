@@ -1,6 +1,6 @@
 import ProductFormSchema, {
   TProductFormSchema,
-} from "../schemas/productFormSchema";
+} from "../schemas/product.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ProductDetailsForm from "./ProductDetailsForm";
@@ -20,11 +20,14 @@ import { useThumbnails } from "@/contexts/component.store";
 import { useToast } from "@/components/ui/use-toast";
 import useCreateProduct from "../services/createProducts";
 import { ToastAction } from "@/components/ui/toast";
+import productData from "@/pages/Products/data/productData";
+import { useNavigate } from "react-router";
 
 const CreateProduct = () => {
   const thumbnails = useThumbnails();
   const { toast } = useToast();
-  const {isPending,isError,error, data, mutate, reset} = useCreateProduct()
+  const navigate = useNavigate();
+  // const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
@@ -38,29 +41,45 @@ const CreateProduct = () => {
       productQuantity: "1",
       productTag: "",
       sellingPrice: "",
-      stockStatus: "in stock"
+      stockStatus: "in stock",
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
     console.log(thumbnails);
-    values.productImages = thumbnails as string[];
-    mutate(values, {
-      onSuccess(data, variables, context) {
-        toast({
-          className: "bg-[#7cf988]",
-          title: "Success",
-          description: "Product creation is successful",
-        });
-      },
-      onError(error, variables, context) {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message,
-          action: <ToastAction altText="Retry" onClick={reset}>Retry</ToastAction>
-        })
-      },
-    })
+    values.productImages = [
+      "/carousel2.jfif",
+      "/carousel3.jfif",
+      "/carousel1.jfif",
+    ];
+
+    productData.push(values);
+    toast({
+      className: "bg-[#7cf988]",
+      title: "Success",
+      description: "Product creation is successful",
+    });
+    setTimeout(() => navigate("/products"), 2000);
+    // mutate(values, {
+    //   onSuccess(data, variables, context) {
+    //     toast({
+    //       className: "bg-[#7cf988]",
+    //       title: "Success",
+    //       description: "Product creation is successful",
+    //     });
+    //   },
+    //   onError(error, variables, context) {
+    //     toast({
+    //       variant: "destructive",
+    //       title: "Error",
+    //       description: error.message,
+    //       action: (
+    //         <ToastAction altText="Retry" onClick={reset}>
+    //           Retry
+    //         </ToastAction>
+    //       ),
+    //     });
+    //   },
+    // });
   };
 
   return (

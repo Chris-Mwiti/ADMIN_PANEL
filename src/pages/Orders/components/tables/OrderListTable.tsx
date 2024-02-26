@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useGetOrders from "../services/getOrders";
-import orderColumns from "./colums";
+import orderColumns from "./columns";
 import { TOrdersSchema } from "../schemas/orders.schema";
 import {
   ColumnFiltersState,
@@ -32,21 +32,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import TableLoading from "@/components/ui_fallbacks/TableLoading";
+import TableError from "@/components/ui_fallbacks/TableError";
+import orderData from "../data/orderData";
 
 const OrdersListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -58,9 +52,10 @@ const OrdersListTable = () => {
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
   //   API call to a fake database
-  const { isLoading, isError, error, data, refetch } = useGetOrders();
+  // const { isLoading, isError, error, data, refetch } = useGetOrders();
+  const data = orderData
   const table = useReactTable<TOrdersSchema>({
-    data: data as TOrdersSchema[],
+    data: data,
     columns: orderColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -79,13 +74,13 @@ const OrdersListTable = () => {
     },
   });
 
-  if (isLoading) {
-    return <OrderListLoading />;
-  }
+  // if (isLoading) {
+  //   return <TableLoading />;
+  // }
 
-  if (isError) {
-    return <OrderErrorFallBack error={error} retry={refetch} />;
-  }
+  // if (isError) {
+  //   return <TableError error={error} retry={refetch} />;
+  // }
 
   if (data) {
     return (
@@ -231,42 +226,6 @@ const OrdersListTable = () => {
       </div>
     );
   }
-};
-
-const OrderListLoading = () => {
-  return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Loading...</CardTitle>
-      </CardHeader>
-      <CardContent className="w-full">
-        <Skeleton className="w-full" />
-      </CardContent>
-    </Card>
-  );
-};
-
-const OrderErrorFallBack = ({
-  error,
-  retry,
-}: {
-  error: Error;
-  retry: () => void;
-}) => {
-  return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Error</CardTitle>
-        <CardDescription>{error.message}</CardDescription>
-      </CardHeader>
-
-      <CardFooter>
-        <Button variant={"destructive"} onClick={() => retry()}>
-          Retry
-        </Button>
-      </CardFooter>
-    </Card>
-  );
 };
 
 export default OrdersListTable;

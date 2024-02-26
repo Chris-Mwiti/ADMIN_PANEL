@@ -11,7 +11,7 @@ import {
   Pencil,
   Trash2Icon,
 } from "lucide-react";
-import { TProductFormSchema } from "../schemas/productFormSchema";
+import { TProductFormSchema } from "../schemas/product.schema";
 import useDeleteProductById from "../services/deleteProduct";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import {
@@ -156,35 +156,16 @@ export const tableColums: ColumnDef<Products>[] = [
             align="end"
             className="bg-slate-200 p-3 rounded-md">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigate(`products/${id}`)}>
+            <DropdownMenuItem>
               <Button variant={"ghost"} className="w-full">
                 <Eye className=" size-4 mr-3" />
                 View
               </Button>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate(`products/edit/${id}`)}>
-              <Button variant={"ghost"} className="w-full">
-                <Pencil className="mr-3 size-4" />
-                Edit
-              </Button>
-            </DropdownMenuItem>
             <DropdownMenuItem>
               <Button
                 variant={"destructive"}
-                onClick={() =>
-                  mutate(id, {
-                    onSuccess: () => {
-                      queryClient.invalidateQueries({
-                        queryKey: ["Products"],
-                      });
-                      toast({
-                        title: "Deletion Complete",
-                        description: `The following product has been deleted successfully ${id}`,
-                        className: "bg-[#7cf988]",
-                      });
-                    },
-                  })
-                }>
+              >
                 <Trash2Icon color="#ff1309" className="mr-3 size-4" />
                 Delete
               </Button>

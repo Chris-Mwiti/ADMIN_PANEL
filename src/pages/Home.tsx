@@ -1,7 +1,7 @@
 import { ShoppingBag, ShoppingBasket, ShoppingCart, User2 } from "lucide-react";
-import { InfoCard } from "./Home/components/InfoCard";
-import { InfoCardsLayout } from "./Home/components/InfoCardsLayout";
-import ChartGroup from "./Home/components/ChartGroup";
+import { InfoCard } from "./Home/components/cards/InfoCard";
+import { InfoCardsLayout } from "./Home/components/cards/InfoCardsLayout";
+import ChartGroup from "./Home/components/charts/ChartGroup";
 
 export default function Home() {
   return (
@@ -18,7 +18,6 @@ export default function Home() {
       ">
         <InfoCardsLayout />
         <ChartGroup />
-        <InfoCardsLayout />
       </div>
     </section>
   );

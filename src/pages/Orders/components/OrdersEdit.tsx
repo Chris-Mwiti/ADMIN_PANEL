@@ -2,24 +2,32 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import useGetOrderById from "./services/getOrderById";
 import { addHours, format } from "date-fns";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Car, ChevronDown, Printer } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Printer } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { SelectValue } from "@radix-ui/react-select";
+import { Skeleton } from "@/components/ui/skeleton";
+import orderData from "./data/orderData";
 
 const OrdersEdit = () => {
   const { orderId } = useParams();
   if (!orderId)
     return (
-      <div className="w-full items-center justify-center">
+      <div className="w-full items-center justify-center text-slate-100">
         No Order Id Provided
       </div>
     );
 
-  const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
-  const [status, setStatus] = useState(data?.orderStatus)
+  const data = orderData.find(value => value.id === orderId);
+  // const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
+  const [status, setStatus] = useState(data?.orderStatus);
 
   // Tag Object Propeties
   const bgClass: { [key: string]: string } = {
@@ -27,14 +35,15 @@ const OrdersEdit = () => {
     completed: "bg-green-300/30 text-green-500",
     pending: "bg-orange-300/30 text-orange-500",
   };
+  
 
-  if(data){
+  if (data) {
     // Date formatting
     const formatedDate = format(data.orderDate, "do MMM yyy");
     const formatedTime = format(addHours(data.orderDate, 3), "hh:mm aaa");
 
     //HandleChanges
-    const isChangesAvailable = data.orderStatus !== status
+    const isChangesAvailable = data.orderStatus !== status;
     return (
       <div className="w-full p-3 flex flex-col space-y-4">
         <div className="flex flex-col space-y-2">
@@ -245,9 +254,11 @@ const OrdersEdit = () => {
             <div className="space-y-3">
               <CardTitle>Payment</CardTitle>
               <span className="flex space-x-4 items-center">
-                <p className="text-muted-foreground font-medium">Payment type</p>
+                <p className="text-muted-foreground font-medium">
+                  Payment type
+                </p>
                 <span className="bg-green-400/10 text-green-400 p-3 rounded-md shadow-lg">
-                    {data.orderInfo.paymentType}
+                  {data.orderInfo.paymentType}
                 </span>
               </span>
             </div>

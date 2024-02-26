@@ -6,6 +6,7 @@ import {
   Kanban,
   ReceiptText,
   ShoppingCart,
+  Users,
 } from "lucide-react";
 import NavLink from "./NavLink";
 import MobileNavLinks from "./MobileNavLinks";
@@ -25,15 +26,15 @@ const DesktopNavLinks = (props: IDesktopNavLinksProps) => {
     <nav className="w-full min-h-screen  flex flex-col space-y-3">
       <ul className="w-full list-none flex flex-col space-y-7 px-3 py-4">
         <NavLink urlPath="/" icon={HomeIcon} title="Home" />
+        <NavLink urlPath="/users" icon={Users} title="Users" subUrlLinks={["create", "edit"]} />
         <NavLink
           urlPath="/products"
           icon={Boxes}
           title="Products"
-          subUrlLinks={["/create", "list", "edit"]}
+          subUrlLinks={["/create", "list"]}
         />
-        <NavLink urlPath="/orders" icon={ShoppingCart} title="Order" subUrlLinks={["edit"]} />
-        <NavLink urlPath="/invoices" icon={ReceiptText} title="Invoices" />
-        <NavLink urlPath="/kanban" icon={Kanban} title="Kanban" />
+        <NavLink urlPath="/orders" icon={ShoppingCart} title="Order"  />
+        <NavLink urlPath="/invoices" icon={ReceiptText} title="Invoices" subUrlLinks={["create"]} />
       </ul>
     </nav>
   );
@@ -50,22 +51,21 @@ export const NavLinks = (props: INavLinksProps) => {
         <MobileNavLinks
           urlPath="users"
           subUrlLinks={["/create", "/list"]}
-          icon={Contact2}
+          icon={Users}
           title="Users"
+        />
+        <MobileNavLinks urlPath="orders" icon={ShoppingCart} title="Orders" />
+        <MobileNavLinks
+          urlPath="products"
+          subUrlLinks={["/create", "/list"]}
+          icon={Boxes}
+          title="Products"
         />
         <MobileNavLinks
           urlPath="invoices"
           icon={ReceiptText}
           title="Invoices"
           subUrlLinks={["/create"]}
-        />
-        <MobileNavLinks urlPath="kanban" icon={Kanban} title="Kanban" />
-        <MobileNavLinks urlPath="order" icon={ShoppingCart} title="Orders" />
-        <MobileNavLinks
-          urlPath="products"
-          subUrlLinks={["/create", "/list"]}
-          icon={Boxes}
-          title="Products"
         />
       </ul>
     </nav>

@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
+import chartData from "../data/chart";
 
 export interface ISales {
   series: ApexAxisChartSeries | ApexNonAxisChartSeries;
@@ -29,21 +30,23 @@ function getSalesData() {
 }
 
 const SalesChart = () => {
-  const { isLoading, isError, error, data, refetch } = useQuery({
-    queryKey: ["WeekSales"],
-    queryFn: getSalesData,
-  });
+  // const { isLoading, isError, error, data, refetch } = useQuery({
+  //   queryKey: ["WeekSales"],
+  //   queryFn: getSalesData,
+  // });
 
-  if (isLoading) {
-    return <SalesChartSkeleton />;
-  }
-  if (isError) {
-    return (
-      <SalesFallBackErrorElement retryFn={refetch} errMsg={error as Error} />
-    );
-  }
+  const data = chartData.Sales.find(value => value.WeeklySales)
 
-  if (data?.WeeklySales) {
+  // if (isLoading) {
+  //   return <SalesChartSkeleton />;
+  // }
+  // if (isError) {
+  //   return (
+  //     <SalesFallBackErrorElement retryFn={refetch} errMsg={error as Error} />
+  //   );
+  // }
+
+  if (data) {
     return (
       <div
         className="
@@ -60,8 +63,8 @@ const SalesChart = () => {
             ">
             <Chart
               type="line"
-              series={data.WeeklySales.series}
-              options={data.WeeklySales.options}
+              series={data.WeeklySales!.series}
+              options={data.WeeklySales!.options as ApexOptions}
               width="100%"
               height={"100%"}
             />
