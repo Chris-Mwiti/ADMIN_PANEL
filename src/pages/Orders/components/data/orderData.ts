@@ -5,7 +5,7 @@ const orderData: TOrdersSchema[] = [
     id: "12345",
     customerName: "Fredrick Irumba",
     customerEmail: "fredrick@gmail.com",
-    customerAvatar: "/public/avatar.jpg",
+    customerAvatar: "/avatar.jpg",
     orderDate: new Date("2024-02-27T21:00:00.000Z"),
     itemsCount: "10",
     totalOrderPrice: "500",
@@ -13,7 +13,7 @@ const orderData: TOrdersSchema[] = [
     orderItems: [
       {
         productName: "Grape juice",
-        productImage: "/public/carousel1.jfif",
+        productImage: "/carousel1.jfif",
         sellingPrice: "300",
         orderQty: "5",
         productCategory: "Food",
@@ -31,7 +31,7 @@ const orderData: TOrdersSchema[] = [
     id: "24957",
     customerName: "Fredrick Irumba",
     customerEmail: "fredrick@gmail.com",
-    customerAvatar: "/public/avatar.jpg",
+    customerAvatar: "/avatar.jpg",
     orderDate: new Date("2024-02-27T21:00:00.000Z"),
     itemsCount: "10",
     totalOrderPrice: "500",
@@ -39,7 +39,7 @@ const orderData: TOrdersSchema[] = [
     orderItems: [
       {
         productName: "Grape juice",
-        productImage: "/public/carousel1.jfif",
+        productImage: "/carousel1.jfif",
         sellingPrice: "300",
         orderQty: "5",
         productCategory: "Food",
@@ -57,7 +57,7 @@ const orderData: TOrdersSchema[] = [
     id: "34345",
     customerName: "Fredrick Irumba",
     customerEmail: "fredrick@gmail.com",
-    customerAvatar: "/public/avatar.jpg",
+    customerAvatar: "/avatar.jpg",
     orderDate: new Date("2024-02-27T21:00:00.000Z"),
     itemsCount: "10",
     totalOrderPrice: "500",
@@ -65,21 +65,21 @@ const orderData: TOrdersSchema[] = [
     orderItems: [
       {
         productName: "Grape juice",
-        productImage: "/public/carousel1.jfif",
+        productImage: "/carousel1.jfif",
         sellingPrice: "300",
         orderQty: "5",
         productCategory: "Food",
       },
       {
         productName: "Grape juice",
-        productImage: "/public/carousel2.jfif",
+        productImage: "/carousel2.jfif",
         sellingPrice: "300",
         orderQty: "5",
         productCategory: "Food",
       },
       {
         productName: "Grape juice",
-        productImage: "/public/carousel3.jfif",
+        productImage: "/carousel3.jfif",
         sellingPrice: "300",
         orderQty: "5",
         productCategory: "Food",
