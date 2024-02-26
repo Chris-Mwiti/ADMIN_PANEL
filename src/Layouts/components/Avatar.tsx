@@ -9,12 +9,15 @@ const AvatarComponent = () => {
     <Avatar className="text-foreground">
       <AvatarImage src="" />
       <Popover>
-        <PopoverTrigger className="size-12 flex items-center justify-center ">
-          <AvatarFallback className="flex size-full items-center justify-center ring ring-primary">
+        <PopoverTrigger className="size-12 ">
+          <AvatarFallback className="flex border items-center justify-center ring ring-primary">
             CM
           </AvatarFallback>
         </PopoverTrigger>
-        <PopoverContent className="bg-primary p-4 rounded-md">
+        <PopoverContent
+          className="bg-gray-900 p-4 rounded-md z-600"
+          align="end"
+          alignOffset={20}>
           <div className="w-full space-y-3 flex flex-col">
             <span className="space-y-2">
               <p className="text-slate-100">Frank Maina</p>
