@@ -108,7 +108,7 @@ const UserCreate = () => {
                         </FormControl>
                         <div className="size-full rounded-full flex flex-col items-center justify-center -z-10 ">
                           <Camera size={"50px"} color="#efefef" />
-                          <p className="font-medium text-slate-100">
+                          <p className="font-medium text-foreground">
                             Upload Photo
                           </p>
                         </div>

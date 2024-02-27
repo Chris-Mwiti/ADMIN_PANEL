@@ -8,7 +8,7 @@ import {
   ShoppingCart,
   Users,
 } from "lucide-react";
-import NavLink from "./NavLink";
+import NavLinkItem from "./NavLink";
 import MobileNavLinks from "./MobileNavLinks";
 
 interface INavLinksProps {
@@ -25,16 +25,16 @@ const DesktopNavLinks = (props: IDesktopNavLinksProps) => {
   return (
     <nav className="w-full min-h-screen  flex flex-col space-y-3">
       <ul className="w-full list-none flex flex-col space-y-7 px-3 py-4">
-        <NavLink urlPath="/" icon={HomeIcon} title="Home" />
-        <NavLink urlPath="/users" icon={Users} title="Users" subUrlLinks={["create", "edit"]} />
-        <NavLink
+        <NavLinkItem urlPath="/" icon={HomeIcon} title="Home" />
+        <NavLinkItem urlPath="/users" icon={Users} title="Users" subUrlLinks={["create", "edit"]} />
+        <NavLinkItem
           urlPath="/products"
           icon={Boxes}
           title="Products"
           subUrlLinks={["/create", "list"]}
         />
-        <NavLink urlPath="/orders" icon={ShoppingCart} title="Order"  />
-        <NavLink urlPath="/invoices" icon={ReceiptText} title="Invoices" subUrlLinks={["create"]} />
+        <NavLinkItem urlPath="/orders" icon={ShoppingCart} title="Order"  />
+        <NavLinkItem urlPath="/invoices" icon={ReceiptText} title="Invoices" subUrlLinks={["create"]} />
       </ul>
     </nav>
   );

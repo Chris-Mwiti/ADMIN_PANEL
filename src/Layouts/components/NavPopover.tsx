@@ -28,7 +28,7 @@ const NavPopover = (props: INavPopOver) => {
               <Link
                 to={`${props.urlPath}/${url.replace("/", "")}`}
                 key={`${props.urlPath}/${url}`}>
-                <p className="text-white w-full divide-y hover:bg-[#efefef]/20 p-3 rounded-md">
+                <p className="text-slate-100 w-full divide-y hover:bg-[#efefef]/20 p-3 rounded-md">
                   {url.replace("/", "")}
                 </p>
               </Link>

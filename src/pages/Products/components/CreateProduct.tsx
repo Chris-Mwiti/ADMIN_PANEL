@@ -87,7 +87,7 @@ const CreateProduct = () => {
       className="
             w-full min-h-full p-3 space-y-3
         ">
-      <p className="text-3xl text-[#efefef] font-bold">Create a new product</p>
+      <p className="text-3xl text-foreground font-bold">Create a new product</p>
       {/* Product Details */}
       <div className="w-full">
         <Form {...form}>
