@@ -37,7 +37,6 @@ const UserCreate = () => {
     },
   });
 
-  const [isDisabled, setIsDisabled] = useState(true);
     //   const {isPending, reset ,mutate} = useCreateUser();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -249,7 +248,7 @@ const UserCreate = () => {
               />
             </CardContent>
           </Card>
-          <Button className=" justify-self-end" type="submit" disabled={isDisabled}>
+          <Button className=" justify-self-end" type="submit">
             Submit
           </Button>
         </form>
