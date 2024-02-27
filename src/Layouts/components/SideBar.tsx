@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { NavLinks } from "./NavLinks";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function SideBar() {
   const [toogleSideBarStatus, setToogleSideBar] = useState(true);
