@@ -42,14 +42,7 @@ const UserCreate = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
-
     values.avatar = "/avatar.jpg";
-
-    // @TODO: Research more on how to check whether all values are present using zod
-    if(values.name && values.email){
-      setIsDisabled(false);
-    }
-
     userData.push(values);
     toast({
       title: "User created successfully",
