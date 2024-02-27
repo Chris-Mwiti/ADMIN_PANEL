@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
+.rubik-glitch-regular {
+  font-family: "Rubik Glitch", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,6 +25,7 @@
     overflow: hidden;
   }
 }
+
 
 
 @layer base {
@@ -64,3 +74,8 @@
     --ring: 142.4 71.8% 29.2%;
   }
 }
+
+
+
+
+

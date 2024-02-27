@@ -24,7 +24,7 @@ const Drawer = () => {
         className="bg-white/10 bg-clip-padding bg-opacity-50 backdrop-filter backdrop-blur-sm">
         <SheetHeader>
           <SheetTitle>
-            <p className="text-primary text-center text-xl font-bold">
+            <p className="text-primary font-logo text-center text-4xl rubik-glitch-regular">
               MADRIGAL
             </p>
           </SheetTitle>

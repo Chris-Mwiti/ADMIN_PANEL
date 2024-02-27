@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        logo: ['"Rubik Glitch'],
+      },
       colors: {
         blueRibbon: {
           50: "#eff6ff",

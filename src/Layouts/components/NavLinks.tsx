@@ -1,9 +1,7 @@
 import {
   Boxes,
-  Contact2,
   Home,
   HomeIcon,
-  Kanban,
   ReceiptText,
   ShoppingCart,
   Users,
@@ -23,18 +21,31 @@ interface IDesktopNavLinksProps {
 
 const DesktopNavLinks = (props: IDesktopNavLinksProps) => {
   return (
-    <nav className="w-full min-h-screen  flex flex-col space-y-3">
+    <nav className="w-full min-h-screen  flex flex-col space-y-3 py-3">
+      <p className="text-primary font-logo text-center text-4xl rubik-glitch-regular">
+        MADRIGAL
+      </p>
       <ul className="w-full list-none flex flex-col space-y-7 px-3 py-4">
         <NavLinkItem urlPath="/" icon={HomeIcon} title="Home" />
-        <NavLinkItem urlPath="/users" icon={Users} title="Users" subUrlLinks={["create", "edit"]} />
+        <NavLinkItem
+          urlPath="/users"
+          icon={Users}
+          title="Users"
+          subUrlLinks={["create", "edit"]}
+        />
         <NavLinkItem
           urlPath="/products"
           icon={Boxes}
           title="Products"
           subUrlLinks={["/create", "list"]}
         />
-        <NavLinkItem urlPath="/orders" icon={ShoppingCart} title="Order"  />
-        <NavLinkItem urlPath="/invoices" icon={ReceiptText} title="Invoices" subUrlLinks={["create"]} />
+        <NavLinkItem urlPath="/orders" icon={ShoppingCart} title="Order" />
+        <NavLinkItem
+          urlPath="/invoices"
+          icon={ReceiptText}
+          title="Invoices"
+          subUrlLinks={["create"]}
+        />
       </ul>
     </nav>
   );
