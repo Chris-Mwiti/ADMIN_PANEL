@@ -41,6 +41,7 @@ import {
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
 import orderData from "../data/orderData";
+import { Card, CardContent } from "@/components/ui/card";
 
 const OrdersListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -53,7 +54,7 @@ const OrdersListTable = () => {
 
   //   API call to a fake database
   // const { isLoading, isError, error, data, refetch } = useGetOrders();
-  const data = orderData
+  const data = orderData;
   const table = useReactTable<TOrdersSchema>({
     data: data,
     columns: orderColumns,
@@ -84,12 +85,12 @@ const OrdersListTable = () => {
 
   if (data) {
     return (
-      <div className="w-full p-2">
-        <p className="text-3xl text-slate-100 font-medium">Orders List</p>
+      <div className="w-full p-3">
+        <p className="text-2xl text-slate-100 font-medium">Orders List</p>
         {/* @TODO:Extract filter section to be a component */}
         <div className="flex flex-col space-y-3 space-x-3 items-center py-4 sm:flex-row">
           {/* Filter orders serch field */}
-         
+
           <Input
             placeholder="Filter orders..."
             value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
@@ -103,8 +104,7 @@ const OrdersListTable = () => {
           <Select
             onValueChange={(value) =>
               table.getColumn("orderStatus")?.setFilterValue(value)
-            }
-          >
+            }>
             <SelectTrigger className="max-w-sm text-white">
               <SelectValue placeholder="Filter status" />
             </SelectTrigger>
@@ -145,54 +145,57 @@ const OrdersListTable = () => {
 
         {/* Table Section */}
         <div className="rounded-md border">
-          <Table>
-            {/* Table Header */}
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+          <Card>
+            <CardContent>
+              <Table>
+                {/* Table Header */}
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
                   ))}
-                </TableRow>
-              ))}
-            </TableHeader>
+                </TableHeader>
 
-            {/* Table Body */}
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                {/* Table Body */}
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={orderColumns.length}
+                        className="h-24 text-center">
+                        No results found
                       </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={orderColumns.length}
-                    className="h-24 text-center">
-                    No results found
-                  </TableCell>
-                </TableRow>
-              )}
-             
-            </TableBody>
-          </Table>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
           {/* Action Btns */}
           <div className="flex items-center justify-end space-x-2 py-4 px-2">

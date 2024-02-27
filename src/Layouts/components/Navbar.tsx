@@ -1,6 +1,6 @@
 import AvatarComponent from "./Avatar";
 import Drawer from "./Drawer";
-import { Bell, Settings, User, Users } from "lucide-react";
+import { Bell, Settings } from "lucide-react";
 import { SearchModal } from "./SearchModal";
 export const Navbar = () => {
   return (
@@ -25,11 +25,11 @@ export const Navbar = () => {
         className="
             flex space-x-5 items-center
         ">
-        <span>
-          <Bell color="#ffffff" />
+        <span className="size-max group p-2 rounded-full hover:bg-[#efefef] cursor-pointer">
+          <Bell color="#ffffff" className="group-hover:stroke-[#1c1917]" />
         </span>
-        <span>
-          <Settings color="#ffffff" />
+        <span className="size-max group p-2 rounded-full hover:bg-[#efefef] cursor-pointer">
+          <Settings color="#ffffff" className="group-hover:stroke-[#1c1917]" />
         </span>
         <AvatarComponent />
       </div>

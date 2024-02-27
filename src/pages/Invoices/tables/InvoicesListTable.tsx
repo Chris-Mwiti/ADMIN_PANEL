@@ -42,6 +42,7 @@ import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
 import { useNavigate } from "react-router";
 import invoiceData from "../data/invoiceData";
+import { Card, CardContent } from "@/components/ui/card";
 
 const InvoiceListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -53,8 +54,8 @@ const InvoiceListTable = () => {
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
   //   API call to a fake database
- //   const { isLoading, isError, error, data, refetch } = useGetInvoices();
-  
+  //   const { isLoading, isError, error, data, refetch } = useGetInvoices();
+
   const data = invoiceData;
   const table = useReactTable<TInvoicesSchema>({
     data: data!,
@@ -76,21 +77,21 @@ const InvoiceListTable = () => {
     },
   });
 
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
 
-//   if (isLoading) {
-//     return <TableLoading />;
-//   }
+  //   if (isLoading) {
+  //     return <TableLoading />;
+  //   }
 
-//   if (isError) {
-//     return <TableError error={error} retry={refetch} />;
-//   }
+  //   if (isError) {
+  //     return <TableError error={error} retry={refetch} />;
+  //   }
 
   if (data) {
     return (
-      <div className="w-full p-2 container">
+      <div className="w-full p-3">
         <div className="w-full flex justify-between">
-          <p className="text-3xl text-slate-100 font-medium">Invoices List</p>
+          <p className="text-2xl text-slate-100 font-medium">Invoices List</p>
           <Button
             className="bg-slate-300"
             onClick={() => navigate("/invoices/create")}>
@@ -157,53 +158,57 @@ const InvoiceListTable = () => {
 
         {/* Table Section */}
         <div className="rounded-md border">
-          <Table>
-            {/* Table Header */}
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+          <Card>
+            <CardContent>
+              <Table>
+                {/* Table Header */}
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
                   ))}
-                </TableRow>
-              ))}
-            </TableHeader>
+                </TableHeader>
 
-            {/* Table Body */}
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                {/* Table Body */}
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={invoicesColumns.length}
+                        className="h-24 text-center">
+                        No results found
                       </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={invoicesColumns.length}
-                    className="h-24 text-center">
-                    No results found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
           {/* Action Btns */}
           <div className="flex items-center justify-end space-x-2 py-4 px-2">

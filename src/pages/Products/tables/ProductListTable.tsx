@@ -33,6 +33,7 @@ import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
 import productData from "@/pages/Products/data/productData";
 import { useNavigate } from "react-router";
+import { Card, CardContent } from "@/components/ui/card";
 
 const ProductListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -75,9 +76,9 @@ const ProductListTable = () => {
 
   if (data) {
     return (
-      <div className="w-full container space-y-3">
+      <div className="w-full p-3 space-y-3">
         <div className="w-full flex justify-between">
-          <p className="text-3xl text-slate-100 font-medium">Invoices List</p>
+          <p className="text-2xl text-slate-100 font-medium">Products List</p>
           <Button
             className="bg-slate-300"
             onClick={() => navigate("/products/create")}>
@@ -124,53 +125,57 @@ const ProductListTable = () => {
 
         {/* Table Section */}
         <div className="rounded-md border">
-          <Table>
-            {/* Table Header */}
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+          <Card>
+            <CardContent>
+              <Table>
+                {/* Table Header */}
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
                   ))}
-                </TableRow>
-              ))}
-            </TableHeader>
+                </TableHeader>
 
-            {/* Table Body */}
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                {/* Table Body */}
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={tableColums.length}
+                        className="h-24 text-center">
+                        No results found
                       </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={tableColums.length}
-                    className="h-24 text-center">
-                    No results found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
           {/* Action Btns */}
           <div className="flex items-center justify-end space-x-2 py-4 px-2">

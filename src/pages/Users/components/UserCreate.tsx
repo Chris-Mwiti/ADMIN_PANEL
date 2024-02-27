@@ -15,11 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Camera } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import useCreateUser from "../services/createUser";
 import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 import userData from "../data/userData";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const UserCreate = () => {
   const form = useForm<TUser>({
@@ -38,11 +37,19 @@ const UserCreate = () => {
     },
   });
 
+  const [isDisabled, setIsDisabled] = useState(true);
     //   const {isPending, reset ,mutate} = useCreateUser();
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
+
     values.avatar = "/avatar.jpg";
+
+    // @TODO: Research more on how to check whether all values are present using zod
+    if(values.name && values.email){
+      setIsDisabled(false);
+    }
+
     userData.push(values);
     toast({
       title: "User created successfully",
@@ -249,7 +256,7 @@ const UserCreate = () => {
               />
             </CardContent>
           </Card>
-          <Button className="bg-slate-300 justify-self-end" type="submit">
+          <Button className=" justify-self-end" type="submit" disabled={isDisabled}>
             Submit
           </Button>
         </form>

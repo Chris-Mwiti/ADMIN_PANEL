@@ -6,7 +6,7 @@ export const Main = () => {
     <main
       className="
           flex flex-1  flex-col dark:bg-background 
-          border relative max-h-screen overflow-hidden
+          relative max-h-screen overflow-hidden
         ">
       <Navbar />
       <div

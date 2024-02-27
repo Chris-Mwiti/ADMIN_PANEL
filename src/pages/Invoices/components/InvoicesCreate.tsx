@@ -116,7 +116,7 @@ const InvoicesCreate = () => {
     });
 
     setTimeout(() => navigate("/invoices"), 2000);
-    
+
     // mutate(values, {
     //   onSuccess(data, variables, context) {
     //     toast({

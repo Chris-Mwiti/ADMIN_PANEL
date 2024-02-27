@@ -38,10 +38,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import TableLoading from "@/components/ui_fallbacks/TableLoading";
-import TableError from "@/components/ui_fallbacks/TableError";
 import { useNavigate } from "react-router";
 import userData from "../data/userData";
+import { Card, CardContent } from "@/components/ui/card";
 
 const UserListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -52,11 +51,11 @@ const UserListTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
-  const navigate = useNavigate()
-    //   API call to a fake database
-    //   const { isLoading, isError, error, data, refetch } = useGetUsers();
-    const data = userData;
-    const table = useReactTable<TUser>({
+  const navigate = useNavigate();
+  //   API call to a fake database
+  //   const { isLoading, isError, error, data, refetch } = useGetUsers();
+  const data = userData;
+  const table = useReactTable<TUser>({
     data: data!,
     columns: usersColumns,
     onSortingChange: setSorting,
@@ -76,20 +75,22 @@ const UserListTable = () => {
     },
   });
 
-//   if (isLoading) {
-//     return <TableLoading />;
-//   }
+  //   if (isLoading) {
+  //     return <TableLoading />;
+  //   }
 
-//   if (isError) {
-//     return <TableError error={error} retry={refetch} />;
-//   }
+  //   if (isError) {
+  //     return <TableError error={error} retry={refetch} />;
+  //   }
 
   if (data) {
     return (
-      <div className="w-full p-2">
+      <div className="w-full p-3">
         <div className="w-full flex justify-between">
-          <p className="text-3xl text-slate-100 font-medium">Users List</p>
-          <Button className="bg-slate-300" onClick={() => navigate("/users/create")}>
+          <p className="text-2xl text-slate-100 font-medium">Users List</p>
+          <Button
+            className="bg-slate-300"
+            onClick={() => navigate("/users/create")}>
             <UserPlus className="mr-3" />
             New User
           </Button>
@@ -163,53 +164,57 @@ const UserListTable = () => {
 
         {/* Table Section */}
         <div className="rounded-md border">
-          <Table>
-            {/* Table Header */}
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+          <Card>
+            <CardContent>
+              <Table>
+                {/* Table Header */}
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
                   ))}
-                </TableRow>
-              ))}
-            </TableHeader>
+                </TableHeader>
 
-            {/* Table Body */}
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                {/* Table Body */}
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={usersColumns.length}
+                        className="h-24 text-center">
+                        No results found
                       </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={usersColumns.length}
-                    className="h-24 text-center">
-                    No results found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
           {/* Action Btns */}
           <div className="flex items-center justify-end space-x-2 py-4 px-2">

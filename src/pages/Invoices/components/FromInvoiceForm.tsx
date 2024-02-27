@@ -2,7 +2,12 @@ import { UseFormReturn } from "react-hook-form";
 import TInvoicesSchema from "../schemas/invoices.schema";
 import { TUserDetails, TUserInfo } from "./InvoicesCreate";
 import UsersModal from "./UsersModal";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
 interface IToFormProps {
@@ -17,7 +22,7 @@ const FromInvoiceForm = ({
   senderUserInfo,
 }: IToFormProps) => {
   return (
-    <div className="w-full p-2 space-y-2">
+    <div className="w-full p-2 space-y-5">
       <span className="flex justify-between w-full items-center">
         <p className="text-muted-foreground font-medium">From:</p>
         <UsersModal setCurrentUser={setSenderUserInfo} />

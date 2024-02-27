@@ -15,7 +15,7 @@ const AvatarComponent = () => {
           </AvatarFallback>
         </PopoverTrigger>
         <PopoverContent
-          className="bg-gray-900 p-4 rounded-md z-600"
+          className="bg-[#1c1917] p-4 rounded-md z-600"
           align="end"
           alignOffset={20}>
           <div className="w-full space-y-3 flex flex-col">

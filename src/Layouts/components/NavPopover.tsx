@@ -1,11 +1,15 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 interface INavPopOver {
-    subUrlLinks?:string[];
-    urlPath:string;
+  subUrlLinks?: string[];
+  urlPath: string;
 }
-const NavPopover = (props:INavPopOver) => {
+const NavPopover = (props: INavPopOver) => {
   return (
     <div
       className={`
@@ -18,13 +22,13 @@ const NavPopover = (props:INavPopOver) => {
         <PopoverTrigger>
           <ChevronRight color="#efefef" size={"25px"} />
         </PopoverTrigger>
-        <PopoverContent className="bg-blueRibbon-950 w-32 border">
+        <PopoverContent className="bg-[#1c1917] w-32 border">
           <div className="flex flex-col space-y-2">
             {props.subUrlLinks?.map((url) => (
               <Link
                 to={`${props.urlPath}/${url.replace("/", "")}`}
                 key={`${props.urlPath}/${url}`}>
-                <p className="text-white w-full divide-y hover:bg-blueRibbon-200 p-3 rounded-md">
+                <p className="text-white w-full divide-y hover:bg-[#efefef]/20 p-3 rounded-md">
                   {url.replace("/", "")}
                 </p>
               </Link>
@@ -34,6 +38,6 @@ const NavPopover = (props:INavPopOver) => {
       </Popover>
     </div>
   );
-}
+};
 
-export default NavPopover
+export default NavPopover;
