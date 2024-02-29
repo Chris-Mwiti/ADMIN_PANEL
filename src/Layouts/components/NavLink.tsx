@@ -11,10 +11,9 @@ interface INavLink {
 }
 
 const NavLinkItem = (props: INavLink) => {
-
   const [isActive, setIsActive] = useState(false);
 
-  function changeActiveStatus (isActive:boolean){
+  function changeActiveStatus(isActive: boolean) {
     setIsActive(isActive);
     return "";
   }
@@ -22,10 +21,9 @@ const NavLinkItem = (props: INavLink) => {
     <li
       className={`
             w-full group/nav_link flex items-center px-3 py-2  rounded-md hover:bg-[#efefef]/20
-            cursor-pointer relative ${isActive ? "bg-primary" : ""}
+            cursor-pointer relative ${isActive ? "bg-primary/80" : ""}
             space-x-3
-        `}
-    >
+        `}>
       <props.icon color="#efefef" size="25px" />
       <NavLink
         to={props.urlPath}

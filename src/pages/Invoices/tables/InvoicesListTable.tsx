@@ -43,6 +43,7 @@ import TableError from "@/components/ui_fallbacks/TableError";
 import { useNavigate } from "react-router";
 import invoiceData from "../data/invoiceData";
 import { Card, CardContent } from "@/components/ui/card";
+import InvoicesOverview from "../components/InvoicesOverview";
 
 const InvoiceListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -89,7 +90,7 @@ const InvoiceListTable = () => {
 
   if (data) {
     return (
-      <div className="w-full p-3">
+      <div className="w-full p-3 space-y-4">
         <div className="w-full flex justify-between">
           <p className="text-2xl text-slate-100 font-medium">Invoices List</p>
           <Button
@@ -98,6 +99,9 @@ const InvoiceListTable = () => {
             <Plus className="mr-3" />
             New Invoice
           </Button>
+        </div>
+        <div className="w-full flex justify-center items-center p-3">
+          <InvoicesOverview />
         </div>
         {/* @TODO:Extract filter section to be a component */}
         <div className="flex flex-col space-y-3 space-x-3 items-center py-4 sm:flex-row">
