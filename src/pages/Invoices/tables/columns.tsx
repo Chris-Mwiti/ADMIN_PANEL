@@ -19,7 +19,9 @@ const invoicesColumns: ColumnDef<TInvoicesSchema>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllRowsSelected() || (table.getIsSomePageRowsSelected() as boolean || "indeterminate")
+          table.getIsAllRowsSelected() ||
+          (table.getIsSomePageRowsSelected() as boolean) ||
+          "indeterminate"
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -61,7 +63,6 @@ const invoicesColumns: ColumnDef<TInvoicesSchema>[] = [
     header: "Customer",
     accessorFn: (row) => `${row.invoiceInfo.to.name}`,
     cell: ({ row }) => {
-      console.log(row.original);
       return (
         <div className="flex space-x-3">
           <span className="size-14 rounded-full">

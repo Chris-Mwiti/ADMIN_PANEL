@@ -69,7 +69,7 @@ const invoiceData: TInvoicesSchema[] = [
         phone: "0712345678",
       },
       to: {
-        name: "Derrick Shimenga",
+        name: "Sandra Namu",
         address: "Kakamega",
         email: "derrick@gmail.com",
         phone: "0712345679",
@@ -88,6 +88,96 @@ const invoiceData: TInvoicesSchema[] = [
     createdAt: new Date("2024-02-26T04:33:58.971Z"),
     dueDate: new Date("2024-03-14T21:00:00.000Z"),
   },
+
+  {
+    id: "3ca3",
+    invoiceInfo: {
+      from: {
+        name: "Chris Mwiti",
+        address: "Nairobi",
+        email: "mwitichris@gmail.com",
+        phone: "0712345678",
+      },
+      to: {
+        name: "Vingoka Company",
+        address: "Kakamega",
+        email: "derrick@gmail.com",
+        phone: "0712345679",
+      },
+    },
+    invoiceDetails: [
+      {
+        title: "Fruit Purchasing",
+        description: "Purchasing of fruits",
+        quantity: "20",
+        price: "300",
+        total: "200",
+      },
+    ],
+    status: "paid",
+    createdAt: new Date("2024-02-26T04:33:58.971Z"),
+    dueDate: new Date("2024-03-14T21:00:00.000Z"),
+  },
+
+  {
+    id: "3ca5",
+    invoiceInfo: {
+      from: {
+        name: "Chris Mwiti",
+        address: "Nairobi",
+        email: "mwitichris@gmail.com",
+        phone: "0712345678",
+      },
+      to: {
+        name: "Simon Wanjohi",
+        address: "Kakamega",
+        email: "derrick@gmail.com",
+        phone: "0712345679",
+      },
+    },
+    invoiceDetails: [
+      {
+        title: "Fruit Purchasing",
+        description: "Purchasing of fruits",
+        quantity: "20",
+        price: "300",
+        total: "200",
+      },
+    ],
+    status: "draft",
+    createdAt: new Date("2024-02-26T04:33:58.971Z"),
+    dueDate: new Date("2024-03-14T21:00:00.000Z"),
+  },
+
+  {
+    id: "3cad",
+    invoiceInfo: {
+      from: {
+        name: "Chris Mwiti",
+        address: "Nairobi",
+        email: "mwitichris@gmail.com",
+        phone: "0712345678",
+      },
+      to: {
+        name: "Charles Mwangi",
+        address: "Kakamega",
+        email: "derrick@gmail.com",
+        phone: "0712345679",
+      },
+    },
+    invoiceDetails: [
+      {
+        title: "Fruit Purchasing",
+        description: "Purchasing of fruits",
+        quantity: "20",
+        price: "500",
+        total: "200",
+      },
+    ],
+    status: "overdue",
+    createdAt: new Date("2024-02-26T04:33:58.971Z"),
+    dueDate: new Date("2024-03-14T21:00:00.000Z"),
+  },
 ];
 
-export default invoiceData
+export default invoiceData;

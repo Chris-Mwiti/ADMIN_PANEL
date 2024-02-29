@@ -44,6 +44,7 @@ import { useNavigate } from "react-router";
 import invoiceData from "../data/invoiceData";
 import { Card, CardContent } from "@/components/ui/card";
 import InvoicesOverview from "../components/InvoicesOverview";
+import evaluateInvoices from "../util/evaluateInvoices";
 
 const InvoiceListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -53,7 +54,7 @@ const InvoiceListTable = () => {
   );
   const [rowSelection, setRowSelection] = useState({});
   const [expanded, setExpanded] = useState<ExpandedState>({});
-
+  
   //   API call to a fake database
   //   const { isLoading, isError, error, data, refetch } = useGetInvoices();
 
@@ -101,7 +102,7 @@ const InvoiceListTable = () => {
           </Button>
         </div>
         <div className="w-full flex justify-center items-center p-3">
-          <InvoicesOverview />
+          <InvoicesOverview invoiceData={invoiceData} />
         </div>
         {/* @TODO:Extract filter section to be a component */}
         <div className="flex flex-col space-y-3 space-x-3 items-center py-4 sm:flex-row">
