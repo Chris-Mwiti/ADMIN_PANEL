@@ -20,7 +20,7 @@ const OrdersEdit = () => {
   const { orderId } = useParams();
   if (!orderId)
     return (
-      <div className="w-full items-center justify-center text-slate-100">
+      <div className="w-full flex items-center justify-center text-slate-100">
         No Order Id Provided
       </div>
     );
@@ -31,6 +31,7 @@ const OrdersEdit = () => {
 
   // Tag Object Propeties
   const bgClass: { [key: string]: string } = {
+    canceled: "bg-red-400/30 text-red-200",
     refunded: "bg-gray-400/30 text-gray-200",
     completed: "bg-green-300/30 text-green-500",
     pending: "bg-orange-300/30 text-orange-500",
@@ -71,6 +72,7 @@ const OrdersEdit = () => {
               <SelectValue placeholder="Change Status">{status}</SelectValue>
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="canceled">Canceled</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
               <SelectItem value="refunded">Refunded</SelectItem>

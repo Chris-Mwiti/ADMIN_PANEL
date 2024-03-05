@@ -44,7 +44,6 @@ import { useNavigate } from "react-router";
 import invoiceData from "../data/invoiceData";
 import { Card, CardContent } from "@/components/ui/card";
 import InvoicesOverview from "../components/InvoicesOverview";
-import evaluateInvoices from "../util/evaluateInvoices";
 
 const InvoiceListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);

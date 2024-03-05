@@ -21,7 +21,7 @@ const NavLinkItem = (props: INavLink) => {
     <li
       className={`
             w-full group/nav_link flex items-center px-3 py-2  rounded-md hover:bg-[#efefef]/20
-            cursor-pointer relative ${isActive ? "bg-primary/80" : ""}
+            cursor-pointer relative ${isActive ? "bg-primary/40" : ""}
             space-x-3
         `}>
       <props.icon color="#efefef" size="25px" />
