@@ -2,6 +2,7 @@ import {
   Boxes,
   Home,
   HomeIcon,
+  LogIn,
   ReceiptText,
   ShoppingCart,
   Users,
@@ -46,6 +47,7 @@ const DesktopNavLinks = (props: IDesktopNavLinksProps) => {
           title="Invoices"
           subUrlLinks={["create"]}
         />
+        <NavLinkItem urlPath="/register" icon={LogIn} title="Login" />
       </ul>
     </nav>
   );

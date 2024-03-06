@@ -8,6 +8,7 @@ import OrdersListTable from "@/pages/Orders/components/tables/OrderListTable";
 import Products from "@/pages/Products";
 import CreateProduct from "@/pages/Products/components/CreateProduct";
 import ProductListTable from "@/pages/Products/tables/ProductListTable";
+import RegisterForm from "@/pages/Register/pages/Register";
 import UserCreate from "@/pages/Users/components/UserCreate";
 import UserEdit from "@/pages/Users/components/UserEdit";
 import UserListTable from "@/pages/Users/tables/UserList";
@@ -16,6 +17,7 @@ import { Route, Routes } from "react-router";
 const MainRoutes = () => {
   return (
     <Routes>
+      <Route path="/register" index element={<RegisterForm />} />
       <Route path="/" element={<MainLayout />}>
         <Route index element={<App />} />
         <Route path="users">
