@@ -52,7 +52,7 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   // const { mutate } = useCreateUser();
   // const {mutate: submitLogin} = useLoginUser();
-  
+
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
     if (
@@ -89,7 +89,7 @@ const RegisterForm = () => {
         MADRIGAL PANEL
       </p>
       <Tabs defaultValue="login" className=" w-full md:w-[800px] space-y-4">
-        <div className="bg-primary/10 w-full h-10 rounded-md flex justify-center items-center space-x-3">
+        <div className="bg-primary/10 w-full h-10 rounded-md flex justify-center items-center space-x-3 shadow-xl">
           <Info className="stroke-primary size-5" />
           <span className="text-foreground">
             {" "}
