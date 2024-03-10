@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { UploadCloudIcon } from "lucide-react";
 import { useActions, useThumbnails } from "@/contexts/component.store";
 import Thumbnails from "./Thumbnails";
+import useGetCategories from "../services/getCategories";
 
 export type TProductDetails = {
   form: UseFormReturn<TProductFormSchema>;
@@ -23,6 +24,7 @@ export type TProductDetails = {
 };
 
 const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
+  
   const storedThumbnails = useThumbnails();
   const { updateThumbnails, removeAllThumbnails } = useActions();
 
@@ -38,13 +40,11 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
       setUploadComplete(false);
       for (const file of files) {
         const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onloadend = () => {
           thumbnailImages.push(reader.result);
-          console.log(thumbnailImages);
           setThumbnails(thumbnailImages as string[]);
         };
-
-        reader.readAsDataURL(file);
       }
     }
   };

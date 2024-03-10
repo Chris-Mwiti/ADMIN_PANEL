@@ -23,7 +23,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Eye, EyeOff, Info } from "lucide-react";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import useCreateUser from "../services/createUser";
 import useLoginUser from "../services/loginUser";
 import { useToast } from "@/components/ui/use-toast";
@@ -49,38 +48,17 @@ const RegisterForm = () => {
   });
 
   //Form submission hooks
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  // const { mutate } = useCreateUser();
-  // const {mutate: submitLogin} = useLoginUser();
+  const { mutate:submitRegister } = useCreateUser();
+  const {mutate: submitLogin} = useLoginUser();
 
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
-    if (
-      values.email !== "jeremiah@dreamvile.com" ||
-      values.password !== "jeremiah"
-    ) {
-      toast({
-        className: "bg-destructive",
-        title: "Invalid login",
-        description: "Wrong credentials",
-      });
-    } else {
-      toast({
-        className: "bg-primary/90",
-        title: "Login success",
-        description: "Welcome back jeremiah cole",
-      });
-
-      setTimeout(() => navigate("/"), 2000);
-    }
-    // submitLogin(values);
+    submitLogin(values);
   };
 
   const registerSubmit = (values: TRegisterSchema) => {
-    console.log(values);
     values.role = "admin";
-    // mutate(values);
+    submitRegister(values);
   };
 
   const [toogleVisisbility, setVisibility] = useState(false);

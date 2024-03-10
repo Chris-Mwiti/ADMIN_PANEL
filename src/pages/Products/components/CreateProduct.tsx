@@ -27,10 +27,11 @@ const CreateProduct = () => {
   const thumbnails = useThumbnails();
   const { toast } = useToast();
   const navigate = useNavigate();
-  // const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
+  const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
+      //lowLevelAlert
       productName: "",
       productCategory: "",
       productDescription: "",
@@ -41,45 +42,38 @@ const CreateProduct = () => {
       productQuantity: "1",
       productTag: "",
       sellingPrice: "",
+      buyingPrice: "",
+      isPerishable: false,
       stockStatus: "in stock",
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
     console.log(thumbnails);
-    values.productImages = [
-      "/carousel2.jfif",
-      "/carousel3.jfif",
-      "/carousel1.jfif",
-    ];
-
+    console.log(values);
+    values.productImages = thumbnails as string[];
     productData.push(values);
-    toast({
-      className: "bg-[#7cf988]",
-      title: "Success",
-      description: "Product creation is successful",
+    mutate(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          className: "bg-[#7cf988]",
+          title: "Success",
+          description: "Product creation is successful",
+        });
+      },
+      onError(error, variables, context) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+          action: (
+            <ToastAction altText="Retry" onClick={reset}>
+              Retry
+            </ToastAction>
+          ),
+        });
+      },
     });
-    setTimeout(() => navigate("/products"), 2000);
-    // mutate(values, {
-    //   onSuccess(data, variables, context) {
-    //     toast({
-    //       className: "bg-[#7cf988]",
-    //       title: "Success",
-    //       description: "Product creation is successful",
-    //     });
-    //   },
-    //   onError(error, variables, context) {
-    //     toast({
-    //       variant: "destructive",
-    //       title: "Error",
-    //       description: error.message,
-    //       action: (
-    //         <ToastAction altText="Retry" onClick={reset}>
-    //           Retry
-    //         </ToastAction>
-    //       ),
-    //     });
-    //   },
-    // });
+    // setTimeout(() => navigate("/products"), 2000);
   };
 
   return (

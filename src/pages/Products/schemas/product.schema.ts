@@ -58,14 +58,18 @@ const ProductFormSchema = z.object({
   published: z.boolean({
     required_error: "Publish status is required",
   }),
-  perishable: z.boolean({
+  isPerishable: z.boolean({
     required_error: "Status required"
   }),
   expireDate: z.date({
     required_error: "Expiry date required"
   }).optional(),
+  discountId: z.string().optional(),
   createdAt: z.date().default(new Date()),
-  stockStatus: z.string().optional()
+  stockStatus: z.string().optional(),
+
+  categoryName:z.string().optional(),
+  categoryDescription:z.string().optional()
 });
 
 export type TProductFormSchema = z.infer<typeof ProductFormSchema>;

@@ -29,8 +29,15 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import useGetCategories from "../services/getCategories";
+import TableLoading from "@/components/ui_fallbacks/TableLoading";
+import TableError from "@/components/ui_fallbacks/TableError";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
 
 const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
+  //Fetch available categories in the Db
+  const { data, isError, isLoading, error, refetch } = useGetCategories();
   const [activeLabel, setActiveLabel] = useState(true);
   const [isPerishable, setIsPerishable] = useState(false);
   const handlePerishableChange = (
@@ -40,6 +47,12 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
     setIsPerishable(value);
     onChange(value);
   };
+
+
+
+  if(isLoading) return <TableLoading />
+  if(isError) return <TableError error={error} retry={refetch} />
+
   return (
     <Card>
       <CardHeader>
@@ -89,30 +102,78 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="productCategory"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Accessories">Accessories</SelectItem>
-                      <SelectItem value="Clothing">Clothing</SelectItem>
-                      <SelectItem value="Food">Food</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="w-full space-y-3 flex flex-col">
+              <FormField
+                control={form.control}
+                name="productCategory"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {data.data.length >= 1 &&
+                          data.data.map((category) => (
+                            <SelectItem
+                              key={category.categoryName}
+                              value={category.id}>
+                              {category.categoryName}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Category form section */}
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="createCategory">
+                  <AccordionTrigger>
+                    <Button
+                      type="button"
+                      className="self-end"
+                      variant="outline">
+                      Create category
+                    </Button>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <FormField
+                      control={form.control}
+                      name="categoryName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Category Name</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="Category name" />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="categoryDescription"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Category Description</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="Category description" />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
 
             <FormField
               control={form.control}
@@ -139,7 +200,7 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
             />
             <FormField
               control={form.control}
-              name="perishable"
+              name="isPerishable"
               render={({ field }) => (
                 <FormItem className="flex space-x-4 items-center">
                   <FormControl>
