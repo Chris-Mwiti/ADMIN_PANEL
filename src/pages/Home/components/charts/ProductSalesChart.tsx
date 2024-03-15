@@ -49,7 +49,7 @@ const ProductSalesChart = () => {
           type="pie"
           series={data?.sales[0].series}
           options={data?.sales[0].options as ApexOptions}
-          width={"100%"}
+          width={"440px"}
           height={"370px"}
         />
       </CardContent>
