@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { queryClient } from "@/main";
 import { TProductFormSchema } from "../schemas/product.schema";
 import useAxiosInstance from "@/config/axios";

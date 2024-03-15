@@ -22,6 +22,8 @@ import useCreateProduct from "../services/createProducts";
 import { ToastAction } from "@/components/ui/toast";
 import productData from "@/pages/Products/data/productData";
 import { useNavigate } from "react-router";
+import { Loader } from "lucide-react";
+import CreateButton from "@/components/ui_fallbacks/CreateButton";
 
 const CreateProduct = () => {
   const thumbnails = useThumbnails();
@@ -110,10 +112,7 @@ const CreateProduct = () => {
                 </FormItem>
               )}
             />
-
-            <Button type="submit" className="bg-slate-100">
-              Create
-            </Button>
+            <CreateButton isPending={isPending} />  
           </form>
         </Form>
       </div>
