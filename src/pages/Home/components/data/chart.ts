@@ -138,6 +138,9 @@ const chartData = {
               width: 300,
               type: "pie",
             },
+            legend: {
+              position: "bottom"
+            },
             labels: [
               "Festive Bread",
               "Super Loaf",

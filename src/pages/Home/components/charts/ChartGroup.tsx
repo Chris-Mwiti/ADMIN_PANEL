@@ -6,7 +6,7 @@ const ChartGroup = () => {
     <div
       className="
         w-full flex flex-col space-x-6 items-center
-        sm:flex-row space-y-4
+        sm:flex-row space-y-4 h-max
     ">
       <SalesChart />
       <ProductSalesChart />

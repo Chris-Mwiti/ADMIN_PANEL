@@ -36,7 +36,7 @@ const ProductSalesChart = () => {
   // if (isError)
   //   return <ProductSalesErrorFallBack error={error} refetchFn={refetch} />;
 
-  const data = chartData.ProductSales.find(value => value.id == "1");
+  const data = chartData.ProductSales.find((value) => value.id == "1");
 
   return (
     <Card>
@@ -49,7 +49,8 @@ const ProductSalesChart = () => {
           type="pie"
           series={data?.sales[0].series}
           options={data?.sales[0].options as ApexOptions}
-          width={"440px"}
+          width={"100%"}
+          height={"370px"}
         />
       </CardContent>
     </Card>
