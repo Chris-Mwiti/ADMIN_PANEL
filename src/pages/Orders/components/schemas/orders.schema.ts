@@ -7,47 +7,58 @@ const OrderSchema = z.object({
       message: "Order id should be greater than 5 characters",
     })
     .optional(),
-  customerName: z.string({
-    required_error: "Customer name required",
-  }),
-  customerEmail: z
-    .string({
-      required_error: "Customer Email required",
-    })
-    .email(),
-  customerAvatar: z.string({
-    required_error: "Image avatar required",
-  }),
-  orderDate: z.date({
-    required_error: "Order date required",
-  }),
-  itemsCount: z.string({
-    required_error: "No of items required",
-  }),
-  totalOrderPrice: z.string({
-    required_error: "Total order price required",
-  }),
-  orderStatus: z.string({
-    required_error: "Order status required",
-  }),
-  orderItems: z
+  total: z.number(),
+  status: z.enum(["pending", "completed", "canceled", "refunded"]),
+  createdAt: z.date().default(new Date()),
+  updatedAt: z.date().optional().default(new Date()),
+  user: z
     .object({
-      productName: z.string(),
-      productImage: z.string(),
-      sellingPrice: z.string(),
-      discount: z.string().optional(),
-      shippingFee: z.string().optional(),
-      orderQty: z.string(),
-      productCategory: z.string(),
+      id: z.string(),
+      avatarUrl: z.string(),
+      firstName: z.string(),
+      lastName: z.string(),
+      phone:z.string(),
+    }),
+  payment: z
+    .object({
+      id: z.string(),
+      amount: z.number(),
+      provider: z.enum(["mpesa", "paypal"]),
+      status: z.enum(["completed", "canceled", "pending"]),
+      createdAt: z.date().default(new Date()),
+      updatedAt: z.date().default(new Date()),
     })
     .array(),
-  orderInfo: z.object({
-    shipBy: z.string(),
-    trackingNo: z.string(),
-    address: z.string(),
-    recipientPhone: z.string(),
-    paymentType: z.string(),
-  }),
+  items: z
+    .object({
+      id: z.string(),
+      price: z.number(),
+      quantity: z.number(),
+      product: z.object({
+        productName: z.string(),
+        sellingPrice: z.number(),
+        assetIds: z
+          .object({
+            id: z.string(),
+            images: z.object({
+              id: z.string(),
+              imageUrl: z.string(),
+            }),
+          })
+          .array(),
+      }),
+    })
+    .array(),
+  shippingInfo: z.object({
+    id: z.string(),
+    county: z.string(),
+    street: z.string(),
+    town: z.string(),
+    locationDesc: z.string(),
+    status: z.enum(["pending", "completed", "canceled"]),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+  }).array(),
 });
 
 export type TOrdersZSchema = z.infer<typeof OrderSchema>

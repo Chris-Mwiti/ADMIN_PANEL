@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { UploadCloudIcon } from "lucide-react";
 import { useActions, useThumbnails } from "@/contexts/component.store";
 import Thumbnails from "./Thumbnails";
-import useGetCategories from "../services/getCategories";
 
 export type TProductDetails = {
   form: UseFormReturn<TProductFormSchema>;
@@ -128,6 +127,7 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
                     <Button
                       variant={"outline"}
                       onClick={removeAllThumbnails}
+                      type="button"
                       disabled={thumbnails.length > 0 ? false : true}>
                       Remove All
                     </Button>

@@ -122,6 +122,7 @@ const ProductPriceForm = ({ form, onSubmit }: TProductDetails) => {
                       disabled={isInputActive}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

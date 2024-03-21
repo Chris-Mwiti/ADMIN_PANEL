@@ -39,8 +39,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNavigate } from "react-router";
-import userData from "../data/userData";
 import { Card, CardContent } from "@/components/ui/card";
+import TableLoading from "@/components/ui_fallbacks/TableLoading";
+import TableError from "@/components/ui_fallbacks/TableError";
 
 const UserListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -53,8 +54,8 @@ const UserListTable = () => {
 
   const navigate = useNavigate();
   //   API call to a fake database
-  //   const { isLoading, isError, error, data, refetch } = useGetUsers();
-  const data = userData;
+  const { isLoading, isError, error, data, refetch } = useGetUsers();
+  console.log(data);
   const table = useReactTable<TUser>({
     data: data!,
     columns: usersColumns,
@@ -75,13 +76,13 @@ const UserListTable = () => {
     },
   });
 
-  //   if (isLoading) {
-  //     return <TableLoading />;
-  //   }
+    if (isLoading) {
+      return <TableLoading />;
+    }
 
-  //   if (isError) {
-  //     return <TableError error={error} retry={refetch} />;
-  //   }
+    if (isError) {
+      return <TableError error={error} retry={refetch} />;
+    }
 
   if (data) {
     return (

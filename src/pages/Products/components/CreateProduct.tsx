@@ -35,13 +35,17 @@ const CreateProduct = () => {
     defaultValues: {
       //lowLevelAlert
       productName: "",
-      productCategory: "",
+      category:{
+        id: ""
+      },
       productDescription: "",
       productCode: "",
       productLabel: "",
       productImages: [],
       productSku: "",
-      productQuantity: "1",
+      inventory:{
+        quantity: "1"
+      },
       productTag: "",
       sellingPrice: "",
       buyingPrice: "",

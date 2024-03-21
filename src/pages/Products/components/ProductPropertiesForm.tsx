@@ -91,13 +91,14 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
             />
             <FormField
               control={form.control}
-              name="productQuantity"
+              name="inventory.quantity"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Quantity</FormLabel>
                   <FormControl>
                     <Input placeholder="Product Qty" type="number" {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -105,7 +106,7 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
             <div className="w-full space-y-3 flex flex-col">
               <FormField
                 control={form.control}
-                name="productCategory"
+                name="category.id"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
@@ -154,6 +155,7 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                           <FormControl>
                             <Input {...field} placeholder="Category name" />
                           </FormControl>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -167,6 +169,7 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                           <FormControl>
                             <Input {...field} placeholder="Category description" />
                           </FormControl>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />

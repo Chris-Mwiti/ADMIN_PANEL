@@ -27,15 +27,12 @@ const ProductFormSchema = z.object({
     .max(10, { message: "The product code is too long" })
     .optional(),
   productSku: z.string().length(6, { message: "SKU should be 6 digits" }),
-  productQuantity: z
-    .string({
-      invalid_type_error: "An interger must be provided",
-      required_error: "Product quantity must be provided",
-    })
-    .min(1, { message: "Value must be greater than 1" }),
-  productCategory: z.string({
-    invalid_type_error: "String value required",
-    required_error: "Please select a product category or create a new one",
+  inventory: z.object({
+    quantity:z.string()
+  }),
+  category:z.object({
+    id:z.string().optional(),
+    categoryName:z.string().optional()
   }),
   productTag: z
     .string({
@@ -50,6 +47,15 @@ const ProductFormSchema = z.object({
   sellingPrice: z.string({
     required_error: "Selling price required",
   }),
+  assetIds:z.object({
+    id:z.string(),
+    createdAt:z.date(),
+    updatedAt:z.date(),
+    images: z.object({
+      id:z.string(),
+      imageUrl:z.string()
+    })
+  }).array().optional(),
   tax: z
     .number({
       required_error: "Product tax is required",
@@ -65,7 +71,7 @@ const ProductFormSchema = z.object({
     required_error: "Expiry date required"
   }).optional(),
   discountId: z.string().optional(),
-  createdAt: z.date().default(new Date()),
+  createdAt: z.date().default(new Date()).optional(),
   stockStatus: z.string().optional(),
 
   categoryName:z.string().optional(),

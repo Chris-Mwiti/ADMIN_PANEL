@@ -11,16 +11,20 @@ const productData: TProductFormSchema[] = [
       "/carousel3.jfif",
       "/carousel4.jfif",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
     stockStatus: "in stock",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: true,
+    isPerishable: true,
   },
   {
     id: "2",
@@ -32,16 +36,20 @@ const productData: TProductFormSchema[] = [
       "/carousel3.jfif",
       "/carousel4.jfif",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
     stockStatus: "in stock",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: false,
+    isPerishable: false,
   },
   {
     id: "3",
@@ -53,16 +61,20 @@ const productData: TProductFormSchema[] = [
       "/carousel3.jfif",
       "/carousel4.jfif",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
     stockStatus: "in stock",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: false,
+    isPerishable: false,
   },
   {
     id: "4",
@@ -74,16 +86,20 @@ const productData: TProductFormSchema[] = [
       "/carousel3.jfif",
       "/carousel4.jfif",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food"
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
     stockStatus: "in stock",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40"
+    },
     createdAt: new Date(),
-    perishable: true,
+    isPerishable: true,
   },
 ];
 

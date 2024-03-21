@@ -48,8 +48,8 @@ const RegisterForm = () => {
   });
 
   //Form submission hooks
-  const { mutate:submitRegister } = useCreateUser();
-  const {mutate: submitLogin} = useLoginUser();
+  const { mutate: submitRegister, error: registerError } = useCreateUser();
+  const { mutate: submitLogin, error: loginError } = useLoginUser();
 
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
@@ -68,18 +68,19 @@ const RegisterForm = () => {
         MADRIGAL PANEL
       </p>
       <Tabs defaultValue="login" className=" w-full md:w-[800px] space-y-4">
-        <div className="bg-primary/10 w-full h-10 rounded-md flex justify-center items-center space-x-3 shadow-xl">
-          <Info className="stroke-primary size-5" />
+        <div
+          className={` bg-destructive/30 w-full h-10 rounded-md flex justify-center items-center space-x-3 shadow-xl ${
+            loginError || registerError ? "visible" : "invisible"
+          }`}>
+          <Info className="stroke-destructive size-5" />
           <span className="text-foreground">
             {" "}
-            Please use the default values to login
+            {registerError?.message || loginError?.message}
           </span>
         </div>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="register" disabled>
-            Register
-          </TabsTrigger>
+          <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
         <TabsContent value="login">
           <Card>
