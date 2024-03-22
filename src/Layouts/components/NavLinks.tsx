@@ -80,6 +80,11 @@ export const NavLinks = (props: INavLinksProps) => {
           title="Invoices"
           subUrlLinks={["/create"]}
         />
+        <MobileNavLinks 
+          urlPath="register"
+          icon={LogIn}
+          title="Login"
+        />
       </ul>
     </nav>
   );
