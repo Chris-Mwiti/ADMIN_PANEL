@@ -1,4 +1,4 @@
-import useGetQuery from "@/querys/FetchQueries/fetchSalesData";
+//import useGetQuery from "@/querys/FetchQueries/fetchSalesData";
 import { Products } from "../tables/columns";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosInstance from "@/config/axios";
