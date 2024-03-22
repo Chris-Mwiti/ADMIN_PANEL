@@ -33,7 +33,7 @@ const UsersModal = (props: IUserModalProp) => {
   const manipulateData = (values: TUser): TUserDetails => {
     setOpenModal(false);
     return {
-      name: `${values.name.firstName} ${values.name.lastName}`,
+      name: `${values.firstName} ${values.lastName}`,
       email: values.email,
       phone: values.phone,
       address: values.address,
@@ -67,7 +67,7 @@ const UsersModal = (props: IUserModalProp) => {
               key={value.id}
               onClick={() => props.setCurrentUser(manipulateData(value))}>
               <p className="text-slate-600 font-medium text-lg">
-                {value.name.firstName + " " + value.name.lastName}
+                {value.firstName + " " + value.lastName}
               </p>
               <p className="text-primary font-medium">{value.company}</p>
               <p className="text-muted-foreground">{value.address}</p>
@@ -76,7 +76,7 @@ const UsersModal = (props: IUserModalProp) => {
           ))}
         </div>
       </DialogContent>
-    </Dialog>
+    </Dialog> 
   );
 };
 
