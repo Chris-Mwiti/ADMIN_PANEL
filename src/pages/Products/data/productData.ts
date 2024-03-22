@@ -6,7 +6,7 @@ const productData: TProductFormSchema[] = [
   {
     id: "1",
     productName: "Bread",
-    productDescription: "Bread is on sale",
+  productDescription: "Bread is on sale",
     productImages: [
       "/packedBread1.jfif",
       "/packedBread2.jfif",
