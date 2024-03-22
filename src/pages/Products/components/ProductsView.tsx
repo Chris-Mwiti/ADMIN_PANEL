@@ -28,7 +28,7 @@ const ProductsView = () => {
   const data = findProduct(productId);
 
   const [qrCodeSrc, setQrCodeSrc] = useState(
-    "https://admin-panel-madrigal.vercel.app/products/" + productId
+    "https://admin-panel-madrigal.vercel.app/products/view/" + productId
   );
   const [productQty, setProductQty] = useState(1);
   const [total, setTotal] = useState(productQty * parseInt(data?.sellingPrice));
