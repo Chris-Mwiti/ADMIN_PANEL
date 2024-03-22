@@ -5,35 +5,21 @@ const dummyNotifications: TNotifications[] = [
     title: "STOCK LEVEL CRITICAL",
     message: "Stock level for PRODUCT-123EF is critical",
     status: "urgent",
-    imageUrl: "/public/RedGrapeJuice.jfif",
+    imageUrl: "/packedBread1.jfif",
     type: "products",
   },
   {
     title: "NEW USER REGISTERED",
     message: "A new user has been created",
     status: "minor",
-    imageUrl: "/public/avatar.jpg",
+    imageUrl: "/packedBread2.jfif",
     type: "users",
   },
   {
     title: "NEW USER REGISTERED",
     message: "A new user has been created",
     status: "minor",
-    imageUrl: "/public/avatar.jpg",
-    type: "users",
-  },
-  {
-    title: "NEW USER REGISTERED",
-    message: "A new user has been created",
-    status: "minor",
-    imageUrl: "/public/avatar.jpg",
-    type: "users",
-  },
-  {
-    title: "NEW USER REGISTERED",
-    message: "A new user has been created",
-    status: "minor",
-    imageUrl: "/public/avatar.jpg",
+    imageUrl: "/avatar.jpg",
     type: "users",
   },
   {
@@ -41,13 +27,6 @@ const dummyNotifications: TNotifications[] = [
     message: "A new order has been placed",
     status: "important",
     type: "orders",
-  },
-  {
-    title: "STOCK LEVEL CRITICAL",
-    message: "Stock level for PRODUCT-123EF is critical",
-    status: "urgent",
-    imageUrl: "/public/RedGrapeJuice.jfif",
-    type: "products",
   },
 ];
 

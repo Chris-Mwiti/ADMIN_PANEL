@@ -1,5 +1,7 @@
 import { InfoCardsLayout } from "./Home/components/cards/InfoCardsLayout";
 import ChartGroup from "./Home/components/charts/ChartGroup";
+import ProductSalesChart from "./Home/components/charts/ProductSalesChart";
+import SalesChart from "./Home/components/charts/SalesChart";
 import OrdersListTable from "./Orders/components/tables/OrderListTable";
 import PreviewsOrdersTable from "./Orders/components/tables/preview.table";
 import UserListTable from "./Users/tables/UserList";
@@ -20,9 +22,9 @@ export default function Home() {
       ">
         <InfoCardsLayout />
         {/* <ChartGroup /> */}
-        <div className="grid grid-cols-2 gap-3 h-max">
-          <PreviewTable />
-          <PreviewsOrdersTable />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 h-max">
+          <ProductSalesChart />
+          <SalesChart />
         </div>
       </div>
     </section>

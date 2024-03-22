@@ -5,16 +5,16 @@ const chartData = {
       WeeklySales: {
         series: [
           {
-            name: "Week 1 Sales",
-            data: [300, 200, 400, 120, 250, 120, 125],
+            name: "Broadways",
+            data: [300, 200, 400, 120, 250, 120, 125].reverse(),
           },
           {
-            name: "Week 2 Sales",
-            data: [210, 125, 160, 240, 300, 125, 100],
+            name: "Superloaf",
+            data: [210, 125, 160, 240, 300, 125, 100].reverse(),
           },
           {
-            name: "Week 3 Sales",
-            data: [500, 140, 210, 145, 325, 135, 178],
+            name: "Festive bread",
+            data: [500, 140, 210, 145, 325, 135, 178].reverse(),
           },
         ],
         options: {
@@ -58,7 +58,7 @@ const chartData = {
             size: 0,
           },
           xaxis: {
-            categories: ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
+            categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
             title: {
               text: "Days Of Week",
               style: {
@@ -132,21 +132,19 @@ const chartData = {
       sales: [
         {
           type: "pie",
-          series: [200, 500, 300, 100, 150],
+          series: [200, 500, 300],
           options: {
             chart: {
               width: 300,
               type: "pie",
             },
             legend: {
-              position: "bottom"
+              position: "bottom",
             },
             labels: [
               "Festive Bread",
               "Super Loaf",
               "Broadways",
-              "Mafuko",
-              "Candy Bread",
             ],
             responsive: [
               {
@@ -179,4 +177,4 @@ const chartData = {
   ],
 };
 
-export default chartData
+export default chartData;

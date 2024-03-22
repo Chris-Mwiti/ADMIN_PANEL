@@ -4,13 +4,30 @@ import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
 import cloudinaryConfig from "@/config/clooudinary";
 import { fill, scale } from "@cloudinary/url-gen/actions/resize";
-import { InputHTMLAttributes, useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import QRCode from "qrcode";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { Barcode, ShoppingCart } from "lucide-react";
 import { findProduct } from "../data/productData";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const BarcodeElement = lazy(() => import("react-barcode"));
+const SuspenseBarCode = () => {
+  return (
+    <div className="w-ful h-10">
+      <Skeleton className="size-full rounded-md" />
+    </div>
+  );
+};
+const FallBarCode = () => {
+  return (
+    <span className="w-96 h-6">
+      <Barcode className="w-96 h-full rounded-md stroke-white" width={100} />
+    </span>
+  );
+};
 
 const bgClass: { [key: string]: string } = {
   instock: "bg-red-400/30 text-gray-200",
@@ -95,17 +112,18 @@ const ProductsView = () => {
               Add to cart
             </Button>
 
-            <div className="flex flex-col space-y-4">
-              <p className="text-foreground font-bold text-3xl">QR CODE</p>
-
-              <span className="size-40 rounded-md">
-                <img
-                  src={qrCodeSrc}
-                  alt="QR CODE"
-                  className="size-full rounded-md"
-                  loading="lazy"
-                />
-              </span>
+            <div className="flex items-center  w-full space-x-6">
+              <div className="flex flex-col space-y-4 w-full">
+                <p className="text-foreground font-bold text-3xl">BARCODE</p>
+                <Suspense fallback={<SuspenseBarCode />}>
+                  <BarcodeElement
+                    value={`https://admin-panel-madrigal.vercel.app/products/view/${productId}`}
+                    textAlign="center"
+                    displayValue
+                    background="#34d399"
+                  />
+                </Suspense>
+              </div>
             </div>
           </div>
         </div>

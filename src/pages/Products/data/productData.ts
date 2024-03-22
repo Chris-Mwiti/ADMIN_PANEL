@@ -4,31 +4,7 @@ import { TDiscount } from "../schemas/discounts.schema";
 
 const productData: TProductFormSchema[] = [
   {
-    id: "1",
-    productName: "Bread",
-  productDescription: "Bread is on sale",
-    productImages: [
-      "/packedBread1.jfif",
-      "/packedBread2.jfif",
-      "/ProductsBreadIllustrator.jpg",
-    ],
-    category: {
-      categoryName: "Food",
-    },
-    productSku: "123456",
-    productCode: "M1234",
-    buyingPrice: "300",
-    sellingPrice: "400",
-    stockStatus: "IN STOCK",
-    published: true,
-    inventory: {
-      quantity: "40",
-    },
-    createdAt: new Date(),
-    isPerishable: true,
-  },
-  {
-    id: "2",
+    id: "PRODUCT-1234",
     productName: "Superloaf Bread",
     productDescription: "Mango juice is on sale",
     productImages: [
@@ -52,7 +28,7 @@ const productData: TProductFormSchema[] = [
     isPerishable: false,
   },
   {
-    id: "3",
+    id: "PRODUCT-WER1",
     productName: "Festive bread",
     productDescription: "Mango juice is on sale",
     productImages: [
@@ -76,7 +52,7 @@ const productData: TProductFormSchema[] = [
     isPerishable: false,
   },
   {
-    id: "4",
+    id: "PRODUCT-1124",
     productName: "Broadways",
     productDescription: "Mango juice is on sale",
     productImages: [
