@@ -68,9 +68,7 @@ export const tableColums: ColumnDef<Products>[] = [
           {/* @TODO: Replace the Thumbnail component to support cloudinary image component */}
           <span className="size-14 rounded-md">
             <img
-              src={handleImageTransformation(
-                row.original.assetIds[0].images.imageUrl
-              )}
+              src={row.original.productImages[0]}
               alt="Broadways"
               className="size-full object-contain rounded-md"
               loading="lazy"

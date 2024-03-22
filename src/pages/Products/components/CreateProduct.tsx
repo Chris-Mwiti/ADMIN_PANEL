@@ -24,27 +24,32 @@ import productData from "@/pages/Products/data/productData";
 import { useNavigate } from "react-router";
 import { Loader } from "lucide-react";
 import CreateButton from "@/components/ui_fallbacks/CreateButton";
+import { useState } from "react";
+import generateRandomString from "../generators/randomId";
+import { useProductActions } from "../data/data.store";
 
 const CreateProduct = () => {
   const thumbnails = useThumbnails();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
+  const { addProduct } = useProductActions();
+  // const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
+  const [isPending, setIsPending] = useState(false);
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
       //lowLevelAlert
       productName: "",
-      category:{
-        id: ""
+      category: {
+        id: "",
       },
       productDescription: "",
       productCode: "",
       productLabel: "",
       productImages: [],
       productSku: "",
-      inventory:{
-        quantity: "1"
+      inventory: {
+        quantity: "1",
       },
       productTag: "",
       sellingPrice: "",
@@ -54,32 +59,38 @@ const CreateProduct = () => {
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
-    console.log(thumbnails);
-    console.log(values);
+    setIsPending(true);
+    values.id = `PRODUCT-${generateRandomString()}`;
     values.productImages = thumbnails as string[];
-    productData.push(values);
-    mutate(values, {
-      onSuccess(data, variables, context) {
-        toast({
-          className: "bg-[#7cf988]",
-          title: "Success",
-          description: "Product creation is successful",
-        });
-      },
-      onError(error, variables, context) {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message,
-          action: (
-            <ToastAction altText="Retry" onClick={reset}>
-              Retry
-            </ToastAction>
-          ),
-        });
-      },
-    });
-    // setTimeout(() => navigate("/products"), 2000);
+    values.createdAt = new Date();
+    console.log(values);
+
+    // mutate(values, {
+    //   onSuccess(data, variables, context) {
+    //     toast({
+    //       className: "bg-[#7cf988]",
+    //       title: "Success",
+    //       description: "Product creation is successful",
+    //     });
+    //   },
+    //   onError(error, variables, context) {
+    //     toast({
+    //       variant: "destructive",
+    //       title: "Error",
+    //       description: error.message,
+    //       action: (
+    //         <ToastAction altText="Retry" onClick={reset}>
+    //           Retry
+    //         </ToastAction>
+    //       ),
+    //     });
+    //   },
+    // });
+    setTimeout(() => {
+      productData.push(values);
+      navigate("/products");
+      setIsPending(false);
+    }, 2000);
   };
 
   return (
@@ -116,7 +127,7 @@ const CreateProduct = () => {
                 </FormItem>
               )}
             />
-            <CreateButton isPending={isPending} />  
+            <CreateButton isPending={isPending} />
           </form>
         </Form>
       </div>

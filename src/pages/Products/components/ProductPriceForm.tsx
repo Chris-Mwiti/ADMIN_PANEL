@@ -21,13 +21,16 @@ import {
 } from "@/components/ui/select";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
+import { discountIds } from "../data/productData";
 
 const ProductPriceForm = ({ form, onSubmit }: TProductDetails) => {
   const [isInputActive, setInputActive] = useState(false);
-  const { data, error, isError, isLoading, refetch } = useGetDiscounts();
+  // const { data, error, isError, isLoading, refetch } = useGetDiscounts();
 
-  if (isLoading) return <TableLoading />;
-  if (isError) return <TableError error={error} retry={refetch} />;
+  // if (isLoading) return <TableLoading />;
+  // if (isError) return <TableError error={error} retry={refetch} />;
+
+  const data = discountIds
 
   return (
     <Card>
@@ -88,8 +91,8 @@ const ProductPriceForm = ({ form, onSubmit }: TProductDetails) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {data.data.length >= 1 &&
-                        data.data.map((discountId) => (
+                      {data.length >= 1 &&
+                        data.map((discountId) => (
                           <SelectItem key={discountId.id} value={discountId.id}>
                             {discountId.coupon}
                           </SelectItem>

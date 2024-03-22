@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
+import { findProduct } from "../data/productData";
 
 const bgClass: { [key: string]: string } = {
   instock: "bg-red-400/30 text-gray-200",
@@ -21,17 +22,19 @@ const bgClass: { [key: string]: string } = {
 const ProductsView = () => {
   const { productId } = useParams();
 
-  const { data, isLoading, isError, error, refetch } =
-    useGetProductsById(productId);
+  //   const { data, isLoading, isError, error, refetch } =
+  //     useGetProductsById(productId);
+
+  const data = findProduct(productId);
 
   const [qrCodeSrc, setQrCodeSrc] = useState(
-    "https://admin-panel-madrigal.vercel.app/products/view/" + productId
+    "https://admin-panel-madrigal.vercel.app/products/" + productId
   );
   const [productQty, setProductQty] = useState(1);
   const [total, setTotal] = useState(productQty * parseInt(data?.sellingPrice));
 
-  if (isLoading) return <TableLoading />;
-  if (isError) return <TableError error={error} retry={refetch} />;
+  //   if (isLoading) return <TableLoading />;
+  //   if (isError) return <TableError error={error} retry={refetch} />;
 
   if (data) {
     const handleImageTransformation = (publicId: string) => {
@@ -50,7 +53,7 @@ const ProductsView = () => {
         <div className="p-3 grid grid-cols-1 sm:grid-cols-2 gap-12">
           <span className="size-full rounded-md">
             <img
-              src={handleImageTransformation(data.assetIds[0].images.imageUrl)}
+              src={data.productImages[0]}
               alt="Product"
               className="size-full rounded-md"
             />

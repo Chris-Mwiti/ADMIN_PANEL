@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useGetOrderById from "./services/getOrderById";
 import { addHours, format } from "date-fns";
 import {
@@ -31,6 +31,7 @@ import {
 import cloudinaryConfig from "@/config/clooudinary";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import useUpdateOrder from "./services/updateOrderById";
+import orderData, { findOrder, replaceOrders } from "./data/orderData";
 
 // Tag Object Propeties
 const bgClass: { [key: string]: string } = {
@@ -49,16 +50,13 @@ const OrdersEdit = () => {
       </div>
     );
 
-  const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
-  const { mutate, isPending } = useUpdateOrder(orderId);
+  const data = findOrder(orderId);
+  // const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
+  // const { mutate, isPending } = useUpdateOrder(orderId);
   const [status, setStatus] = useState(data?.status);
   const [disabled, setDisabled] = useState(false);
 
   //@TODO: CREATE CUSTOM SKELETON LOADER AND ERROR TEMPLATE
-
-  if (isLoading) return <TableLoading />;
-
-  if (isError) return <TableError error={error} retry={refetch} />;
 
   if (data) {
     // Date formatting
@@ -73,11 +71,15 @@ const OrdersEdit = () => {
 
     //HandleChanges
     const isChangesAvailable = data.status !== status;
-
+    const navigate = useNavigate();
     const handleUpdateOrder = () => {
       if (isChangesAvailable) {
         setDisabled(false);
-        mutate(status as TOrdersSchema["status"]);
+        const filteredOrders = orderData.filter(
+          (order) => order.id !== orderId
+        );
+        replaceOrders([...filteredOrders, {...data, status}]);
+        setTimeout(() => navigate("/orders"), 2000);
       }
     };
 
@@ -200,7 +202,7 @@ const OrdersEdit = () => {
                       className="flex items-center space-x-3 rounded-md p-2"
                       key={index}>
                       <span className="size-16">
-                        <AdvancedImage
+                        {/* <AdvancedImage
                           cldImg={transformImage(
                             item.product.assetIds[0].images.imageUrl
                           )}
@@ -209,6 +211,11 @@ const OrdersEdit = () => {
                             responsive(),
                             placeholder({ mode: "blur" }),
                           ]}
+                        /> */}
+                        <img
+                          src={item.product.assetIds[0].images.imageUrl}
+                          alt="Product"
+                          className="size-12 rounded-md"
                         />
                       </span>
                       <span className="space-y-2">

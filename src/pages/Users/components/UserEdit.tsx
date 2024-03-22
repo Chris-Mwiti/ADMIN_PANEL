@@ -22,20 +22,16 @@ import useUpdateUser from "../services/updateUser";
 import useGetUsersById from "../services/getUserById";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
-import UserData from "../data/userData";
+import UserData, { findUser, replaceUsers } from "../data/userData";
 import CreateButton from "@/components/ui_fallbacks/CreateButton";
+import { useState } from "react";
 
 const UserEdit = () => {
   const { userId } = useParams();
 
-  const {
-    data: userData,
-    isLoading,
-    isError: isFetchErr,
-    error: fetchError,
-    refetch,
-  } = useGetUsersById(userId);
-  const { isPending, isError, error, reset, mutate } = useUpdateUser(userId!);
+  // 
+  const userData = findUser(userId);
+  const [isPending,setIsPending] = useState(false)
 
   const form = useForm<TUser>({
     resolver: zodResolver(userSchema),
@@ -54,40 +50,42 @@ const UserEdit = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
+    setIsPending(true);
     values.avatarUrl = "/avatar.jpg";
-    UserData.push(values);
+    const filteredUsers = UserData.filter(user => user.id !== userId);
+    filteredUsers.push(values);
+    replaceUsers(filteredUsers);
     toast({
       title: "User created successfully",
       className: "bg-[#7cf988]",
       description: "The user was created successfully",
     });
+    setIsPending(false)
     setTimeout(() => navigate("/users"), 2000);
-    mutate(values, {
-      onSuccess(data, variables, context) {
-        toast({
-          title: "User created successfully",
-          className: "bg-[#7cf988]",
-          description: "The user was created successfully",
-        });
-      },
-      onError(error, variables, context) {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message,
-          action: (
-            <ToastAction altText="Retry" onClick={reset}>
-              Retry
-            </ToastAction>
-          ),
-        });
-      },
-    });
+    // mutate(values, {
+    //   onSuccess(data, variables, context) {
+    //     toast({
+    //       title: "User created successfully",
+    //       className: "bg-[#7cf988]",
+    //       description: "The user was created successfully",
+    //     });
+    //   },
+    //   onError(error, variables, context) {
+    //     toast({
+    //       variant: "destructive",
+    //       title: "Error",
+    //       description: error.message,
+    //       action: (
+    //         <ToastAction altText="Retry" onClick={reset}>
+    //           Retry
+    //         </ToastAction>
+    //       ),
+    //     });
+    //   },
+    // });
   };
 
-  if (isLoading) return <TableLoading />;
-  if (isFetchErr) return <TableError error={fetchError} retry={refetch} />;
-
+  
   console.log(userData);
   if (userData) {
     return (

@@ -3,84 +3,85 @@ import TUser from "../schemas/users.schema";
 let UserData: TUser[] = [
   {
     id: "1290",
-    name: {
-      firstName: "Chris",
-      lastName: "Mwiti",
-    },
+    firstName: "Chris",
+    lastName: "Mwiti",
     email: "mwitichris@gmail.com",
     emailVerified: true,
     phone: "0712345678",
     address: "Nairobi",
     company: "Safaricom",
     role: "Data Analyst",
-    avatar: "/avatar.jpg",
+    avatarUrl: "/avatar.jpg",
     createdAt: new Date("2024-02-25T10:04:12.192Z"),
     status: "active",
   },
   {
     id: "129r",
-    name: {
-      firstName: "Chris",
-      lastName: "Mwiti",
-    },
+    firstName: "Jason",
+    lastName: "Iringu",
     email: "mwitichris@gmail.com",
     emailVerified: true,
     phone: "0712345678",
     address: "Nairobi",
     company: "Safaricom",
     role: "Data Analyst",
-    avatar: "/avatar.jpg",
+    avatarUrl: "/avatar.jpg",
     createdAt: new Date("2024-02-25T10:04:12.192Z"),
     status: "banned",
   },
   {
     id: "129i",
-    name: {
-      firstName: "Chris",
-      lastName: "Mwiti",
-    },
+    firstName: "Simon",
+    lastName: "Mutai",
     email: "mwitichris@gmail.com",
     emailVerified: true,
     phone: "0712345678",
     address: "Nairobi",
     company: "Safaricom",
     role: "Data Analyst",
-    avatar: "/avatar.jpg",
+    avatarUrl: "/avatar.jpg",
     createdAt: new Date("2024-02-25T10:04:12.192Z"),
     status: "pending",
   },
   {
     id: "fdcc",
-    name: {
-      firstName: "Chris",
-      lastName: "Mwiti",
-    },
+    firstName: "Fredrick",
+    lastName: "Robert",
     email: "mwitichris@gmail.com",
     emailVerified: true,
     phone: "0712345678",
     address: "Nairobi",
     company: "Safaricom",
     role: "Data Analyst",
-    avatar: "/avatar.jpg",
+    avatarUrl: "/avatar.jpg",
     createdAt: new Date("2024-02-25T10:05:24.364Z"),
     status: "active",
   },
   {
     id: "7f52",
-    name: {
-      firstName: "Derrick",
-      lastName: "Shimenga",
-    },
-    email: "derrick@gmail.com",
+    firstName: "Isaac",
+    lastName: "Shimenga",
+    email: "isaac@gmail.com",
     emailVerified: true,
     phone: "0712345679",
     address: "Kakamega",
     company: "Airtel",
     role: "Analyst",
-    avatar: "/avatar.jpg",
+    avatarUrl: "/avatar.jpg",
     createdAt: new Date("2024-02-25T10:06:51.206Z"),
     status: "active",
   },
 ];
 
+const findUser = (id:string) => UserData.find(user => user.id == id);
+const replaceUsers = (users:TUser[]) => UserData = users;
+const addUser = (user:TUser) => UserData.push(user);
+
 export default UserData
+
+
+export {
+  findUser,
+  replaceUsers,
+  addUser
+}

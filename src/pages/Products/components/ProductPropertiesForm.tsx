@@ -33,11 +33,13 @@ import useGetCategories from "../services/getCategories";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { categories } from "../data/productData";
 
 
 const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
   //Fetch available categories in the Db
-  const { data, isError, isLoading, error, refetch } = useGetCategories();
+  // const { data, isError, isLoading, error, refetch } = useGetCategories();
+  const data = categories;
   const [activeLabel, setActiveLabel] = useState(true);
   const [isPerishable, setIsPerishable] = useState(false);
   const handlePerishableChange = (
@@ -50,8 +52,8 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
 
 
 
-  if(isLoading) return <TableLoading />
-  if(isError) return <TableError error={error} retry={refetch} />
+  // if(isLoading) return <TableLoading />
+  // if(isError) return <TableError error={error} retry={refetch} />
 
   return (
     <Card>
@@ -119,8 +121,8 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {data.data.length >= 1 &&
-                          data.data.map((category) => (
+                        {data.length >= 1 &&
+                          data.map((category) => (
                             <SelectItem
                               key={category.categoryName}
                               value={category.id}>

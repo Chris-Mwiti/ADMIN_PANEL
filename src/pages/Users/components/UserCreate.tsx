@@ -22,6 +22,9 @@ import { useState } from "react";
 import useCreateUser from "../services/createUser";
 import { ToastAction } from "@/components/ui/toast";
 import CreateButton from "@/components/ui_fallbacks/CreateButton";
+import generateRandomString from "@/pages/Products/generators/randomId";
+import { useUserActions } from "../data/user.store";
+import UserData from "../data/userData";
 
 const UserCreate = () => {
   const form = useForm<TUser>({
@@ -38,34 +41,23 @@ const UserCreate = () => {
     },
   });
 
-  const {isPending, reset ,mutate} = useCreateUser();
+  // const {isPending, reset ,mutate} = useCreateUser();
+  const [isPending, setIsPending] = useState(false);
+  const {addUser} = useUserActions()
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
+    setIsPending(true);
+    values.id = `USER-${generateRandomString()}`
     values.avatarUrl = "/avatar.jpg";
-    
-    setTimeout(() => navigate("/users"), 2000);
-    mutate(values, {
-        onSuccess(data, variables, context) {
-            toast({
-              title: "User created successfully",
-              className: "bg-[#7cf988]",
-              description: "The user was created successfully",
-            });
-        },
-        onError(error, variables, context) {
-            toast({
-              variant: "destructive",
-              title: "Error",
-              description: error.message,
-              action: (
-                <ToastAction altText="Retry" onClick={reset}>
-                  Retry
-                </ToastAction>
-              ),
-            });
-        },
+    UserData.push(values);
+    toast({
+      title: "Successfully created the user",
+      description: "User created successfully"
     })
+    setIsPending(false);
+    setTimeout(() => navigate("/users"), 2000);
+    
   };
   return (
     <div className="w-full space-y-5 m-auto p-4">

@@ -27,6 +27,8 @@ import useCreateUser from "../services/createUser";
 import useLoginUser from "../services/loginUser";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router";
+import { useRegisterActions } from "@/contexts/data.store";
+import CreateButton from "@/components/ui_fallbacks/CreateButton";
 
 const RegisterForm = () => {
   const loginForm = useForm<TLoginSchema>({
@@ -47,18 +49,43 @@ const RegisterForm = () => {
     },
   });
 
-  //Form submission hooks
-  const { mutate: submitRegister, error: registerError } = useCreateUser();
-  const { mutate: submitLogin, error: loginError } = useLoginUser();
+  // //Form submission hooks
+  // const { mutate: submitRegister, error: registerError } = useCreateUser();
+  // const { mutate: submitLogin, error: loginError } = useLoginUser();
+
+  const registerActions = useRegisterActions();
+  const navigate = useNavigate();
+  const [isLogging, setIsLogging] = useState(false);
+  const [error, setError] = useState("");
 
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
-    submitLogin(values);
+    setIsLogging(true);
+    const isLoggedIn = registerActions.loginUser(values);
+    if (isLoggedIn) {
+      setTimeout(() => {
+        setIsLogging(false);
+        navigate("/");
+      }, 2000);
+    } else {
+      setIsLogging(false);
+      setError("Invalid login credentials");
+    }
   };
 
   const registerSubmit = (values: TRegisterSchema) => {
     values.role = "admin";
-    submitRegister(values);
+    setIsLogging(true);
+    setError("");
+    setTimeout(() => {
+      const registerStatus = registerActions.registerUser(values);
+      if (!registerStatus) {
+        setIsLogging(false);
+        return setError("User already exists");
+      }
+      setIsLogging(false);
+      setError("Please go back to the login tab");
+    }, 2000);
   };
 
   const [toogleVisisbility, setVisibility] = useState(false);
@@ -70,13 +97,10 @@ const RegisterForm = () => {
       <Tabs defaultValue="login" className=" w-full md:w-[800px] space-y-4">
         <div
           className={` bg-destructive/30 w-full h-10 rounded-md flex justify-center items-center space-x-3 shadow-xl ${
-            loginError || registerError ? "visible" : "invisible"
+            error ? "visible" : "invisible"
           }`}>
           <Info className="stroke-destructive size-5" />
-          <span className="text-foreground">
-            {" "}
-            {registerError?.message || loginError?.message}
-          </span>
+          <span className="text-foreground"> {error}</span>
         </div>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
@@ -124,9 +148,7 @@ const RegisterForm = () => {
                     defaultValue="jeremiah"
                   />
 
-                  <Button type="submit" className="w-full">
-                    Login
-                  </Button>
+                  <CreateButton isPending={isLogging} />
                 </form>
               </Form>
               <Button
@@ -230,9 +252,7 @@ const RegisterForm = () => {
                       )}
                     />
 
-                    <Button className="col-span-2" type="submit">
-                      Create account
-                    </Button>
+                    <CreateButton isPending={isLogging} />
                   </form>
                 </Form>
 
