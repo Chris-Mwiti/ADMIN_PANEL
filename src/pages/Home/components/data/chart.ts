@@ -5,15 +5,15 @@ const chartData = {
       WeeklySales: {
         series: [
           {
-            name: "Week 1 Sales",
+            name: "Festive Bread",
             data: [300, 200, 400, 120, 250, 120, 125],
           },
           {
-            name: "Week 2 Sales",
+            name: "Broadways",
             data: [210, 125, 160, 240, 300, 125, 100],
           },
           {
-            name: "Week 3 Sales",
+            name: "Superloaf",
             data: [500, 140, 210, 145, 325, 135, 178],
           },
         ],
@@ -58,7 +58,7 @@ const chartData = {
             size: 0,
           },
           xaxis: {
-            categories: ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
+            categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
             title: {
               text: "Days Of Week",
               style: {
