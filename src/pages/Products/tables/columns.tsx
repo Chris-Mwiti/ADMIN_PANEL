@@ -22,7 +22,9 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { useNavigate } from "react-router";
 import { toast } from "@/components/ui/use-toast";
-import { queryClient } from "@/main";
+import cloudinaryConfig from "@/config/clooudinary";
+import { fill, scale } from "@cloudinary/url-gen/actions/resize";
+
 
 export type Products = TProductFormSchema & {
   stockStatus: "out of stock" | "low stock" | "in stock";
@@ -55,20 +57,34 @@ export const tableColums: ColumnDef<Products>[] = [
   {
     accessorKey: "productName",
     header: "Product",
-    cell: ({ row }) => (
-      <div className="flex space-x-4 items-center p-2">
-        {/* @TODO: Replace the Thumbnail component to support cloudinary image component */}
-        <Thumbnails image={row.original.productImages[0]} />
-        <div className="flex flex-col space-y-4">
-          <p className="text-slate-100 text-xl font-medium">
-            {row.original.productName}
-          </p>
-          <p className="text-muted-foreground">
-            {row.original.productCategory}
-          </p>
+    cell: ({ row }) => {
+        const handleImageTransformation = (publicId: string) => {
+          const image = cloudinaryConfig.image(publicId);
+          image.resize(scale().width(56).height(56));
+          return image.toURL();
+        };
+      return (
+        <div className="flex space-x-4 items-center p-2">
+          {/* @TODO: Replace the Thumbnail component to support cloudinary image component */}
+          <span className="size-14 rounded-md">
+            <img
+              src={row.original.productImages[0]}
+              alt="Broadways"
+              className="size-full object-contain rounded-md"
+              loading="lazy"
+            />
+          </span>
+          <div className="flex flex-col space-y-4">
+            <p className="text-slate-100 text-xl font-medium">
+              {row.original.productName}
+            </p>
+            <p className="text-muted-foreground">
+              {row.original.category.categoryName}
+            </p>
+          </div>
         </div>
-      </div>
-    ),
+      );
+    },
     enableHiding: false,
   },
   {
@@ -92,7 +108,7 @@ export const tableColums: ColumnDef<Products>[] = [
     header: "Stock",
     cell: ({ row }) => (
       <StockBar
-        productQuantity={row.original.productQuantity}
+        productQuantity={String(row.original.inventory.quantity)}
         stockStatus={row.original.stockStatus}
       />
     ),
@@ -158,7 +174,7 @@ export const tableColums: ColumnDef<Products>[] = [
             className="bg-slate-200 p-3 rounded-md">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
-              <Button variant={"ghost"} className="w-full">
+              <Button variant={"ghost"} className="w-full" onClick={() => navigate("/products/view/" + row.original.id)}>
                 <Eye className=" size-4 mr-3" />
                 View
               </Button>

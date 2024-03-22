@@ -49,7 +49,7 @@ export type TUserDetails = {
 
 export type TUserInfo = Pick<
   TUser,
-  "name" | "email" | "address" | "phone" | "company"
+  "firstName" | "email" | "address" | "phone" | "company"
 >;
 
 const InvoicesCreate = () => {

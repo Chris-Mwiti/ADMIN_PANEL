@@ -1,98 +1,158 @@
+import UserData from "@/pages/Users/data/userData";
 import { TOrdersSchema } from "../schemas/orders.schema";
+import productData from "@/pages/Products/data/productData";
+import { addHours } from "date-fns";
 
-const orderData: TOrdersSchema[] = [
+let orderData: TOrdersSchema[] = [
   {
-    id: "12345",
-    customerName: "Fredrick Irumba",
-    customerEmail: "fredrick@gmail.com",
-    customerAvatar: "/avatar.jpg",
-    orderDate: new Date("2024-02-27T21:00:00.000Z"),
-    itemsCount: "10",
-    totalOrderPrice: "500",
-    orderStatus: "pending",
-    orderItems: [
+    id: "ORDER_WERT",
+    user: UserData[0],
+    total: 300,
+    status: "completed",
+    createdAt: new Date(),
+    updatedAt: addHours(new Date(), 4),
+    payment: [
       {
-        productName: "Grape juice",
-        productImage: "/carousel1.jfif",
-        sellingPrice: "300",
-        orderQty: "5",
-        productCategory: "Food",
+        id: "PAYM-123",
+        amount: 300,
+        provider: "mpesa",
+        status: "completed",
+        createdAt: new Date(),
       },
     ],
-    orderInfo: {
-      shipBy: "Direct Expresss",
-      trackingNo: "SPXIRDEFGVE134",
-      address: "Nairobi",
-      recipientPhone: "071234567",
-      paymentType: "MPESA",
-    },
+    items: [
+      {
+        id: "ITEM-1234",
+        price: 200,
+        quantity: 10,
+        product: {
+          productName: productData[0].productName,
+          sellingPrice: parseInt(productData[0].sellingPrice),
+          assetIds: [
+            {
+              id: "ASSET-123",
+              images: {
+                id: "IMAGE-123",
+                imageUrl: productData[0].productImages[0],
+              },
+            },
+          ],
+        },
+      },
+    ],
+    shippingInfo: [
+      {
+        id: "SHIPPING-123",
+        county: "Nairobi",
+        street: "Nairobi",
+        town: "Nairobi",
+        locationDesc: "Madaraka",
+        status: "completed",
+        createdAt: new Date(),
+      },
+    ],
   },
+
   {
-    id: "24957",
-    customerName: "Fredrick Irumba",
-    customerEmail: "fredrick@gmail.com",
-    customerAvatar: "/avatar.jpg",
-    orderDate: new Date("2024-02-27T21:00:00.000Z"),
-    itemsCount: "10",
-    totalOrderPrice: "500",
-    orderStatus: "completed",
-    orderItems: [
+    id: "ORDER_WERR",
+    user: UserData[1],
+    total: 300,
+    status: "refunded",
+    createdAt: new Date(),
+    updatedAt: addHours(new Date(), 4),
+    payment: [
       {
-        productName: "Grape juice",
-        productImage: "/carousel1.jfif",
-        sellingPrice: "300",
-        orderQty: "5",
-        productCategory: "Food",
+        id: "PAYM-123",
+        amount: 300,
+        provider: "mpesa",
+        status: "canceled",
+        createdAt: new Date(),
       },
     ],
-    orderInfo: {
-      shipBy: "Direct Expresss",
-      trackingNo: "SPXIRDEFGVE134",
-      address: "Nairobi",
-      recipientPhone: "071234567",
-      paymentType: "MPESA",
-    },
+    items: [
+      {
+        id: "ITEM-1234",
+        price: 200,
+        quantity: 10,
+        product: {
+          productName: productData[1].productName,
+          sellingPrice: parseInt(productData[1].sellingPrice),
+          assetIds: [
+            {
+              id: "ASSET-123",
+              images: {
+                id: "IMAGE-123",
+                imageUrl: productData[1].productImages[0],
+              },
+            },
+          ],
+        },
+      },
+    ],
+    shippingInfo: [
+      {
+        id: "SHIPPING-123",
+        county: "Nairobi",
+        street: "Nairobi",
+        town: "Nairobi",
+        locationDesc: "Madaraka",
+        status: "completed",
+        createdAt: new Date(),
+      },
+    ],
   },
+
   {
-    id: "34345",
-    customerName: "Fredrick Irumba",
-    customerEmail: "fredrick@gmail.com",
-    customerAvatar: "/avatar.jpg",
-    orderDate: new Date("2024-02-27T21:00:00.000Z"),
-    itemsCount: "10",
-    totalOrderPrice: "500",
-    orderStatus: "refunded",
-    orderItems: [
+    id: "ORDER_WDER",
+    user: UserData[0],
+    total: 300,
+    status: "pending",
+    createdAt: new Date(),
+    updatedAt: addHours(new Date(), 6),
+    payment: [
       {
-        productName: "Grape juice",
-        productImage: "/carousel1.jfif",
-        sellingPrice: "300",
-        orderQty: "5",
-        productCategory: "Food",
-      },
-      {
-        productName: "Grape juice",
-        productImage: "/carousel2.jfif",
-        sellingPrice: "300",
-        orderQty: "5",
-        productCategory: "Food",
-      },
-      {
-        productName: "Grape juice",
-        productImage: "/carousel3.jfif",
-        sellingPrice: "300",
-        orderQty: "5",
-        productCategory: "Food",
+        id: "PAYM-123",
+        amount: 300,
+        provider: "mpesa",
+        status: "pending",
+        createdAt: new Date(),
       },
     ],
-    orderInfo: {
-      shipBy: "Direct Expresss",
-      trackingNo: "SPXIRDEFGVE134",
-      address: "Nairobi",
-      recipientPhone: "071234567",
-      paymentType: "MPESA",
-    },
+    items: [
+      {
+        id: "ITEM-1234",
+        price: 200,
+        quantity: 10,
+        product: {
+          productName: productData[2].productName,
+          sellingPrice: parseInt(productData[0].sellingPrice),
+          assetIds: [
+            {
+              id: "ASSET-123",
+              images: {
+                id: "IMAGE-123",
+                imageUrl: productData[0].productImages[0],
+              },
+            },
+          ],
+        },
+      },
+    ],
+    shippingInfo: [
+      {
+        id: "SHIPPING-123",
+        county: "Nairobi",
+        street: "Nairobi",
+        town: "Nairobi",
+        locationDesc: "Madaraka",
+        status: "pending",
+        createdAt: new Date(),
+      },
+    ],
   },
 ];
+
+export const findOrder = (id:string) => orderData.find(order => order.id == id);
+export const replaceOrders = (orders:TOrdersSchema[]) => orderData = orders 
 
 export default orderData

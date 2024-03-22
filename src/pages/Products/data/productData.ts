@@ -1,86 +1,141 @@
 import { TProductFormSchema } from "@/pages/Products/schemas/product.schema";
+import { TCategory } from "../schemas/category.schema";
+import { TDiscount } from "../schemas/discounts.schema";
 
 const productData: TProductFormSchema[] = [
   {
     id: "1",
     productName: "Bread",
     productDescription: "Bread is on sale",
+    productName: "Mafuko Bread",
+    productDescription: "Mango juice is on sale",
     productImages: [
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
+      "/packedBread1.jfif",
+      "/packedBread2.jfif",
+      "/ProductsBreadIllustrator.jpg",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "in stock",
+    stockStatus: "IN STOCK",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: true,
+    isPerishable: true,
   },
   {
     id: "2",
-    productName: "Bread",
-    productDescription: "Bread is on sale",
+    productName: "Superloaf Bread",
+    productDescription: "Mango juice is on sale",
     productImages: [
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
+      "/ProductsBreadIllustrator.jpg",
+      "/packedBread1.jfif",
+      "/packedBread2.jfif",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "in stock",
+    stockStatus: "IN STOCK",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: false,
+    isPerishable: false,
   },
   {
     id: "3",
-    productName: "Bread",
-    productDescription: "Bread is on sale",
+    productName: "Festive bread",
+    productDescription: "Mango juice is on sale",
     productImages: [
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
+      "/packedBread2.jfif",
+      "/packedBread1.jfif",
+      "/ProductsBreadIllustrator.jpg",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "in stock",
+    stockStatus: "IN STOCK",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: false,
+    isPerishable: false,
   },
   {
     id: "4",
-    productName: "Bread",
-    productDescription: "Bread is on sale",
+    productName: "Broadways",
+    productDescription: "Mango juice is on sale",
     productImages: [
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
-      "/breadIllustrator.jpg",
+      "/packedBread1.jfif",
+      "/packedBread2.jfif",
+      "/ProductsBreadIllustrator.jpg",
     ],
-    productCategory: "Food",
+    category: {
+      categoryName: "Food",
+    },
     productSku: "123456",
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "in stock",
+    stockStatus: "IN STOCK",
     published: true,
-    productQuantity: "30",
+    inventory: {
+      quantity: "40",
+    },
     createdAt: new Date(),
-    perishable: true,
+    isPerishable: true,
   },
 ];
+
+const addProduct = (product: TProductFormSchema) => productData.push(product);
+const findProduct = (id: string) =>
+  productData.find((product) => product.id == id);
+const categories: TCategory[] = [
+  {
+    id: "CATEGORY_123",
+    categoryName: "White Bread",
+    categoryDescription: "Food on sale",
+  },
+  {
+    id: "CATEGORY_124",
+    categoryName: "Brown bread",
+    categoryDescription: "Food on sale",
+  },
+];
+
+const discountIds: TDiscount[] = [
+  {
+    id: "DISCOUNT_WERT",
+    coupon: "ADCER",
+  },
+  {
+    id: "DISCOUNT_ERTY",
+    coupon: "ASDER",
+  },
+  {
+    id: "DISCOUNT_FERT",
+    coupon: "REFDE",
+  },
+];
+
+const addCategory = (categoryDto: TCategory) => categories.push(categoryDto);
+
+export { addProduct, addCategory, categories, findProduct, discountIds };
 
 export default productData;

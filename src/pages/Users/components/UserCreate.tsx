@@ -19,57 +19,45 @@ import { useToast } from "@/components/ui/use-toast";
 import userData from "../data/userData";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import useCreateUser from "../services/createUser";
+import { ToastAction } from "@/components/ui/toast";
+import CreateButton from "@/components/ui_fallbacks/CreateButton";
+import generateRandomString from "@/pages/Products/generators/randomId";
+import { useUserActions } from "../data/user.store";
+import UserData from "../data/userData";
 
 const UserCreate = () => {
   const form = useForm<TUser>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: {
-        firstName: "",
-        lastName: "",
-      },
+      firstName: "",
+      lastName: "",
       email: "",
       emailVerified: true,
       address: "",
       phone: "",
       company: "",
-      avatar: "",
+      avatarUrl: "",
     },
   });
 
-    //   const {isPending, reset ,mutate} = useCreateUser();
+  // const {isPending, reset ,mutate} = useCreateUser();
+  const [isPending, setIsPending] = useState(false);
+  const {addUser} = useUserActions()
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
-    values.avatar = "/avatar.jpg";
-    userData.push(values);
+    setIsPending(true);
+    values.id = `USER-${generateRandomString()}`
+    values.avatarUrl = "/avatar.jpg";
+    UserData.push(values);
     toast({
-      title: "User created successfully",
-      className: "bg-[#7cf988]",
-      description: "The user was created successfully",
-    });
+      title: "Successfully created the user",
+      description: "User created successfully"
+    })
+    setIsPending(false);
     setTimeout(() => navigate("/users"), 2000);
-    // mutate(values, {
-    //     onSuccess(data, variables, context) {
-    //         toast({
-    //           title: "User created successfully",
-    //           className: "bg-[#7cf988]",
-    //           description: "The user was created successfully",
-    //         });
-    //     },
-    //     onError(error, variables, context) {
-    //         toast({
-    //           variant: "destructive",
-    //           title: "Error",
-    //           description: error.message,
-    //           action: (
-    //             <ToastAction altText="Retry" onClick={reset}>
-    //               Retry
-    //             </ToastAction>
-    //           ),
-    //         });
-    //     },
-    // })
+    
   };
   return (
     <div className="w-full space-y-5 m-auto p-4">
@@ -83,7 +71,7 @@ const UserCreate = () => {
               {/* @TODO:Add upload functionality to support image preview */}
               <FormField
                 control={form.control}
-                name="avatar"
+                name="avatarUrl"
                 render={({ field }) => (
                   <FormItem className="flex flex-col items-center">
                     <div className="size-44 border border-dashed bg-gray-400/30 rounded-full flex items-center justify-center relative">
@@ -144,7 +132,7 @@ const UserCreate = () => {
             <CardContent className="grid grid-cols-0 xl:grid-cols-2 gap-3 py-3">
               <FormField
                 control={form.control}
-                name="name.firstName"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -160,7 +148,7 @@ const UserCreate = () => {
               />
               <FormField
                 control={form.control}
-                name="name.lastName"
+                name="lastName"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -248,9 +236,7 @@ const UserCreate = () => {
               />
             </CardContent>
           </Card>
-          <Button className=" justify-self-end" type="submit">
-            Submit
-          </Button>
+          <CreateButton isPending={isPending} />
         </form>
       </Form>
     </div>

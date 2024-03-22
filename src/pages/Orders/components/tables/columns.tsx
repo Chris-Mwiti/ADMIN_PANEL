@@ -71,17 +71,23 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
       return (
         <div className="flex space-x-3">
           <span className="size-14 rounded-full">
-            <img
-              src={row.original.customerAvatar}
-              className="size-full object-contain rounded-full"
-              alt="A"
-            />
+            {row.original.user.avatarUrl ? (
+              <img
+                src={row.original.user.avatarUrl}
+                alt="A"
+                className="size-full rounded-full"
+              />
+            ) : (
+              <span className="size-full rounded-full bg-primary text-card-foreground flex items-center justify-center text-xl font-bold">
+                U
+              </span>
+            )}
           </span>
           <div className="flex flex-col space-y-2">
             <p className="text-slate-100 text-lg font-bold">
-              {row.original.customerName}
+              {row.original.user.firstName}
             </p>
-            <p className="text-gray-200">{row.original.customerEmail}</p>
+            <p className="text-gray-200">{row.original.user.id}</p>
           </div>
         </div>
       );
@@ -93,9 +99,9 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
     accessorKey: "orderDate",
     header: "Date",
     cell: ({ row }) => {
-      const formatedDate = format(row.original.orderDate, "do MMM yyy");
+      const formatedDate = format(row.original.createdAt, "do MMM yyy");
       const formatedTime = format(
-        addHours(row.original.orderDate, 3),
+        addHours(row.original.createdAt, 3),
         "hh:mm aaa"
       );
 
@@ -112,7 +118,7 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
     accessorKey: "orderItems",
     header: "Items",
     cell: ({ row }) => {
-      const items = row.original.itemsCount;
+      const items = row.original.items.length;
       return <div className="text-slate-100 text-base">{items}</div>;
     },
   },
@@ -124,7 +130,7 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
       const price = new Intl.NumberFormat("en-us", {
         currency: "KSH",
         style: "currency",
-      }).format(Number(row.original.totalOrderPrice));
+      }).format(Number(row.original.total));
 
       return <p className="text-slate-100 font-medium">{price}</p>;
     },
@@ -134,11 +140,12 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
     accessorKey: "orderStatus",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.original.orderStatus;
+      const status = row.original.status;
       const bgClass: { [key: string]: string } = {
-        refunded: "bg-gray-400/30 text-gray-200",
+        canceled: "bg-red-400/30 text-gray-200",
         completed: "bg-green-300/30 text-green-500",
         pending: "bg-orange-300/30 text-orange-500",
+        refunded: "bg-gray-400/30 text-gray-200",
       };
       return (
         <div

@@ -1,14 +1,18 @@
 import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
 import TUser from "../schemas/users.schema"
 import { queryClient } from "@/main"
+import useAxiosInstance from "@/config/axios"
 
 const useUpdateUser = (id:string) => {
+    const axiosInstance = useAxiosInstance();
     return useMutation({
         mutationKey: ["updateUser", id],
-        mutationFn: (values:Partial<TUser>) => axios.put(
-            "http://localhost:1100/Users/" + id,
-            values
+        mutationFn: (values:Partial<TUser>) => axiosInstance.put(
+            "/api/users/" + id,
+            {
+                id: id,
+                ...values
+            }
         ).then(res => res.status),
         onSuccess: () => {
             queryClient.invalidateQueries({

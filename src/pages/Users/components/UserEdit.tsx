@@ -22,40 +22,45 @@ import useUpdateUser from "../services/updateUser";
 import useGetUsersById from "../services/getUserById";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
-import UserData from "../data/userData";
+import UserData, { findUser, replaceUsers } from "../data/userData";
+import CreateButton from "@/components/ui_fallbacks/CreateButton";
+import { useState } from "react";
 
 const UserEdit = () => {
   const { userId } = useParams();
-  const userData = UserData.find((value) => value.id === userId);
 
-  console.log(userData);
+  // 
+  const userData = findUser(userId);
+  const [isPending,setIsPending] = useState(false)
+
   const form = useForm<TUser>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: {
-        firstName: userData?.name.firstName || "",
-        lastName: userData?.name.lastName || "",
-      },
-      email: userData?.email || "",
-      emailVerified: userData?.emailVerified || true,
-      address: userData?.address || "",
-      phone: userData?.phone || "",
-      company: userData?.company || "",
-      avatar: userData?.avatar || "",
+      firstName: userData?.firstName,
+      lastName: userData?.lastName,
+      email: userData?.email,
+      emailVerified: userData?.emailVerified,
+      address: userData?.address || "Nairobi",
+      phone: userData?.phone,
+      company: userData?.company,
+      avatarUrl: userData?.avatarUrl || "/avatar.jpg",
     },
   });
 
-  //   const { isPending, isError, error, reset, mutate } = useUpdateUser(userId!);
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
-    values.avatar = "/avatar.jpg";
-    UserData.push(values);
+    setIsPending(true);
+    values.avatarUrl = "/avatar.jpg";
+    const filteredUsers = UserData.filter(user => user.id !== userId);
+    filteredUsers.push(values);
+    replaceUsers(filteredUsers);
     toast({
       title: "User created successfully",
       className: "bg-[#7cf988]",
       description: "The user was created successfully",
     });
+    setIsPending(false)
     setTimeout(() => navigate("/users"), 2000);
     // mutate(values, {
     //   onSuccess(data, variables, context) {
@@ -80,9 +85,7 @@ const UserEdit = () => {
     // });
   };
 
-  //   if (isLoading) return <TableLoading />;
-  //   if (loadError) return <TableError error={fetchError} retry={refetch} />;
-
+  
   console.log(userData);
   if (userData) {
     return (
@@ -97,11 +100,14 @@ const UserEdit = () => {
                 {/* @TODO:Add upload functionality to support image preview */}
                 <FormField
                   control={form.control}
-                  name="avatar"
+                  name="avatarUrl"
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center">
                       <div className="size-44 border border-dashed bg-gray-400/30 rounded-full flex items-center justify-center relative">
-                        <img src={field.value} className="size-full rounded-full" />
+                        <img
+                          src={field.value}
+                          className="size-full rounded-full"
+                        />
                       </div>
                       <FormDescription className="text-center w-[170px]">
                         Allowed *.jpeg, *jpg, *png, *gif max size of 3 Mb
@@ -109,7 +115,7 @@ const UserEdit = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                  defaultValue={userData?.avatar}
+                  defaultValue={userData?.avatarUrl}
                 />
 
                 <FormField
@@ -143,7 +149,7 @@ const UserEdit = () => {
               <CardContent className="grid grid-cols-0 xl:grid-cols-2 gap-3 py-3">
                 <FormField
                   control={form.control}
-                  name="name.firstName"
+                  name="firstName"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -151,17 +157,17 @@ const UserEdit = () => {
                           placeholder="First Name"
                           {...field}
                           className="py-6"
-                          defaultValue={userData.name.firstName}
+                          defaultValue={userData.firstName}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
-                  defaultValue={userData.name.firstName}
+                  defaultValue={userData.firstName}
                 />
                 <FormField
                   control={form.control}
-                  name="name.lastName"
+                  name="lastName"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -174,7 +180,7 @@ const UserEdit = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                  defaultValue={userData?.name.lastName}
+                  defaultValue={userData?.lastName}
                 />
                 <FormField
                   control={form.control}
@@ -260,9 +266,7 @@ const UserEdit = () => {
                 />
               </CardContent>
             </Card>
-            <Button className="bg-slate-300 justify-self-end" type="submit">
-              Submit
-            </Button>
+            <CreateButton isPending={isPending} />
           </form>
         </Form>
       </div>

@@ -22,43 +22,49 @@ import useCreateProduct from "../services/createProducts";
 import { ToastAction } from "@/components/ui/toast";
 import productData from "@/pages/Products/data/productData";
 import { useNavigate } from "react-router";
+import { Loader } from "lucide-react";
+import CreateButton from "@/components/ui_fallbacks/CreateButton";
+import { useState } from "react";
+import generateRandomString from "../generators/randomId";
+import { useProductActions } from "../data/data.store";
 
 const CreateProduct = () => {
   const thumbnails = useThumbnails();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { addProduct } = useProductActions();
   // const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
+  const [isPending, setIsPending] = useState(false);
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
+      //lowLevelAlert
       productName: "",
-      productCategory: "",
+      category: {
+        id: "",
+      },
       productDescription: "",
       productCode: "",
       productLabel: "",
       productImages: [],
       productSku: "",
-      productQuantity: "1",
+      inventory: {
+        quantity: "1",
+      },
       productTag: "",
       sellingPrice: "",
+      buyingPrice: "",
+      isPerishable: false,
       stockStatus: "in stock",
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
-    console.log(thumbnails);
-    values.productImages = [
-      "/carousel2.jfif",
-      "/carousel3.jfif",
-      "/carousel1.jfif",
-    ];
+    setIsPending(true);
+    values.id = `PRODUCT-${generateRandomString()}`;
+    values.productImages = thumbnails as string[];
+    values.createdAt = new Date();
+    console.log(values);
 
-    productData.push(values);
-    toast({
-      className: "bg-[#7cf988]",
-      title: "Success",
-      description: "Product creation is successful",
-    });
-    setTimeout(() => navigate("/products"), 2000);
     // mutate(values, {
     //   onSuccess(data, variables, context) {
     //     toast({
@@ -80,6 +86,11 @@ const CreateProduct = () => {
     //     });
     //   },
     // });
+    setTimeout(() => {
+      productData.push(values);
+      navigate("/products");
+      setIsPending(false);
+    }, 2000);
   };
 
   return (
@@ -116,10 +127,7 @@ const CreateProduct = () => {
                 </FormItem>
               )}
             />
-
-            <Button type="submit" className="bg-slate-100">
-              Create
-            </Button>
+            <CreateButton isPending={isPending} />
           </form>
         </Form>
       </div>

@@ -23,6 +23,7 @@ export type TProductDetails = {
 };
 
 const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
+  
   const storedThumbnails = useThumbnails();
   const { updateThumbnails, removeAllThumbnails } = useActions();
 
@@ -38,13 +39,11 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
       setUploadComplete(false);
       for (const file of files) {
         const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onloadend = () => {
           thumbnailImages.push(reader.result);
-          console.log(thumbnailImages);
           setThumbnails(thumbnailImages as string[]);
         };
-
-        reader.readAsDataURL(file);
       }
     }
   };
@@ -128,6 +127,7 @@ const ProductDetailsForm = ({ form, onSubmit }: TProductDetails) => {
                     <Button
                       variant={"outline"}
                       onClick={removeAllThumbnails}
+                      type="button"
                       disabled={thumbnails.length > 0 ? false : true}>
                       Remove All
                     </Button>

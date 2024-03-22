@@ -23,11 +23,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Eye, EyeOff, Info } from "lucide-react";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import useCreateUser from "../services/createUser";
 import useLoginUser from "../services/loginUser";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router";
+import { useRegisterActions } from "@/contexts/data.store";
+import CreateButton from "@/components/ui_fallbacks/CreateButton";
 
 const RegisterForm = () => {
   const loginForm = useForm<TLoginSchema>({
@@ -48,39 +49,43 @@ const RegisterForm = () => {
     },
   });
 
-  //Form submission hooks
-  const { toast } = useToast();
+  // //Form submission hooks
+  // const { mutate: submitRegister, error: registerError } = useCreateUser();
+  // const { mutate: submitLogin, error: loginError } = useLoginUser();
+
+  const registerActions = useRegisterActions();
   const navigate = useNavigate();
-  // const { mutate } = useCreateUser();
-  // const {mutate: submitLogin} = useLoginUser();
+  const [isLogging, setIsLogging] = useState(false);
+  const [error, setError] = useState("");
 
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
-    if (
-      values.email !== "jeremiah@dreamvile.com" ||
-      values.password !== "jeremiah"
-    ) {
-      toast({
-        className: "bg-destructive",
-        title: "Invalid login",
-        description: "Wrong credentials",
-      });
+    setIsLogging(true);
+    const isLoggedIn = registerActions.loginUser(values);
+    if (isLoggedIn) {
+      setTimeout(() => {
+        setIsLogging(false);
+        navigate("/");
+      }, 2000);
     } else {
-      toast({
-        className: "bg-primary/90",
-        title: "Login success",
-        description: "Welcome back jeremiah cole",
-      });
-
-      setTimeout(() => navigate("/"), 2000);
+      setIsLogging(false);
+      setError("Invalid login credentials");
     }
-    // submitLogin(values);
   };
 
   const registerSubmit = (values: TRegisterSchema) => {
-    console.log(values);
     values.role = "admin";
-    // mutate(values);
+    setIsLogging(true);
+    setError("");
+    setTimeout(() => {
+      const registerStatus = registerActions.registerUser(values);
+      if (!registerStatus) {
+        setIsLogging(false);
+        return setError("User already exists");
+      }
+      setIsLogging(false);
+      setError("Please go back to the login tab");
+    }, 2000);
   };
 
   const [toogleVisisbility, setVisibility] = useState(false);
@@ -90,18 +95,16 @@ const RegisterForm = () => {
         MADRIGAL PANEL
       </p>
       <Tabs defaultValue="login" className=" w-full md:w-[800px] space-y-4">
-        <div className="bg-primary/10 w-full h-10 rounded-md flex justify-center items-center space-x-3 shadow-xl">
-          <Info className="stroke-primary size-5" />
-          <span className="text-foreground">
-            {" "}
-            Please use the default values to login
-          </span>
+        <div
+          className={` bg-destructive/30 w-full h-10 rounded-md flex justify-center items-center space-x-3 shadow-xl ${
+            error ? "visible" : "invisible"
+          }`}>
+          <Info className="stroke-destructive size-5" />
+          <span className="text-foreground"> {error}</span>
         </div>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="register" disabled>
-            Register
-          </TabsTrigger>
+          <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
         <TabsContent value="login">
           <Card>
@@ -145,9 +148,7 @@ const RegisterForm = () => {
                     defaultValue="jeremiah"
                   />
 
-                  <Button type="submit" className="w-full">
-                    Login
-                  </Button>
+                  <CreateButton isPending={isLogging} />
                 </form>
               </Form>
               <Button
@@ -251,9 +252,7 @@ const RegisterForm = () => {
                       )}
                     />
 
-                    <Button className="col-span-2" type="submit">
-                      Create account
-                    </Button>
+                    <CreateButton isPending={isLogging} />
                   </form>
                 </Form>
 

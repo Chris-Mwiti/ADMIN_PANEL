@@ -7,6 +7,7 @@ import OrdersEdit from "@/pages/Orders/components/OrdersEdit";
 import OrdersListTable from "@/pages/Orders/components/tables/OrderListTable";
 import Products from "@/pages/Products";
 import CreateProduct from "@/pages/Products/components/CreateProduct";
+import ProductsView from "@/pages/Products/components/ProductsView";
 import ProductListTable from "@/pages/Products/tables/ProductListTable";
 import RegisterForm from "@/pages/Register/pages/Register";
 import UserCreate from "@/pages/Users/components/UserCreate";
@@ -28,7 +29,7 @@ const MainRoutes = () => {
         <Route path="products">
           <Route index element={<Products />} />
           <Route element={<ProductListTable />} path="list" />
-          <Route path="edit/:productId" />
+          <Route path="view/:productId" element={<ProductsView />} />
           <Route path="create" element={<CreateProduct />} />
         </Route>
         <Route path="orders">

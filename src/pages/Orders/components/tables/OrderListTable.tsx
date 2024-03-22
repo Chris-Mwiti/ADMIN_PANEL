@@ -75,14 +75,8 @@ const OrdersListTable = () => {
     },
   });
 
-  // if (isLoading) {
-  //   return <TableLoading />;
-  // }
 
-  // if (isError) {
-  //   return <TableError error={error} retry={refetch} />;
-  // }
-
+  console.log(data);
   if (data) {
     return (
       <div className="w-full p-3">

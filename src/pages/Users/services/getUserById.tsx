@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import TUser from "../schemas/users.schema";
+import useAxiosInstance from "@/config/axios";
+import IResponse from "@/types/response.types";
 
-const useGetUsersById = (id:string) => {
+const useGetUsersById = (id: string) => {
+  const axiosInstance = useAxiosInstance();
   return useQuery({
     queryKey: ["Users", id],
     queryFn: () =>
-      axios.get<TUser>("http://localhost:1100/Users/" + id).then((res) => res.data),
+      axiosInstance
+        .get<IResponse<TUser>>("/api/users/" + id)
+        .then((res) => res.data.data),
   });
 };
 

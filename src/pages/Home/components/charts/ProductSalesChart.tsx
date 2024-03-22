@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ISales } from "./SalesChart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import chartData from "../data/chart";
 import { ApexOptions } from "apexcharts";
 

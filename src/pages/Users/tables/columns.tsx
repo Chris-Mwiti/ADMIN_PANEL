@@ -2,11 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import TUsers from "../schemas/users.schema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowUpDown,
-  Eye,
-  MoreVertical,
-} from "lucide-react";
+import { ArrowUpDown, Eye, MoreVertical } from "lucide-react";
 import { addHours, format } from "date-fns";
 import {
   DropdownMenu,
@@ -65,20 +61,26 @@ const usersColumns: ColumnDef<TUsers>[] = [
   {
     id: "fullName",
     header: "Name",
-    accessorFn: (row) => `${row.name.firstName} ${row.name.lastName}`,
+    accessorFn: (row) => `${row.firstName} ${row.lastName}`,
     cell: ({ row }) => {
       return (
         <div className="flex space-x-3">
           <span className="size-14 rounded-full">
-            <img
-              src={row.original.avatar}
-              className="size-full object-contain rounded-full"
-              alt="A"
-            />
+            {row.original.avatarUrl ? (
+              <img
+                src={row.original.avatarUrl}
+                className="size-full object-contain rounded-full"
+                alt="A"
+              />
+            ) : (
+              <span className="size-full rounded-full bg-primary font-bold text-lg">
+                U
+              </span>
+            )}
           </span>
           <div className="flex flex-col space-y-2">
             <p className="text-slate-100 text-lg font-bold">
-              {row.original.name.firstName + " " + row.original.name.lastName}
+              {row.original.firstName + " " + row.original.lastName}
             </p>
             <p className="text-gray-200">{row.original.email}</p>
           </div>

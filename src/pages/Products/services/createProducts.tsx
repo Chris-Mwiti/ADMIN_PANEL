@@ -1,20 +1,24 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { Products } from "../tables/columns";
 import { queryClient } from "@/main";
 import { TProductFormSchema } from "../schemas/product.schema";
+import useAxiosInstance from "@/config/axios";
+import { useNavigate } from "react-router";
 
 // @TODO: Update the mutation function to reference a single instance of axios object
 
 const useCreateProduct = () => {
+  const axiosInstance = useAxiosInstance();
+  const navigate = useNavigate()
   return useMutation({
     mutationKey: ["createProduct"],
     mutationFn: (values: TProductFormSchema) =>
-      axios.post("http://localhost:1100/Products", values),
+      axiosInstance.post("/api/product", values),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["Products"],
       });
+
+      setTimeout(() => navigate("/products"), 2000)
     },
     retry: 3,
   });
