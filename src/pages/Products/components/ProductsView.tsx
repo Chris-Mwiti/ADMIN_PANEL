@@ -73,6 +73,7 @@ const ProductsView = () => {
               src={data.productImages[0]}
               alt="Product"
               className="size-full rounded-md"
+              loading="lazy"
             />
           </span>
           <div className="w-full flex flex-col space-y-3">
@@ -80,10 +81,10 @@ const ProductsView = () => {
             <p className="text-foreground text-4xl font-bold">
               {data.productName}
             </p>
-            <p className="text-foreground text-lg font-bold">
+            <p className="text-primary text-2xl font-bold">
               sh{data.sellingPrice}
             </p>
-            <p className="text-muted text-lg font-medium">
+            <p className="text-foreground text-lg font-medium">
               {data.productDescription}
             </p>
 

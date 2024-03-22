@@ -6,11 +6,11 @@ const productData: TProductFormSchema[] = [
   {
     id: "PRODUCT-1234",
     productName: "Superloaf Bread",
-    productDescription: "Mango juice is on sale",
+    productDescription: "Super loaf is on sale",
     productImages: [
-      "/ProductsBreadIllustrator.jpg",
-      "/packedBread1.jfif",
-      "/packedBread2.jfif",
+      "https://cdnprod.mafretailproxy.com/sys-master-root/h1b/h63/12681389899806/82689_main.jpg_480Wx480H",
+      "https://cdnprod.mafretailproxy.com/sys-master-root/h10/h4e/12681389244446/74584_main.jpg_480Wx480H",
+      "https://th.bing.com/th/id/R.ee444789c9be4e14aa9d4b585cd6463f?rik=tuEqCDB5E38gZw&riu=http%3a%2f%2fwww.supaloaf.co.ug%2fwp-content%2fuploads%2f2021%2f12%2fmibisco-supa_loaf-mini-bakeries-kenya-uganda-tanzania-east_africa-mombasa-nairobi-kingsmil-bread-festive-bread-mini_group-fayaz_bakery-best-mkate-kenyan-slices_of_life-39-1170x1170.jpg&ehk=FinL%2fGzzb5TTn2NbePWkBDjhw9xdqYieAzVHMVkyBwc%3d&risl=&pid=ImgRaw&r=0",
     ],
     category: {
       categoryName: "Food",
@@ -30,11 +30,11 @@ const productData: TProductFormSchema[] = [
   {
     id: "PRODUCT-WER1",
     productName: "Festive bread",
-    productDescription: "Mango juice is on sale",
+    productDescription: "Festive bread is on sale",
     productImages: [
-      "/packedBread2.jfif",
-      "/packedBread1.jfif",
-      "/ProductsBreadIllustrator.jpg",
+      "https://th.bing.com/th/id/OIP.s4X7t8ERR2ECAF6Hhrw3GgHaHa?rs=1&pid=ImgDetMain",
+      "https://cdnprod.mafretailproxy.com/sys-master-root/h15/h3a/17290375692318/124822_main.jpg_480Wx480H",
+      "https://cdnprod.mafretailproxy.com/sys-master-root/h98/h64/28763174273054/25920_main.jpg_480Wx480H",
     ],
     category: {
       categoryName: "Food",
@@ -54,11 +54,11 @@ const productData: TProductFormSchema[] = [
   {
     id: "PRODUCT-1124",
     productName: "Broadways",
-    productDescription: "Mango juice is on sale",
+    productDescription: "Broadways bread is on sale",
     productImages: [
-      "/packedBread1.jfif",
-      "/packedBread2.jfif",
-      "/ProductsBreadIllustrator.jpg",
+      "https://th.bing.com/th/id/OIP.2VN9VgV_npiEtEuBZU59LgHaHa?rs=1&pid=ImgDetMain",
+      "https://cdnprod.mafretailproxy.com/sys-master-root/hfa/hd5/12461841743902/5_Main.jpg_480Wx480H",
+      "https://cdnprod.mafretailproxy.com/sys-master-root/h13/h7a/27631903080478/7_main.jpg_480Wx480H",
     ],
     category: {
       categoryName: "Food",

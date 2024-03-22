@@ -199,55 +199,6 @@ let orderData: TOrdersSchema[] = [
       },
     ],
   },
-
-  {
-    id: "ORDER_SERT",
-    user: UserData[2],
-    total: 300,
-    status: "completed",
-    createdAt: new Date(),
-    updatedAt: addHours(new Date(), 4),
-    payment: [
-      {
-        id: "PAYM-123",
-        amount: 300,
-        provider: "mpesa",
-        status: "completed",
-        createdAt: new Date(),
-      },
-    ],
-    items: [
-      {
-        id: "ITEM-1234",
-        price: 200,
-        quantity: 10,
-        product: {
-          productName: productData[0].productName,
-          sellingPrice: parseInt(productData[0].sellingPrice),
-          assetIds: [
-            {
-              id: "ASSET-123",
-              images: {
-                id: "IMAGE-123",
-                imageUrl: productData[0].productImages[0],
-              },
-            },
-          ],
-        },
-      },
-    ],
-    shippingInfo: [
-      {
-        id: "SHIPPING-123",
-        county: "Nairobi",
-        street: "Nairobi",
-        town: "Nairobi",
-        locationDesc: "Madaraka",
-        status: "completed",
-        createdAt: new Date(),
-      },
-    ],
-  },
 ];
 
 export const findOrder = (id: string) =>
