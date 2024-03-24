@@ -13,7 +13,7 @@ const useCreateUser = () => {
     mutationFn: (values: TRegisterSchema) =>
       axios
         .post(
-          "https://juice-hub-ts-server-562ekrs7b-chrismwitis-projects.vercel.app/auth/register",
+          "https://juice-hub-ts-server-ncp3dlmww-chrismwitis-projects.vercel.app/auth/register",
           values
         )
         .then((res) => res.data),

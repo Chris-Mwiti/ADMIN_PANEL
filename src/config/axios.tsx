@@ -7,7 +7,7 @@ const useAxiosInstance = () => {
   console.log(accessToken, refreshToken);
   return axios.create({
     baseURL:
-      "https://juice-hub-ts-server-562ekrs7b-chrismwitis-projects.vercel.app/",
+      "https://juice-hub-ts-server-ncp3dlmww-chrismwitis-projects.vercel.app/",
     timeout: 3000,
     headers: {
       authorization: `Bearer ${accessToken} ${refreshToken}`,

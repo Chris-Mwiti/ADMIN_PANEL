@@ -27,7 +27,7 @@ const useLoginUser = () => {
       mutationFn: (values: TLoginSchema) =>
         axiosInstance
           .post<ITokens>(
-            "https://juice-hub-ts-server-562ekrs7b-chrismwitis-projects.vercel.app/auth/login",
+            "https://juice-hub-ts-server-ncp3dlmww-chrismwitis-projects.vercel.app/auth/login",
             values
           )
           .then((res) => res.data),
