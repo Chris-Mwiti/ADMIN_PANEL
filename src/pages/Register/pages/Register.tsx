@@ -27,7 +27,6 @@ import useCreateUser from "../services/createUser";
 import useLoginUser from "../services/loginUser";
 import { toast, useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router";
-import { useRegisterActions } from "@/contexts/data.store";
 import CreateButton from "@/components/ui_fallbacks/CreateButton";
 
 const RegisterForm = () => {
@@ -53,7 +52,6 @@ const RegisterForm = () => {
   const { mutate: submitRegister, error: registerError, isPending:registerPending } = useCreateUser();
   const { mutate: submitLogin, error: loginError,isPending:logInPending } = useLoginUser();
 
-  const registerActions = useRegisterActions();
   const navigate = useNavigate();
   const [error, setError] = useState("");
 

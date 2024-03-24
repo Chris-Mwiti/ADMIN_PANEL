@@ -35,7 +35,6 @@ import productData from "@/pages/Products/data/productData";
 import { useNavigate } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import useProductsStore, { useProducts } from "../data/data.store";
-import { useUserInfo } from "@/contexts/data.store";
 
 function ProductListTable () {
   const [sorting, setSorting] = useState<SortingState>([]);
