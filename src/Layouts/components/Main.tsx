@@ -1,6 +1,5 @@
 import { Outlet } from "react-router";
 import { Navbar } from "./Navbar";
-import { useTokens } from "@/contexts/data.store";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const Main = () => {
