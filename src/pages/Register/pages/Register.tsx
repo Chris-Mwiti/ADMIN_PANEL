@@ -25,7 +25,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Info } from "lucide-react";
 import useCreateUser from "../services/createUser";
 import useLoginUser from "../services/loginUser";
-import { useToast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router";
 import { useRegisterActions } from "@/contexts/data.store";
 import CreateButton from "@/components/ui_fallbacks/CreateButton";
@@ -34,58 +34,54 @@ const RegisterForm = () => {
   const loginForm = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "jeremiah@dreamvile.com",
+      email: "admin@madrigal.com",
       password: "jeremiah",
     },
   });
   const registerForm = useForm<TRegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      firstName: "Jeremiah",
-      lastName: "Cole",
-      email: "jeremiah@dreamvile.com",
-      password: "jeremiah",
-      phone: "012345678",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phone: "",
     },
   });
 
-  // //Form submission hooks
-  // const { mutate: submitRegister, error: registerError } = useCreateUser();
-  // const { mutate: submitLogin, error: loginError } = useLoginUser();
+  //Form submission hooks
+  const { mutate: submitRegister, error: registerError, isPending:registerPending } = useCreateUser();
+  const { mutate: submitLogin, error: loginError,isPending:logInPending } = useLoginUser();
 
   const registerActions = useRegisterActions();
   const navigate = useNavigate();
-  const [isLogging, setIsLogging] = useState(false);
   const [error, setError] = useState("");
 
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
-    setIsLogging(true);
-    const isLoggedIn = registerActions.loginUser(values);
-    if (isLoggedIn) {
-      setTimeout(() => {
-        setIsLogging(false);
-        navigate("/");
-      }, 2000);
-    } else {
-      setIsLogging(false);
-      setError("Invalid login credentials");
-    }
+    submitLogin(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          title: "Login success",
+          description: "You have successfully logged in"
+        })
+      },
+      onError(error, variables, context) {
+        setError(error.message)
+      },
+    })
   };
 
   const registerSubmit = (values: TRegisterSchema) => {
     values.role = "admin";
-    setIsLogging(true);
-    setError("");
-    setTimeout(() => {
-      const registerStatus = registerActions.registerUser(values);
-      if (!registerStatus) {
-        setIsLogging(false);
-        return setError("User already exists");
-      }
-      setIsLogging(false);
-      setError("Please go back to the login tab");
-    }, 2000);
+    submitRegister(values, {
+      onSuccess(data, variables, context) {
+        setError("Please go back to login tab and log in");    
+      },
+      onError(error, variables, context) {
+        setError(error.message);
+      },
+    })
   };
 
   const [toogleVisisbility, setVisibility] = useState(false);
@@ -148,7 +144,7 @@ const RegisterForm = () => {
                     defaultValue="jeremiah"
                   />
 
-                  <CreateButton isPending={isLogging} />
+                  <CreateButton isPending={logInPending} />
                 </form>
               </Form>
               <Button
@@ -252,7 +248,7 @@ const RegisterForm = () => {
                       )}
                     />
 
-                    <CreateButton isPending={isLogging} />
+                    <CreateButton isPending={registerPending} />
                   </form>
                 </Form>
 

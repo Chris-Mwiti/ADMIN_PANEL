@@ -53,8 +53,7 @@ const OrdersListTable = () => {
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
   //   API call to a fake database
-  // const { isLoading, isError, error, data, refetch } = useGetOrders();
-  const data = orderData;
+  const { isLoading, isError, error, data, refetch } = useGetOrders();
   const table = useReactTable<TOrdersSchema>({
     data: data,
     columns: orderColumns,
@@ -76,7 +75,9 @@ const OrdersListTable = () => {
   });
 
 
-  console.log(data);
+  if(isLoading) return <TableLoading />
+  if(isError) return <TableError error={error} retry={refetch} />
+  
   if (data) {
     return (
       <div className="w-full p-3">

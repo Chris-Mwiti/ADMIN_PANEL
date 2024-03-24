@@ -10,27 +10,33 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bell } from "lucide-react";
 import dummyNotifications from "../data/notifications";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import useGetNotifications from "../services/getNotifications";
+import TableLoading from "@/components/ui_fallbacks/TableLoading";
+import TableError from "@/components/ui_fallbacks/TableError";
 
 const NotificationSheet = () => {
-  const notificationItems = dummyNotifications.length;
-  const productNotifications = dummyNotifications.filter(
-    (notf) => notf.type === "products"
-  );
-  const ordersNotifications = dummyNotifications.filter(
-    (notf) => notf.type === "orders"
-  );
-  const usersNotifications = dummyNotifications.filter(
-    (notf) => notf.type === "users"
-  );
+  const { data, isLoading, isError, error, refetch } = useGetNotifications();
+
+  if (isLoading) return <TableLoading />;
+  if (isError) return <TableError error={error} retry={refetch} />;
+
+  const notificationItems = data.length;
+
+  const productNotifications = data.filter((notf) => notf.type === "products");
+  const ordersNotifications = data.filter((notf) => notf.type === "orders");
+  const usersNotifications = data.filter((notf) => notf.type === "users");
 
   return (
     <Sheet>
       <SheetTrigger asChild className="block">
         <div className="relative w-max h-max">
-          <Bell color="#ffffff" className="group-hover:stroke-[#1c1917]" />
+          <Bell
+            color="#ffffff"
+            className="group-hover:stroke-[#1c1917] animate-bounce"
+          />
           <span
             className="
-            size-5 rounded-full grid place-items-center bg-red-500 text-white
+            size-7 rounded-full grid place-items-center bg-red-500 text-white
             absolute -top-3 left-3
             ">
             {notificationItems}
@@ -39,7 +45,7 @@ const NotificationSheet = () => {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="bg-[#1c1917]/90 flex flex-col space-y-3">
+        className="bg-[#1c1917]/90 flex flex-col space-y-3 max-h-screen overflow-y-auto">
         <SheetHeader>
           <SheetTitle>
             <p className="text-white text-3xl text-center">Notifications</p>
@@ -72,21 +78,11 @@ const NotificationSheet = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4 max-h-full overflow-y-auto">
-                    {dummyNotifications.map((notf) => (
+                    {data.map((notf) => (
                       <div className="w-full flex space-x-3">
-                        {notf.imageUrl ? (
-                          <span className="size-14 rounded-md">
-                            <img
-                              src={notf.imageUrl}
-                              alt="N"
-                              className="size-full rounded-md"
-                            />
-                          </span>
-                        ) : (
-                          <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
-                            N
-                          </span>
-                        )}
+                        <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
+                          N
+                        </span>
                         <div className="space-y-3">
                           <p className="text-white font-bold text-base">
                             {notf.title}
@@ -112,19 +108,9 @@ const NotificationSheet = () => {
                   <CardContent className="space-y-4 max-h-full overflow-y-auto">
                     {productNotifications.map((notf) => (
                       <div className="w-full flex space-x-3">
-                        {notf.imageUrl ? (
-                          <span className="size-14 rounded-md">
-                            <img
-                              src={notf.imageUrl}
-                              alt="N"
-                              className="size-full rounded-md"
-                            />
-                          </span>
-                        ) : (
-                          <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
-                            N
-                          </span>
-                        )}
+                        <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
+                          N
+                        </span>
                         <div className="space-y-3">
                           <p className="text-white font-bold text-base">
                             {notf.title}
@@ -150,19 +136,9 @@ const NotificationSheet = () => {
                   <CardContent className="space-y-4 max-h-full overflow-y-auto">
                     {ordersNotifications.map((notf) => (
                       <div className="w-full flex space-x-3">
-                        {notf.imageUrl ? (
-                          <span className="size-14 rounded-md">
-                            <img
-                              src={notf.imageUrl}
-                              alt="N"
-                              className="size-full rounded-md"
-                            />
-                          </span>
-                        ) : (
-                          <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
-                            N
-                          </span>
-                        )}
+                        <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
+                          N
+                        </span>
                         <div className="space-y-3">
                           <p className="text-white font-bold text-base">
                             {notf.title}
@@ -188,19 +164,9 @@ const NotificationSheet = () => {
                   <CardContent className="space-y-4 max-h-full overflow-y-auto">
                     {usersNotifications.map((notf) => (
                       <div className="w-full flex space-x-3">
-                        {notf.imageUrl ? (
-                          <span className="size-14 rounded-md">
-                            <img
-                              src={notf.imageUrl}
-                              alt="N"
-                              className="size-full rounded-md"
-                            />
-                          </span>
-                        ) : (
-                          <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
-                            N
-                          </span>
-                        )}
+                        <span className="size-14 rounded-md bg-primary grid place-items-center text-xl font-bold text-white">
+                          N
+                        </span>
                         <div className="space-y-3">
                           <p className="text-white font-bold text-base">
                             {notf.title}

@@ -62,7 +62,7 @@ const SalesChart = () => {
               w-full h-full
             ">
             <Chart
-              type="line"
+              type="bar"
               series={data.WeeklySales!.series}
               options={data.WeeklySales!.options as ApexOptions}
               width="100%"

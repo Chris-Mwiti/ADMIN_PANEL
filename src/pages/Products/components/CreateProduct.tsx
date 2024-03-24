@@ -33,8 +33,7 @@ const CreateProduct = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { addProduct } = useProductActions();
-  // const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
-  const [isPending, setIsPending] = useState(false);
+  const { isPending, isError, error, data, mutate, reset } = useCreateProduct();
   const form = useForm<TProductFormSchema>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
@@ -55,42 +54,36 @@ const CreateProduct = () => {
       sellingPrice: "",
       buyingPrice: "",
       isPerishable: false,
-      stockStatus: "in stock",
+      stockStatus: "IN_STOCK",
     },
   });
   const onSubmit = (values: TProductFormSchema) => {
-    setIsPending(true);
-    values.id = `PRODUCT-${generateRandomString()}`;
     values.productImages = thumbnails as string[];
-    values.createdAt = new Date();
-    console.log(values);
-
-    // mutate(values, {
-    //   onSuccess(data, variables, context) {
-    //     toast({
-    //       className: "bg-[#7cf988]",
-    //       title: "Success",
-    //       description: "Product creation is successful",
-    //     });
-    //   },
-    //   onError(error, variables, context) {
-    //     toast({
-    //       variant: "destructive",
-    //       title: "Error",
-    //       description: error.message,
-    //       action: (
-    //         <ToastAction altText="Retry" onClick={reset}>
-    //           Retry
-    //         </ToastAction>
-    //       ),
-    //     });
-    //   },
-    // });
-    setTimeout(() => {
-      productData.push(values);
-      navigate("/products");
-      setIsPending(false);
-    }, 2000);
+    mutate(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          className: "bg-[#7cf988]",
+          title: "Success",
+          description: "Product creation is successful",
+        });
+        setTimeout(() => {
+          navigate("/products");
+        }, 2000);
+      },
+      onError(error, variables, context) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+          action: (
+            <ToastAction altText="Retry" onClick={reset}>
+              Retry
+            </ToastAction>
+          ),
+        });
+      },
+    });
+    
   };
 
   return (

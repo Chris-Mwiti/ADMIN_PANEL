@@ -37,13 +37,10 @@ const OrderSchema = z.object({
       product: z.object({
         productName: z.string(),
         sellingPrice: z.number(),
-        assetIds: z
+        asset: z
           .object({
             id: z.string(),
-            images: z.object({
-              id: z.string(),
-              imageUrl: z.string(),
-            }),
+            images: z.string().array()
           })
           .array(),
       }),

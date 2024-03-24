@@ -202,12 +202,6 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
                 View
               </Button>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate(`/orders/edit/${id}`)}>
-              <Button variant={"ghost"} className="w-full">
-                <Pencil className="mr-3 size-4" />
-                Edit
-              </Button>
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

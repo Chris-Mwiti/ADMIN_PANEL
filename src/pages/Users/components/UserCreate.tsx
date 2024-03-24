@@ -41,22 +41,28 @@ const UserCreate = () => {
     },
   });
 
-  // const {isPending, reset ,mutate} = useCreateUser();
-  const [isPending, setIsPending] = useState(false);
-  const {addUser} = useUserActions()
+  const {isPending, reset ,mutate} = useCreateUser();
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
-    setIsPending(true);
-    values.id = `USER-${generateRandomString()}`
-    values.avatarUrl = "/avatar.jpg";
-    UserData.push(values);
-    toast({
-      title: "Successfully created the user",
-      description: "User created successfully"
+    values.avatarUrl = "/avatar.jpg",
+    mutate(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          title: "User created successfully",
+          description: "User created successfully"
+        })
+        setTimeout(() => navigate("/users"), 2000);
+      },
+      onError(error, variables, context) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Error while creating user",
+          action: <ToastAction onClick={reset} altText="retry">Retry</ToastAction>
+        })
+      },
     })
-    setIsPending(false);
-    setTimeout(() => navigate("/users"), 2000);
     
   };
   return (

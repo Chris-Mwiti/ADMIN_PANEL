@@ -29,64 +29,52 @@ import { useState } from "react";
 const UserEdit = () => {
   const { userId } = useParams();
 
-  // 
-  const userData = findUser(userId);
-  const [isPending,setIsPending] = useState(false)
+  //
+  const {
+    data: userData,
+    isError,
+    isLoading,
+    error,
+    refetch,
+  } = useGetUsersById(userId);
+  const { mutate, isPending, reset } = useUpdateUser(userId);
 
   const form = useForm<TUser>({
     resolver: zodResolver(userSchema),
-    defaultValues: {
-      firstName: userData?.firstName,
-      lastName: userData?.lastName,
-      email: userData?.email,
-      emailVerified: userData?.emailVerified,
-      address: userData?.address || "Nairobi",
-      phone: userData?.phone,
-      company: userData?.company,
-      avatarUrl: userData?.avatarUrl || "/avatar.jpg",
-    },
   });
 
   const { toast } = useToast();
   const navigate = useNavigate();
   const onSubmit = (values: TUser) => {
-    setIsPending(true);
     values.avatarUrl = "/avatar.jpg";
-    const filteredUsers = UserData.filter(user => user.id !== userId);
-    filteredUsers.push(values);
-    replaceUsers(filteredUsers);
-    toast({
-      title: "User created successfully",
-      className: "bg-[#7cf988]",
-      description: "The user was created successfully",
+
+    mutate(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          title: "User created successfully",
+          className: "bg-[#7cf988]",
+          description: "The user was created successfully",
+        });
+        setTimeout(() => navigate("/users"), 2000);
+      },
+      onError(error, variables, context) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+          action: (
+            <ToastAction altText="Retry" onClick={reset}>
+              Retry
+            </ToastAction>
+          ),
+        });
+      },
     });
-    setIsPending(false)
-    setTimeout(() => navigate("/users"), 2000);
-    // mutate(values, {
-    //   onSuccess(data, variables, context) {
-    //     toast({
-    //       title: "User created successfully",
-    //       className: "bg-[#7cf988]",
-    //       description: "The user was created successfully",
-    //     });
-    //   },
-    //   onError(error, variables, context) {
-    //     toast({
-    //       variant: "destructive",
-    //       title: "Error",
-    //       description: error.message,
-    //       action: (
-    //         <ToastAction altText="Retry" onClick={reset}>
-    //           Retry
-    //         </ToastAction>
-    //       ),
-    //     });
-    //   },
-    // });
   };
 
-  
-  console.log(userData);
+  if (isLoading) return <TableLoading />;
+  if (isError) return <TableError error={error} retry={refetch} />;
+
   if (userData) {
     return (
       <div className="w-full space-y-5 m-auto p-4">

@@ -9,7 +9,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Printer } from "lucide-react";
+import { Loader, Printer } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -32,6 +32,7 @@ import cloudinaryConfig from "@/config/clooudinary";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import useUpdateOrder from "./services/updateOrderById";
 import orderData, { findOrder, replaceOrders } from "./data/orderData";
+import { useToast } from "@/components/ui/use-toast";
 
 // Tag Object Propeties
 const bgClass: { [key: string]: string } = {
@@ -50,11 +51,15 @@ const OrdersEdit = () => {
       </div>
     );
 
-  const data = findOrder(orderId);
-  // const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
-  // const { mutate, isPending } = useUpdateOrder(orderId);
+  const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
+  const { mutate, isPending } = useUpdateOrder(orderId);
   const [status, setStatus] = useState(data?.status);
   const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  if(isLoading) return <TableLoading />
+  if(isError) return <TableError error={error} retry={refetch} />
 
   //@TODO: CREATE CUSTOM SKELETON LOADER AND ERROR TEMPLATE
 
@@ -71,22 +76,22 @@ const OrdersEdit = () => {
 
     //HandleChanges
     const isChangesAvailable = data.status !== status;
-    const navigate = useNavigate();
     const handleUpdateOrder = () => {
-      if (isChangesAvailable) {
-        setDisabled(false);
-        const filteredOrders = orderData.filter(
-          (order) => order.id !== orderId
-        );
-        replaceOrders([...filteredOrders, {...data, status}]);
-        setTimeout(() => navigate("/orders"), 2000);
-      }
+      mutate(status, {
+        onSuccess(data, variables, context) {
+          toast({
+            description: "Update success",
+            title: "UPDATE SUCCESS",
+          });
+          setTimeout(() => navigate("/orders"), 2000);
+        },
+      });
     };
 
     const transformImage = (imageUrl: string) => {
       const image = cloudinaryConfig.image(imageUrl);
       image.resize(fill().width(64).height(64));
-      return image;
+      return image.toURL();
     };
     return (
       <div className="w-full p-3 flex flex-col space-y-4">
@@ -130,10 +135,17 @@ const OrdersEdit = () => {
 
           <Button
             className="bg-slate-200"
-            disabled={disabled}
+            disabled={isPending}
             type="button"
             onClick={handleUpdateOrder}>
-            Save Changes
+            {isPending ? (
+              <span className="flex items-center">
+                <Loader className="animate-spin mr-3" />
+                Saving...
+              </span>
+            ) : (
+              "Save changes"
+            )}
           </Button>
         </div>
 
@@ -202,18 +214,10 @@ const OrdersEdit = () => {
                       className="flex items-center space-x-3 rounded-md p-2"
                       key={index}>
                       <span className="size-16">
-                        {/* <AdvancedImage
-                          cldImg={transformImage(
-                            item.product.assetIds[0].images.imageUrl
-                          )}
-                          plugins={[
-                            lazyload(),
-                            responsive(),
-                            placeholder({ mode: "blur" }),
-                          ]}
-                        /> */}
                         <img
-                          src={item.product.assetIds[0].images.imageUrl}
+                          src={transformImage(
+                            data.items[0].product.asset[0].images[0]
+                          )}
                           alt="Product"
                           className="size-12 rounded-md"
                         />

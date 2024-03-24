@@ -46,9 +46,7 @@ function ProductListTable () {
   const [rowSelection, setRowSelection] = useState({});
 
   //   API call to a fake database
-  // const { isLoading, isError, error, data, refetch } = useGetProducts();
-  let data = productData;
-  // data = useProducts();
+  const { isLoading, isError, error, data, refetch } = useGetProducts();
   const table = useReactTable<Products>({
     data: data as Products[],
     columns: tableColums,
@@ -69,13 +67,13 @@ function ProductListTable () {
   });
 
   const navigate = useNavigate();
-  // if (isLoading) {
-  //   return <TableLoading />;
-  // }
+  if (isLoading) {
+    return <TableLoading />;
+  }
 
-  // if (isError) {
-  //   return <TableError error={error} retry={refetch} />;
-  // }
+  if (isError) {
+    return <TableError error={error} retry={refetch} />;
+  }
 
   return (
     <div className="w-full p-3 space-y-3">

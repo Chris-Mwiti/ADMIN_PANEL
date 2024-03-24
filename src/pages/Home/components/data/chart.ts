@@ -5,22 +5,13 @@ const chartData = {
       WeeklySales: {
         series: [
           {
-            name: "Broadways",
-            data: [300, 200, 400, 120, 250, 120, 125].reverse(),
-          },
-          {
-            name: "Superloaf",
-            data: [210, 125, 160, 240, 300, 125, 100].reverse(),
-          },
-          {
-            name: "Festive bread",
-            data: [500, 140, 210, 145, 325, 135, 178].reverse(),
+            data: [500, 600, 700],
           },
         ],
         options: {
           chart: {
             height: 350,
-            type: "line",
+            type: "bar",
             dropShadow: {
               enabled: true,
               color: "#000",
@@ -33,15 +24,19 @@ const chartData = {
               show: true,
             },
           },
-          colors: ["#ffd044", "#5a03d5", "#ef5a7f"],
+          plotOptions: {
+            bar: {
+              distributed: true,
+              borderRadius: 4,
+              horizontal: true,
+            },
+          },
+          colors: ["#ffd044", "#00e396", "#008ffb"],
           dataLabels: {
             enabled: false,
           },
           tooltip: {
             theme: "dark",
-          },
-          stroke: {
-            curve: "smooth",
           },
           title: {
             text: "Week Sales",
@@ -58,9 +53,9 @@ const chartData = {
             size: 0,
           },
           xaxis: {
-            categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+            categories: ["Festive Bread", "Superloaf", "Broadways"],
             title: {
-              text: "Days Of Week",
+              text: "Bread types",
               style: {
                 color: "#74ffb3",
               },
@@ -141,11 +136,7 @@ const chartData = {
             legend: {
               position: "bottom",
             },
-            labels: [
-              "Festive Bread",
-              "Super Loaf",
-              "Broadways",
-            ],
+            labels: ["Festive Bread", "Super Loaf", "Broadways"],
             responsive: [
               {
                 breakpoint: 480,

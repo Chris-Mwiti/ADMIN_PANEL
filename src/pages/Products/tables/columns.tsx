@@ -27,7 +27,7 @@ import { fill, scale } from "@cloudinary/url-gen/actions/resize";
 
 
 export type Products = TProductFormSchema & {
-  stockStatus: "out of stock" | "low stock" | "in stock";
+  stockStatus: "OUT_STOCK" | "IN_STOCK";
 };
 
 export const tableColums: ColumnDef<Products>[] = [
@@ -68,7 +68,7 @@ export const tableColums: ColumnDef<Products>[] = [
           {/* @TODO: Replace the Thumbnail component to support cloudinary image component */}
           <span className="size-14 rounded-md">
             <img
-              src={row.original.productImages[0]}
+              src={handleImageTransformation(row.original.asset[0].images[0])}
               alt="Broadways"
               className="size-full object-contain rounded-md"
               loading="lazy"
@@ -179,10 +179,10 @@ export const tableColums: ColumnDef<Products>[] = [
                 View
               </Button>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Button variant={"destructive"}>
-                <Trash2Icon color="#ff1309" className="mr-3 size-4" />
-                Delete
+            <DropdownMenuItem onClick={() => navigate("/products/edit/" + row.original.id)}>
+              <Button variant="ghost">
+                <Pencil color="#ff1309" className="mr-3 size-4" />
+                Edit
               </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>

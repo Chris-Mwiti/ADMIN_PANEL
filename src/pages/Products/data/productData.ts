@@ -19,7 +19,7 @@ const productData: TProductFormSchema[] = [
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "IN STOCK",
+    stockStatus: "IN_STOCK",
     published: true,
     inventory: {
       quantity: "40",
@@ -43,7 +43,7 @@ const productData: TProductFormSchema[] = [
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "IN STOCK",
+    stockStatus: "IN_STOCK",
     published: true,
     inventory: {
       quantity: "40",
@@ -67,7 +67,7 @@ const productData: TProductFormSchema[] = [
     productCode: "M1234",
     buyingPrice: "300",
     sellingPrice: "400",
-    stockStatus: "IN STOCK",
+    stockStatus: "IN_STOCK",
     published: true,
     inventory: {
       quantity: "40",

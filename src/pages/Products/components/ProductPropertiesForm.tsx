@@ -38,8 +38,7 @@ import { categories } from "../data/productData";
 
 const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
   //Fetch available categories in the Db
-  // const { data, isError, isLoading, error, refetch } = useGetCategories();
-  const data = categories;
+  const { data, isError, isLoading, error, refetch } = useGetCategories();
   const [activeLabel, setActiveLabel] = useState(true);
   const [isPerishable, setIsPerishable] = useState(false);
   const handlePerishableChange = (
@@ -52,8 +51,8 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
 
 
 
-  // if(isLoading) return <TableLoading />
-  // if(isError) return <TableError error={error} retry={refetch} />
+  if(isLoading) return <TableLoading />
+  if(isError) return <TableError error={error} retry={refetch} />
 
   return (
     <Card>
@@ -91,6 +90,21 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="productBarCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bar Code</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Product Bar Code" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="inventory.quantity"
@@ -121,8 +135,8 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {data.length >= 1 &&
-                          data.map((category) => (
+                        {data.data.length >= 1 &&
+                          data.data.map((category) => (
                             <SelectItem
                               key={category.categoryName}
                               value={category.id}>

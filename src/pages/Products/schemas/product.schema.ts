@@ -18,7 +18,11 @@ const ProductFormSchema = z.object({
     .min(10, {
       message: "The product description should be greater than 10 letters",
     }),
-  productImages: z.string().array(),
+  productImages: z.string().array().optional(),
+  productBarCode: z.string({
+    required_error: "Product bar code required"
+  }),
+
   productCode: z
     .string()
     .min(5, {
@@ -33,7 +37,7 @@ const ProductFormSchema = z.object({
   category:z.object({
     id:z.string().optional(),
     categoryName:z.string().optional()
-  }),
+  }).optional(),
   productTag: z
     .string({
       invalid_type_error: "String value is required",
@@ -47,14 +51,9 @@ const ProductFormSchema = z.object({
   sellingPrice: z.string({
     required_error: "Selling price required",
   }),
-  assetIds:z.object({
-    id:z.string(),
-    createdAt:z.date(),
-    updatedAt:z.date(),
-    images: z.object({
-      id:z.string(),
-      imageUrl:z.string()
-    })
+  asset: z.object({
+    id:z.string().optional(),
+    images:z.string().array(),
   }).array().optional(),
   tax: z
     .number({
@@ -66,13 +65,13 @@ const ProductFormSchema = z.object({
   }),
   isPerishable: z.boolean({
     required_error: "Status required"
-  }),
+  }).optional(),
   expireDate: z.date({
     required_error: "Expiry date required"
   }).optional(),
   discountId: z.string().optional(),
   createdAt: z.date().default(new Date()).optional(),
-  stockStatus: z.string().optional(),
+  stockStatus: z.enum(["IN_STOCK", "OUT_STOCK"]).optional(),
 
   categoryName:z.string().optional(),
   categoryDescription:z.string().optional()
