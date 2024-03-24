@@ -11,12 +11,10 @@ import { inject } from "@vercel/analytics";
 
 export const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools />
         <MainRoutes />
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );

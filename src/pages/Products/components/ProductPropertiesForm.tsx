@@ -32,14 +32,17 @@ import { Calendar } from "@/components/ui/calendar";
 import useGetCategories from "../services/getCategories";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { categories } from "../data/productData";
-
 
 const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
   //Fetch available categories in the Db
-  // const { data, isError, isLoading, error, refetch } = useGetCategories();
-  const data = categories;
+  const { data, isError, isLoading, error, refetch } = useGetCategories();
   const [activeLabel, setActiveLabel] = useState(true);
   const [isPerishable, setIsPerishable] = useState(false);
   const handlePerishableChange = (
@@ -50,10 +53,8 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
     onChange(value);
   };
 
-
-
-  // if(isLoading) return <TableLoading />
-  // if(isError) return <TableError error={error} retry={refetch} />
+  if (isLoading) return <TableLoading />;
+  if (isError) return <TableError error={error} retry={refetch} />;
 
   return (
     <Card>
@@ -121,8 +122,8 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {data.length >= 1 &&
-                          data.map((category) => (
+                        {data.data.length >= 1 &&
+                          data.data.map((category) => (
                             <SelectItem
                               key={category.categoryName}
                               value={category.id}>
@@ -169,7 +170,10 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                         <FormItem>
                           <FormLabel>Category Description</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Category description" />
+                            <Input
+                              {...field}
+                              placeholder="Category description"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -179,6 +183,20 @@ const ProductPropertiesForm = ({ form, onSubmit }: TProductDetails) => {
                 </AccordionItem>
               </Accordion>
             </div>
+
+            <FormField
+              control={form.control}
+              name="productBarCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bar Code </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Bar Code" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}

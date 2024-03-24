@@ -1,16 +1,17 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useGetProductsById from "../services/getProductsById";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
 import cloudinaryConfig from "@/config/clooudinary";
-import { fill, scale } from "@cloudinary/url-gen/actions/resize";
-import { InputHTMLAttributes, useState } from "react";
+import {  useState } from "react";
 import QRCode from "qrcode";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
-import { findProduct } from "../data/productData";
+import { ICartItems, useProductActions } from "../data/data.store";
+import { useToast } from "@/components/ui/use-toast";
+
 
 const bgClass: { [key: string]: string } = {
   instock: "bg-red-400/30 text-gray-200",
@@ -21,11 +22,12 @@ const bgClass: { [key: string]: string } = {
 
 const ProductsView = () => {
   const { productId } = useParams();
+  const {addToCart} = useProductActions();
+  const navigate = useNavigate();
+  const {toast} = useToast();
 
-  //   const { data, isLoading, isError, error, refetch } =
-  //     useGetProductsById(productId);
-
-  const data = findProduct(productId);
+  const { data, isLoading, isError, error, refetch } =
+    useGetProductsById(productId);
 
   const [qrCodeSrc, setQrCodeSrc] = useState(
     "https://admin-panel-madrigal.vercel.app/products/view/" + productId
@@ -33,8 +35,24 @@ const ProductsView = () => {
   const [productQty, setProductQty] = useState(1);
   const [total, setTotal] = useState(productQty * parseInt(data?.sellingPrice));
 
-  //   if (isLoading) return <TableLoading />;
-  //   if (isError) return <TableError error={error} retry={refetch} />;
+  if (isLoading) return <TableLoading />;
+  if (isError) return <TableError error={error} retry={refetch} />;
+
+  const handleAddToCart = () => {
+    const orderItem = {
+      productId,
+      quantity:productQty,
+      price:data.sellingPrice,
+      assetImage:data.asset[0].images[0],
+      productName:data.productName
+    } as ICartItems
+    addToCart(orderItem);
+    toast({
+      title: "Item added successfully",
+      description: "The Item has been added successfully"
+    })
+    setTimeout(() => navigate("/products"),2000);
+  }
 
   if (data) {
     const handleImageTransformation = (publicId: string) => {
@@ -53,7 +71,7 @@ const ProductsView = () => {
         <div className="p-3 grid grid-cols-1 sm:grid-cols-2 gap-12">
           <span className="size-full rounded-md">
             <img
-              src={data.productImages[0]}
+              src={handleImageTransformation(data.asset[0].images[0])}
               alt="Product"
               className="size-full rounded-md"
             />
@@ -90,7 +108,7 @@ const ProductsView = () => {
                 <p className="text-primary font-bold text-lg">sh{total}</p>
               </div>
             </div>
-            <Button>
+            <Button onClick={handleAddToCart}>
               <ShoppingCart className="size-6 mr-3" />
               Add to cart
             </Button>

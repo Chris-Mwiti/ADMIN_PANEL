@@ -54,8 +54,7 @@ const PreviewsOrdersTable = () => {
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
   //   API call to a fake database
-  // const { isLoading, isError, error, data, refetch } = useGetOrders();
-  const data = orderData;
+  const { isLoading, isError, error, data, refetch } = useGetOrders();
   const table = useReactTable<TOrdersSchema>({
     data: data,
     columns: previewOrderColumns,
@@ -76,11 +75,12 @@ const PreviewsOrdersTable = () => {
     },
   });
 
-  console.log(data);
+  if (isLoading) return <TableLoading />;
+  if (isError) return <TableError error={error} retry={refetch} />;
   if (data) {
     return (
       <div className="w-full p-3 space-y-3">
-        <p className="text-2xl text-slate-100 font-medium">Orders Preview</p>
+        <p className="text-2xl text-slate-100 font-medium">My Orders Preview</p>
         {/* Table Section */}
         <div className="rounded-md border">
           <Card>

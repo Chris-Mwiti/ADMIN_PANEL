@@ -1,6 +1,7 @@
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { TLoginSchema } from "@/pages/Register/schemas/login.schema";
 import { TRegisterSchema } from "@/pages/Register/schemas/register.schema";
+import TUser from "@/pages/Users/schemas/users.schema";
 import { create, createStore } from "zustand";
 
 interface IUserInfo {
@@ -20,13 +21,12 @@ interface ITokenActions {
 }
 
 interface IRegisterActions {
-  loginUser: (values: TLoginSchema) => boolean;
-  logoutUser: () => boolean;
-  registerUser: (values: TRegisterSchema) => boolean;
+  logoutUser: () => void;
+  updateUserInfo:(values:TUser) => void
 }
 
 interface IDataStore {
-  userInfo: TRegisterSchema[];
+  userInfo: TUser;
   tokens: ITokens;
 }
 
@@ -38,16 +38,7 @@ interface IDataStoreActions {
 type TDataStore = IDataStore & IDataStoreActions;
 
 const useDataStore = create<TDataStore>((set, get) => ({
-  userInfo: [
-    {
-      firstName: "Chris",
-      lastName: "Mwiti",
-      phone: "0712345678",
-      avatarUrl: "image.jpg",
-      email: "chrismwiti@gmail.com",
-      password: "12345678",
-    },
-  ],
+  userInfo: {},
   tokens: {
     accessToken: localStorage.getItem("accessToken"),
     refreshToken: localStorage.getItem("refreshToken"),
@@ -65,36 +56,16 @@ const useDataStore = create<TDataStore>((set, get) => ({
   },
 
   registerActions: {
-    loginUser(values) {
-      const accessToken = "abdefghrtyu";
-      const refreshToken = "refgefdsrt";
-      const isUserAvailable = get().userInfo.find(
-        (user) => user.email == values.email && user.password == values.password
-      );
-      if (!isUserAvailable) return false;
-      if (isUserAvailable) {
-        useLocalStorage("accessToken", accessToken).setItem();
-        useLocalStorage("refreshToken", refreshToken).setItem();
-
-        return true;
-      }
+    updateUserInfo(values) {
+      return set((state) => ({
+        ...state,
+        userInfo: values
+      }))
     },
     logoutUser() {
-      return false;
-    },
-    registerUser(values) {
-      const isUserExisting = 
-        get().userInfo.find((user) => user.email == values.email);
-      console.log(isUserExisting);
-      if (isUserExisting) return false;
-      if (!isUserExisting) {
-        set((state) => ({
-          ...state,
-          userInfo: [...get().userInfo, values],
-        }));
-      }
-      return true;
-    },
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
   },
 }));
 

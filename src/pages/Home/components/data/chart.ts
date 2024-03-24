@@ -6,15 +6,15 @@ const chartData = {
         series: [
           {
             name: "Festive Bread",
-            data: [300, 200, 400, 120, 250, 120, 125],
+            data: [300, 200, 400, 120, 250, 120, 125].reverse(),
           },
           {
             name: "Broadways",
-            data: [210, 125, 160, 240, 300, 125, 100],
+            data: [210, 125, 160, 240, 300, 125, 100].reverse(),
           },
           {
             name: "Superloaf",
-            data: [500, 140, 210, 145, 325, 135, 178],
+            data: [500, 140, 210, 145, 325, 135, 178].reverse(),
           },
         ],
         options: {
@@ -132,7 +132,7 @@ const chartData = {
       sales: [
         {
           type: "pie",
-          series: [200, 500, 300, 100, 150],
+          series: [200, 500, 300],
           options: {
             chart: {
               width: 300,
@@ -142,8 +142,6 @@ const chartData = {
               "Festive Bread",
               "Super Loaf",
               "Broadways",
-              "Mafuko",
-              "Candy Bread",
             ],
             responsive: [
               {

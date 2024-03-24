@@ -57,13 +57,11 @@ const PreviewTable = () => {
 
   const navigate = useNavigate();
   //   API call to a fake database
-  // const { isLoading, isError, error, data, refetch } = useGetUsers();
-  // console.log(data);
+  const { isLoading, isError, error, data, refetch } = useGetUsers();
 
-  const data = UserData;
-
+  
   const table = useReactTable<TUser>({
-    data: data!,
+    data: data,
     columns: previewColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -82,13 +80,13 @@ const PreviewTable = () => {
     },
   });
 
-  // if (isLoading) {
-  //   return <TableLoading />;
-  // }
+  if (isLoading) {
+    return <TableLoading />;
+  }
 
-  // if (isError) {
-  //   return <TableError error={error} retry={refetch} />;
-  // }
+  if (isError) {
+    return <TableError error={error} retry={refetch} />;
+  }
 
   if (data) {
     return (

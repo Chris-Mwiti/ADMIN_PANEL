@@ -1,9 +1,6 @@
 import { InfoCardsLayout } from "./Home/components/cards/InfoCardsLayout";
-import ChartGroup from "./Home/components/charts/ChartGroup";
-import OrdersListTable from "./Orders/components/tables/OrderListTable";
-import PreviewsOrdersTable from "./Orders/components/tables/preview.table";
-import UserListTable from "./Users/tables/UserList";
-import PreviewTable from "./Users/tables/preview.table";
+import ProductSalesChart from "./Home/components/charts/ProductSalesChart";
+import SalesChart from "./Home/components/charts/SalesChart";
 
 export default function Home() {
   return (
@@ -21,8 +18,8 @@ export default function Home() {
         <InfoCardsLayout />
         {/* <ChartGroup /> */}
         <div className="grid grid-cols-2 gap-3 h-max">
-          <PreviewTable />
-          <PreviewsOrdersTable />
+          <ProductSalesChart />
+          <SalesChart />
         </div>
       </div>
     </section>

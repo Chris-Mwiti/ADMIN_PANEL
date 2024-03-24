@@ -46,9 +46,7 @@ function ProductListTable () {
   const [rowSelection, setRowSelection] = useState({});
 
   //   API call to a fake database
-  // const { isLoading, isError, error, data, refetch } = useGetProducts();
-  let data = productData;
-  // data = useProducts();
+  const { isLoading, isError, error, data, refetch } = useGetProducts();
   const table = useReactTable<Products>({
     data: data as Products[],
     columns: tableColums,
@@ -69,24 +67,18 @@ function ProductListTable () {
   });
 
   const navigate = useNavigate();
-  // if (isLoading) {
-  //   return <TableLoading />;
-  // }
+  if (isLoading) {
+    return <TableLoading />;
+  }
 
-  // if (isError) {
-  //   return <TableError error={error} retry={refetch} />;
-  // }
+  if (isError) {
+    return <TableError error={error} retry={refetch} />;
+  }
 
   return (
     <div className="w-full p-3 space-y-3">
       <div className="w-full flex justify-between">
         <p className="text-2xl text-slate-100 font-medium">Products List</p>
-        <Button
-          className="bg-slate-300"
-          onClick={() => navigate("/products/create")}>
-          <Plus className="mr-3" />
-          New Product
-        </Button>
       </div>
       {/* @TODO:Extract filter section to be a component */}
       <div className="flex flex-col items-center py-4 sm:flex-row">

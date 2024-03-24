@@ -9,6 +9,7 @@ import {
   Eye,
   MoreVertical,
   Pencil,
+  ShoppingCart,
   Trash2Icon,
 } from "lucide-react";
 import { TProductFormSchema } from "../schemas/product.schema";
@@ -68,7 +69,7 @@ export const tableColums: ColumnDef<Products>[] = [
           {/* @TODO: Replace the Thumbnail component to support cloudinary image component */}
           <span className="size-14 rounded-md">
             <img
-              src={row.original.productImages[0]}
+              src={handleImageTransformation(row.original.asset[0].images[0])}
               alt="Broadways"
               className="size-full object-contain rounded-md"
               loading="lazy"
@@ -174,9 +175,21 @@ export const tableColums: ColumnDef<Products>[] = [
             className="bg-slate-200 p-3 rounded-md">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
-              <Button variant={"ghost"} className="w-full" onClick={() => navigate("/products/view/" + row.original.id)}>
-                <Eye className=" size-4 mr-3" />
-                View
+              <Button
+                variant={"ghost"}
+                className="w-full"
+                onClick={() => navigate("/products/order/" + row.original.id)}>
+                <ShoppingCart className=" size-4 mr-3" />
+                Order
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button
+                variant={"ghost"}
+                className="w-full"
+                onClick={() => navigate("/products/edit/" + row.original.id)}>
+                <Pencil className=" size-4 mr-3" />
+                Edit
               </Button>
             </DropdownMenuItem>
             <DropdownMenuItem>

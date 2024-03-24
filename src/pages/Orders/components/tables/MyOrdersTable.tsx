@@ -1,7 +1,7 @@
 import { useState } from "react";
-import useGetUsers from "../services/getUsers";
-import usersColumns from "./columns";
-import TUser from "../schemas/users.schema";
+import useGetOrders from "../services/getOrders";
+import orderColumns from "./columns";
+import { TOrdersSchema } from "../schemas/orders.schema";
 import {
   ColumnFiltersState,
   ExpandedState,
@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, UserPlus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -38,14 +38,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNavigate } from "react-router";
-import { Card, CardContent } from "@/components/ui/card";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
-import { useUsers } from "../data/user.store";
-import UserData from "../data/userData";
+import { Card, CardContent } from "@/components/ui/card";
+import myOrdersColumns from "./myOrdersColumns";
 
-const UserListTable = () => {
+const MyOrdersTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnsVisibility] = useState<VisibilityState>(
@@ -54,13 +52,11 @@ const UserListTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
-  const navigate = useNavigate();
   //   API call to a fake database
-  const { isLoading, isError, error, data, refetch } = useGetUsers();
-  
-  const table = useReactTable<TUser>({
-    data: data!,
-    columns: usersColumns,
+  const { isLoading, isError, error, data, refetch } = useGetOrders();
+  const table = useReactTable<TOrdersSchema>({
+    data: data,
+    columns: myOrdersColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -78,46 +74,22 @@ const UserListTable = () => {
     },
   });
 
-    if (isLoading) {
-      return <TableLoading />;
-    }
-
-    if (isError) {
-      return <TableError error={error} retry={refetch} />;
-    }
+  if(isLoading) return <TableLoading />
+  if(isError) return <TableError error={error} retry={refetch} />
 
   if (data) {
     return (
       <div className="w-full p-3">
-        <div className="w-full flex justify-between">
-          <p className="text-2xl text-slate-100 font-medium">Users List</p>
-          <Button
-            className="bg-slate-300"
-            onClick={() => navigate("/users/create")}>
-            <UserPlus className="mr-3" />
-            New User
-          </Button>
-        </div>
+        <p className="text-2xl text-slate-100 font-medium"> My Orders List</p>
         {/* @TODO:Extract filter section to be a component */}
         <div className="flex flex-col space-y-3 space-x-3 items-center py-4 sm:flex-row">
           {/* Filter orders serch field */}
 
           <Input
-            placeholder="Filter name..."
-            value={
-              (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
-            }
+            placeholder="Filter orders..."
+            value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
             onChange={(e) =>
-              table.getColumn("fullName")?.setFilterValue(e.target.value)
-            }
-            className="max-w-sm text-white"
-          />
-
-          <Input
-            placeholder="Filter roles..."
-            value={(table.getColumn("role")?.getFilterValue() as string) ?? ""}
-            onChange={(e) =>
-              table.getColumn("role")?.setFilterValue(e.target.value)
+              table.getColumn("id")?.setFilterValue(e.target.value)
             }
             className="max-w-sm text-white"
           />
@@ -125,15 +97,15 @@ const UserListTable = () => {
           {/* Filter order status select field */}
           <Select
             onValueChange={(value) =>
-              table.getColumn("status")?.setFilterValue(value)
+              table.getColumn("orderStatus")?.setFilterValue(value)
             }>
             <SelectTrigger className="max-w-sm text-white">
               <SelectValue placeholder="Filter status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="banned">Banned</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="refunded">Refunded</SelectItem>
             </SelectContent>
           </Select>
 
@@ -208,7 +180,7 @@ const UserListTable = () => {
                   ) : (
                     <TableRow>
                       <TableCell
-                        colSpan={usersColumns.length}
+                        colSpan={orderColumns.length}
                         className="h-24 text-center">
                         No results found
                       </TableCell>
@@ -253,4 +225,4 @@ const UserListTable = () => {
   }
 };
 
-export default UserListTable;
+export default MyOrdersTable;

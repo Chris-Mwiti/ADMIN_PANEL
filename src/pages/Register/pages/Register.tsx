@@ -49,43 +49,35 @@ const RegisterForm = () => {
     },
   });
 
-  // //Form submission hooks
-  // const { mutate: submitRegister, error: registerError } = useCreateUser();
-  // const { mutate: submitLogin, error: loginError } = useLoginUser();
+  //Form submission hooks
+  const { mutate: submitRegister, error: registerError,isPending:isRegistering } = useCreateUser();
+  const { mutate: submitLogin, error: loginError, isPending:isLoggingIn} = useLoginUser();
 
-  const registerActions = useRegisterActions();
   const navigate = useNavigate();
-  const [isLogging, setIsLogging] = useState(false);
   const [error, setError] = useState("");
 
   //Form Submit handlers
   const loginSubmit = (values: TLoginSchema) => {
-    setIsLogging(true);
-    const isLoggedIn = registerActions.loginUser(values);
-    if (isLoggedIn) {
-      setTimeout(() => {
-        setIsLogging(false);
+    submitLogin(values, {
+      onSuccess: () => {
         navigate("/");
-      }, 2000);
-    } else {
-      setIsLogging(false);
-      setError("Invalid login credentials");
-    }
+      },
+      onError(error, variables, context) {
+        setError(error.message)
+      },
+    });
   };
 
   const registerSubmit = (values: TRegisterSchema) => {
-    values.role = "admin";
-    setIsLogging(true);
-    setError("");
-    setTimeout(() => {
-      const registerStatus = registerActions.registerUser(values);
-      if (!registerStatus) {
-        setIsLogging(false);
-        return setError("User already exists");
-      }
-      setIsLogging(false);
-      setError("Please go back to the login tab");
-    }, 2000);
+    values.role = "user";
+    submitRegister(values, {
+      onSuccess: () => {
+        setError("Please return to the login tab");
+      },
+      onError(error, variables, context) {
+        setError(error.message)
+      },
+    });
   };
 
   const [toogleVisisbility, setVisibility] = useState(false);
@@ -148,7 +140,7 @@ const RegisterForm = () => {
                     defaultValue="jeremiah"
                   />
 
-                  <CreateButton isPending={isLogging} />
+                  <CreateButton isPending={isLoggingIn} />
                 </form>
               </Form>
               <Button
@@ -252,7 +244,7 @@ const RegisterForm = () => {
                       )}
                     />
 
-                    <CreateButton isPending={isLogging} />
+                    <CreateButton isPending={isRegistering} />
                   </form>
                 </Form>
 

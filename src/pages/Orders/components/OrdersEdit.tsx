@@ -32,6 +32,7 @@ import cloudinaryConfig from "@/config/clooudinary";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import useUpdateOrder from "./services/updateOrderById";
 import orderData, { findOrder, replaceOrders } from "./data/orderData";
+import handleImageTransformation from "@/utils/imageUrlGenerator";
 
 // Tag Object Propeties
 const bgClass: { [key: string]: string } = {
@@ -50,13 +51,17 @@ const OrdersEdit = () => {
       </div>
     );
 
-  const data = findOrder(orderId);
-  // const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
-  // const { mutate, isPending } = useUpdateOrder(orderId);
+  const { data, isLoading, isError, error, refetch } = useGetOrderById(orderId);
+  const { mutate, isPending } = useUpdateOrder(orderId);
+  const navigate = useNavigate();
+
   const [status, setStatus] = useState(data?.status);
   const [disabled, setDisabled] = useState(false);
 
   //@TODO: CREATE CUSTOM SKELETON LOADER AND ERROR TEMPLATE
+
+  if (isLoading) return <TableLoading />;
+  if (isError) return <TableError error={error} retry={refetch} />;
 
   if (data) {
     // Date formatting
@@ -71,23 +76,10 @@ const OrdersEdit = () => {
 
     //HandleChanges
     const isChangesAvailable = data.status !== status;
-    const navigate = useNavigate();
     const handleUpdateOrder = () => {
-      if (isChangesAvailable) {
-        setDisabled(false);
-        const filteredOrders = orderData.filter(
-          (order) => order.id !== orderId
-        );
-        replaceOrders([...filteredOrders, {...data, status}]);
-        setTimeout(() => navigate("/orders"), 2000);
-      }
+      console.log("Updating....");
     };
 
-    const transformImage = (imageUrl: string) => {
-      const image = cloudinaryConfig.image(imageUrl);
-      image.resize(fill().width(64).height(64));
-      return image;
-    };
     return (
       <div className="w-full p-3 flex flex-col space-y-4">
         <div className="flex flex-col space-y-2">
@@ -202,18 +194,10 @@ const OrdersEdit = () => {
                       className="flex items-center space-x-3 rounded-md p-2"
                       key={index}>
                       <span className="size-16">
-                        {/* <AdvancedImage
-                          cldImg={transformImage(
-                            item.product.assetIds[0].images.imageUrl
-                          )}
-                          plugins={[
-                            lazyload(),
-                            responsive(),
-                            placeholder({ mode: "blur" }),
-                          ]}
-                        /> */}
                         <img
-                          src={item.product.assetIds[0].images.imageUrl}
+                          src={handleImageTransformation(
+                            data.items[0].product.asset[0].images[0]
+                          )}
                           alt="Product"
                           className="size-12 rounded-md"
                         />

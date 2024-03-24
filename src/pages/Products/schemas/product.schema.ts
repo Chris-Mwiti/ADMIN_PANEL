@@ -40,6 +40,9 @@ const ProductFormSchema = z.object({
       required_error: "Please provide a minimum of 2 tags for the product",
     })
     .optional(),
+  productBarCode: z.string({
+    required_error: "Product Bar code is required"
+  }),
   productLabel: z.string().optional(),
   buyingPrice: z.string({
     required_error: "Buying price required",
@@ -47,14 +50,11 @@ const ProductFormSchema = z.object({
   sellingPrice: z.string({
     required_error: "Selling price required",
   }),
-  assetIds:z.object({
+  asset:z.object({
     id:z.string(),
     createdAt:z.date(),
     updatedAt:z.date(),
-    images: z.object({
-      id:z.string(),
-      imageUrl:z.string()
-    })
+    images: z.string().array()
   }).array().optional(),
   tax: z
     .number({

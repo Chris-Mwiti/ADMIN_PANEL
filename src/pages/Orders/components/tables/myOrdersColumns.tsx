@@ -18,8 +18,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router";
+import handleImageTransformation from "@/utils/imageUrlGenerator";
 
-const orderColumns: ColumnDef<TOrdersSchema>[] = [
+const myOrdersColumns: ColumnDef<TOrdersSchema>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -65,29 +66,29 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
   },
 
   {
-    accessorKey: "customerName",
-    header: "Customer",
+    id: "ProductInfo",
+    header: "ProductInfo",
     cell: ({ row }) => {
       return (
         <div className="flex space-x-3">
-          <span className="size-14 rounded-full">
-            {row.original.user.avatarUrl ? (
+          <span className="size-14 rounded-md">
+            {row.original.items.length ? (
               <img
-                src={row.original.user.avatarUrl}
+                src={handleImageTransformation(row.original.items[0].product.asset[0].images[0])}
                 alt="A"
-                className="size-full rounded-full"
+                className="size-full rounded-md"
               />
             ) : (
-              <span className="size-full rounded-full bg-primary text-card-foreground flex items-center justify-center text-xl font-bold">
+              <span className="size-full rounded-md bg-primary text-card-foreground flex items-center justify-center text-xl font-bold">
                 U
               </span>
             )}
           </span>
           <div className="flex flex-col space-y-2">
             <p className="text-slate-100 text-lg font-bold">
-              {row.original.user.firstName}
+              {row.original.items[0].product.productName}
             </p>
-            <p className="text-gray-200">{row.original.user.id}</p>
+            <p className="text-gray-200">{row.original.items[0].quantity}</p>
           </div>
         </div>
       );
@@ -156,28 +157,6 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
     },
   },
   {
-    id: "toogleSubRows",
-    cell: ({ row }) => {
-      console.log(row.getCanExpand());
-      return row.getCanExpand() ? (
-        <Button
-          variant={"ghost"}
-          className="size-max rounded-full p-2 cursor-pointer"
-          onClick={row.getToggleExpandedHandler()}>
-          <ChevronDown className="size-4" color="#ffffff" />
-        </Button>
-      ) : (
-        <Button
-          variant={"ghost"}
-          className="size-max rounded-full p-2 cursor-pointer"
-          onClick={row.getToggleExpandedHandler()}
-          disabled>
-          <ChevronDown className="size-4" color="#ffffff" />
-        </Button>
-      );
-    },
-  },
-  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -196,13 +175,13 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
             align="end"
             className="bg-slate-200 p-3 rounded-md">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate(`/orders/${id}`)}>
               <Button variant={"ghost"} className="w-full">
                 <Eye className=" size-4 mr-3" />
                 View
               </Button>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate(`/orders/myOrdersEdit/${id}`)}>
               <Button variant={"ghost"} className="w-full">
                 <Pencil className="mr-3 size-4" />
                 Edit
@@ -215,4 +194,4 @@ const orderColumns: ColumnDef<TOrdersSchema>[] = [
   },
 ];
 
-export default orderColumns;
+export default myOrdersColumns;

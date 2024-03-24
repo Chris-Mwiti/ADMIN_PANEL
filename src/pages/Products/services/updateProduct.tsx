@@ -4,6 +4,7 @@ import { Products } from "../tables/columns"
 import { queryClient } from "@/main";
 import useAxiosInstance from "@/config/axios";
 import IResponse from "@/types/response.types";
+import { TProductFormSchema } from "../schemas/product.schema";
 
 
 // @TODO: RESEARCH MORE ON OPTIMISTICS UPDATES
@@ -13,12 +14,11 @@ const useUpdateProduct = (id:string) => {
     const axiosInstance = useAxiosInstance();
     return useMutation({
       mutationKey: ["updateProduct", id],
-      mutationFn: (values: Partial<Products>) =>
-        axiosInstance.put<IResponse<Products>>(`/api/product/ ${id}`,values).then((res) => res.status),
+      mutationFn: (values: Partial<TProductFormSchema>) =>
+        axiosInstance.put<IResponse<Products>>(`/api/product/${id}`,values).then((res) => res.status),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["Products"] });
       },
-      retry: 3
     });
 }
 

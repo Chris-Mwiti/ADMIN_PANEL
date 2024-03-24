@@ -38,9 +38,9 @@ const DesktopNavLinks = (props: IDesktopNavLinksProps) => {
           urlPath="/products"
           icon={Boxes}
           title="Products"
-          subUrlLinks={["/create", "list"]}
+          subUrlLinks={["list"]}
         />
-        <NavLinkItem urlPath="/orders" icon={ShoppingCart} title="Order" />
+        <NavLinkItem urlPath="/orders" icon={ShoppingCart} title="Order" subUrlLinks={["myOrders",""]} />
         <NavLinkItem
           urlPath="/invoices"
           icon={ReceiptText}
@@ -70,7 +70,7 @@ export const NavLinks = (props: INavLinksProps) => {
         <MobileNavLinks urlPath="orders" icon={ShoppingCart} title="Orders" />
         <MobileNavLinks
           urlPath="products"
-          subUrlLinks={["/create", "/list"]}
+          subUrlLinks={["/list"]}
           icon={Boxes}
           title="Products"
         />
