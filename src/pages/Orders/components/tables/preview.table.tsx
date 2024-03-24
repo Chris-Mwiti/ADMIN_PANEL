@@ -76,7 +76,6 @@ const PreviewsOrdersTable = () => {
     },
   });
 
-  console.log(data);
   if (data) {
     return (
       <div className="w-full p-3 space-y-3">

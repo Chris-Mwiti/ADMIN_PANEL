@@ -42,7 +42,6 @@ import { useNavigate } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import TableLoading from "@/components/ui_fallbacks/TableLoading";
 import TableError from "@/components/ui_fallbacks/TableError";
-import { useUsers } from "../data/user.store";
 import UserData from "../data/userData";
 import previewColumns from "./preview.columns";
 
