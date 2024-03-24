@@ -28,13 +28,9 @@ let orderData: TOrdersSchema[] = [
         product: {
           productName: productData[0].productName,
           sellingPrice: parseInt(productData[0].sellingPrice),
-          assetIds: [
+          asset: [
             {
-              id: "ASSET-123",
-              images: {
-                id: "IMAGE-123",
-                imageUrl: productData[0].productImages[0],
-              },
+              images: ["/FestiveBread.jfif"],
             },
           ],
         },
@@ -77,13 +73,9 @@ let orderData: TOrdersSchema[] = [
         product: {
           productName: productData[1].productName,
           sellingPrice: parseInt(productData[1].sellingPrice),
-          assetIds: [
+          asset: [
             {
-              id: "ASSET-123",
-              images: {
-                id: "IMAGE-123",
-                imageUrl: productData[1].productImages[0],
-              },
+              images: ["/FestiveBread.jfif"],
             },
           ],
         },
@@ -126,13 +118,9 @@ let orderData: TOrdersSchema[] = [
         product: {
           productName: productData[2].productName,
           sellingPrice: parseInt(productData[0].sellingPrice),
-          assetIds: [
+          asset: [
             {
-              id: "ASSET-123",
-              images: {
-                id: "IMAGE-123",
-                imageUrl: productData[0].productImages[0],
-              },
+              images: ["/FestiveBread.jfif"],
             },
           ],
         },
@@ -175,13 +163,9 @@ let orderData: TOrdersSchema[] = [
         product: {
           productName: productData[0].productName,
           sellingPrice: parseInt(productData[0].sellingPrice),
-          assetIds: [
+          asset: [
             {
-              id: "ASSET-123",
-              images: {
-                id: "IMAGE-123",
-                imageUrl: productData[0].productImages[0],
-              },
+              images: ["/FestiveBread.jfif"],
             },
           ],
         },
@@ -224,13 +208,9 @@ let orderData: TOrdersSchema[] = [
         product: {
           productName: productData[0].productName,
           sellingPrice: parseInt(productData[0].sellingPrice),
-          assetIds: [
+          asset: [
             {
-              id: "ASSET-123",
-              images: {
-                id: "IMAGE-123",
-                imageUrl: productData[0].productImages[0],
-              },
+              images: ["/FestiveBread.jfif"],
             },
           ],
         },
