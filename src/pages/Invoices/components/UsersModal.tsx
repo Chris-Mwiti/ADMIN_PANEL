@@ -22,13 +22,12 @@ interface IUserModalProp {
 
 const UsersModal = (props: IUserModalProp) => {
   const [openModal, setOpenModal] = useState(false);
-  // const {data,isLoading,isError,error,refetch} = useGetUsers();
+  const {data,isLoading,isError,error,refetch} = useGetUsers();
 
-  const data = UserData;
   const navigate = useNavigate();
 
-  // if(isLoading) return <TableLoading />
-  // if(isError) return <TableError error={error} retry={refetch} />
+  if(isLoading) return <TableLoading />
+  if(isError) return <TableError error={error} retry={refetch} />
 
   const manipulateData = (values: TUser): TUserDetails => {
     setOpenModal(false);
