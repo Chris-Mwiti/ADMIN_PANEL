@@ -12,7 +12,10 @@ const useCreateUser = () => {
     mutationKey: ["createUser"],
     mutationFn: (values: TRegisterSchema) =>
       axios
-        .post("http://localhost:3000/auth/register", values)
+        .post(
+          "https://juice-hub-ts-server-562ekrs7b-chrismwitis-projects.vercel.app/auth/register",
+          values
+        )
         .then((res) => res.data),
     onSuccess(data, variables, context) {
       toast({

@@ -23,31 +23,34 @@ const useLoginUser = () => {
     const axiosInstance = useAxiosInstance();
     const { updateUserInfo } = useRegisterActions();
     return useMutation({
-        mutationKey:["login"],
-        mutationFn: (values:TLoginSchema) => axiosInstance.post<ITokens>(
-            "http://localhost:3000/auth/login",
+      mutationKey: ["login"],
+      mutationFn: (values: TLoginSchema) =>
+        axiosInstance
+          .post<ITokens>(
+            "https://juice-hub-ts-server-562ekrs7b-chrismwitis-projects.vercel.app/auth/login",
             values
-        ).then(res => res.data),
-        onSuccess(data, variables, context) {
-            //Persistent storage of cookies
-            localStorage.setItem("accessToken", data.accessToken);
-            localStorage.setItem("refreshToken", data.refreshToken);
-            updateUserInfo(data.user);
-            toast({
-                title: "Login success",
-                description: "Login successfully"
-            })
+          )
+          .then((res) => res.data),
+      onSuccess(data, variables, context) {
+        //Persistent storage of cookies
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        updateUserInfo(data.user);
+        toast({
+          title: "Login success",
+          description: "Login successfully",
+        });
 
-            setTimeout(() => navigate("/"), 2000);
-        },
+        setTimeout(() => navigate("/"), 2000);
+      },
 
-        onError(error, variables, context) {
-            toast({
-                title: "Error",
-                description: error.message
-            })
-        },
-    })
+      onError(error, variables, context) {
+        toast({
+          title: "Error",
+          description: error.message,
+        });
+      },
+    });
 }
 
 export default useLoginUser;
