@@ -2,7 +2,6 @@ import { Outlet } from "react-router";
 import { Navbar } from "./Navbar";
 import { useTokens } from "@/contexts/data.store";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import hello from 'hello';
 export const Main = () => {
   const accessToken = useLocalStorage("accessToken").getItem();
   return (
@@ -12,7 +11,7 @@ export const Main = () => {
           relative max-h-screen overflow-hidden
         ">
       <Navbar />
-      <div
+      {/* <div
         className="
           py-3 self-center flex-1 w-full
           overflow-x-hidden overflow-y-auto 
@@ -33,6 +32,12 @@ export const Main = () => {
             </p>
           </div>
         )}
+      </div> */}
+
+      <div className="w-full flex-col space-y-5 flex items-center justify-center text-destructive text-5xl">
+        LIPA KWANZA BOSS...YOU CAN FIND NOTHING BETTER THAN THIS....@KALITECH
+        TECHNOLOGIES
+        <h2 className="text-center text-5xl"> &#128514;</h2>
       </div>
     </main>
   );
