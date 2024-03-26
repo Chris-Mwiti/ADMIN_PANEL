@@ -1,3 +1,4 @@
+import { Loader } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 
@@ -7,12 +8,11 @@ const TableLoading = () => {
       <CardHeader>
         <CardTitle>Loading...</CardTitle>
       </CardHeader>
-      <CardContent className="w-full">
-        <Skeleton className="w-full" />
+      <CardContent className="w-full flex items-center justify-center">
+        <Loader className="size-7 animate-spin" />
       </CardContent>
     </Card>
   );
 };
 
-
-export default TableLoading
+export default TableLoading;
